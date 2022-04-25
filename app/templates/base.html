@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% block head %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- * ///// jinja2 condition ///// -->
+    {% block title %} {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>GISart</title>
+    {% endif %} {% endblock %}
+
+    <!-- * ///// css styling ///// -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+  </head>
+  {% endblock %}
+  <body>
+    {% block body %}{% endblock %}
+  </body>
+</html>
