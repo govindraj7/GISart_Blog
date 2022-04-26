@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, send_file
 
 blueprint = Blueprint('basic_pgs', __name__)
 
@@ -20,3 +20,8 @@ def about():
 @blueprint.route('/inspiration')
 def inpsiration():
   return redirect('https://unsplash.com/s/photos/satellite-imagery')
+
+# placeholder for download file
+@blueprint.route('/download')
+def download():
+  return send_file('static/downloads/info-sheet.txt', as_attachment=True)
