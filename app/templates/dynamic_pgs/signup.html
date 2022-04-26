@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block body %}
-<section class="container">
+<section id="signup" class="container">
   <h1>Signup</h1>
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus
@@ -22,21 +22,21 @@
   {% endfor %} {% if user_name %}
   <p>Hello {{ user_name }}!!</p>
   {% else %}
-  <p>What is your Name?</p>
   <br />
   <!-- signup form -->
-  <form method="POST">
+  <form method="POST" class="flex justify-content-md-center">
     <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
     {{ form.hidden_tag() }}
     <!-- the form -->
     <!-- name -->
     {{ form.user_name.label (class="form-label") }} {{
     form.user_name(class="form-control") }}
+    <br />
     <!-- password holder -->
     {{ form.password.label (class="form-label") }} {{
     form.password(class="form-control") }}
     <br />
-    {{ form.submit(class="btn btn-secondary") }}
+    {{ form.submit(class="btn btn-primary") }}
   </form>
 </section>
 {% endif %} {% endblock %}

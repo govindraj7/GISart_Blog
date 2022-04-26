@@ -1,3 +1,13 @@
+#signup {
+  /* margin: 0 auto; */
+  width: 60%;
+  min-width: 630px;
+}
+
 form {
-  min-width: 80vw;
+  background-color: #777777;
+  padding: 8vh 5vw;
+  border-radius: 1rem;
+  width: 50%;
+  margin: auto;
 }
