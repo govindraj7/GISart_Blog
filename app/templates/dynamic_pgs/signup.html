@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block body %}
+<section class="container">
+  <h1>signup</h1>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus
+    laborum nesciunt amet animi, neque ut quas cum maxime labore quia odit
+    saepe, quidem inventore vero perferendis incidunt porro tempore!
+  </p>
+</section>
+
+{% if user_name %}
+<p>Hello {{ user_name }}!!</p>
+{% else %}
+<p>What is your Name?</p>
+<br />
+<!-- signup form -->
+<form method="POST">
+  {{ form.hidden_tag() }} {{ form.user_name.label }} {{ form.user_name() }}
+  <br />
+  {{ form.submit() }}
+</form>
+{% endif %} {% endblock %}

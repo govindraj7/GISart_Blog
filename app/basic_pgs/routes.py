@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, render_template, redirect, url_for
 
 blueprint = Blueprint('basic_pgs', __name__)
 
@@ -9,7 +9,12 @@ blueprint = Blueprint('basic_pgs', __name__)
 def index():
   return render_template('basic_pgs/index.html',  title="Welcome!")
 
-# custom error handling 404
+# create route decorator
+@blueprint.route('/about')
+def about():
+  return render_template('basic_pgs/about.html',  title="About")
+    # return redirect(url_for('basic_pgs.about')) 
+    # redirect kept giving error 404
 
 # create redirect route decorator
 @blueprint.route('/inspiration')
