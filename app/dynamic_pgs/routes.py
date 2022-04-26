@@ -28,3 +28,4 @@ def signup():
       form.password.data = ''
       flash("You are now part of the GISart Community.")
   return render_template('dynamic_pgs/signup.html', title='Sign-Up', user_name=user_name, password=password, form=form)
+# TODO: secure password + sessions

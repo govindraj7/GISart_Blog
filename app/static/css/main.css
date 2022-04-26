@@ -1,5 +1,62 @@
+:root {
+  font-size: 16px;
+  --font-fam: "Gudea", sans-serif;
+
+  --pri-txt: #fff;
+  --sec-txt: #1c1c1c;
+
+  --pri-bg: #1c1c1c;
+  --sec-bg: #fff;
+
+  --highlight: #2c67fc;
+}
+
 body {
   margin: 0;
-  background-color: #000;
-  color: #fff;
+  background-color: var(--pri-bg);
+}
+
+.container {
+  width: 70vw;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+  color: var(--pri-txt);
+  font-family: var(--font-fam);
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+/* * ///// custom scrollbar ///// */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
