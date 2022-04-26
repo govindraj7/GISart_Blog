@@ -2,3 +2,4 @@ flaskVenv
 .DS_Store
 .env
 __pyache__
+__init__.py
