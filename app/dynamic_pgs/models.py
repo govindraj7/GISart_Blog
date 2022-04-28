@@ -3,11 +3,12 @@ from app.extensions.database import db
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(25), nullable=False)
+    slug = db.Column(db.String(80), unique=True)
+    user_name = db.Column(db.String(25), nullable=False)
     first_name = db.Column(db.String(373), nullable=False)
     last_name = db.Column(db.String(374), nullable=False)
     email = db.Column(db.String(250), nullable=False, unique=True)
-    date_add = db.Column(db.DateTime, db.DateTime, default=datetime.utcnow)
+    date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return '<name %r>' % self.username
+        return '<user_name %r>' % self.user_name

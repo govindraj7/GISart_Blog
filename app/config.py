@@ -1,7 +1,7 @@
-from os import environ
 from dotenv import load_dotenv
+load_dotenv()
 
-SECRET_KEY = environ.get('SECRET_KEY')
+from os import environ
 SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL')
 
-load_dotenv()
+SECRET_KEY = environ.get('SECRET_KEY')

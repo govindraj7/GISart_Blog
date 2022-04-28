@@ -21,6 +21,15 @@
 
   {% endfor %} {% if user_name %}
   <p>Hello {{ user_name }}!!</p>
+
+  <h2>Test to see db working:</h2>
+  <br />
+  <br />
+  <p>
+    {% for test in testing_db %} {{ test.id }}. {{ test.user_name }} - {{
+    test.email}} <br />
+    {% endfor %}
+  </p>
   {% else %}
   <br />
   <!-- signup form -->
@@ -28,15 +37,25 @@
     <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
     {{ form.hidden_tag() }}
     <!-- the form -->
-    <!-- name -->
+    <!-- * user name -->
     {{ form.user_name.label (class="form-label") }} {{
     form.user_name(class="form-control") }}
     <br />
-    <!-- password holder -->
-    {{ form.password.label (class="form-label") }} {{
-    form.password(class="form-control") }}
+    <!-- * first name -->
+    {{ form.first_name.label (class="form-label") }} {{
+    form.first_name(class="form-control") }}
+    <br />
+    <!-- * last name -->
+    {{ form.last_name.label (class="form-label") }} {{
+    form.last_name(class="form-control") }}
+    <br />
+    <!-- * email -->
+    {{ form.email.label (class="form-label") }} {{
+    form.email(class="form-control") }}
+    <br />
     <br />
     {{ form.submit(class="btn btn-primary") }}
   </form>
 </section>
+
 {% endif %} {% endblock %}
