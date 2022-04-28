@@ -3,3 +3,4 @@ flaskVenv
 .env
 __pyache__
 __init__.py
+database.db

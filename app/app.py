@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for
-from app.extensions.database import db
+from app.extensions.database import db, migrate
 from . import basic_pgs, dynamic_pgs
 
 # create flask instance
@@ -28,3 +28,4 @@ def register_blueprints(app: Flask):
 #  extensions
 def register_extensions(app: Flask):
   db.init_app(app)
+  migrate.init_app(app, db)
