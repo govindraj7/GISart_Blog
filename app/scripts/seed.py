@@ -6,8 +6,7 @@ app = create_app()
 app.app_context().push()
 
 user_data = {
-  'chocolate-chip' : {'user_name': 'ChocolateChip', 'first_name': 'Chocolate', 'last_name': 'Chip', 'email': 'cookie@dough.com'},
-  'bizkut' : {'user_name': 'Cbizkut', 'first_name': 'firstnamehere', 'last_name': 'Lastnamehere', 'email': 'bizkut@party.com'}
+  'CookieCream' : {'user_name': 'Cookes&Cream', 'first_name': 'Tercera Valencia', 'last_name': 'Hernández González', 'email': 'hernandez@gg.com'},
 }
 
 for slug, user in user_data.items():
