@@ -58,6 +58,8 @@ def update(id):
   field_to_update = Users.query.get_or_404(id)
   if request.method == "POST":
     field_to_update.name = request.form['user_name']
+    field_to_update.name = request.form['first_name']
+    field_to_update.name = request.form['last_name']
     field_to_update.email = request.form['email']
     try:
       db.session.commit()
@@ -65,9 +67,9 @@ def update(id):
       return render_template('dynamic_pgs/update.html', form=form, field_to_update=field)
     except:
       flash("ERROR: User Info Updated Could Not Be Updated! Try Again Later.")
-      return render_template('dynamic_pgs/update.html', form=form, field_to_update=field)
+      return render_template('dynamic_pgs/update.html', form=form, field_to_update=field_to_update)
   else:
-    return render_template('dynamic_pgs/update.html', form=form, field_to_update=field)
+    return render_template('dynamic_pgs/update.html', form=form, field_to_update=field_to_update)
 
 
 # TODO: secure password + sessions
