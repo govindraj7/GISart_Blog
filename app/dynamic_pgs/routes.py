@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, flash
+from attr import field
+from flask import Blueprint, render_template, flash, request
 from .models import Users
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
@@ -48,6 +49,25 @@ def signup():
     # form.password.data = ''
     flash("You are now part of the GISart Community.")
 
-  testing_db = Users.query.order_by(Users.date_added)
-  return render_template('dynamic_pgs/signup.html', title='Sign-Up', user_name=user_name, first_name=first_name, last_name=last_name, email=email, form=form, testing_db=testing_db)
+  users_db = Users.query.order_by(Users.date_added)
+  return render_template('dynamic_pgs/signup.html', title='Sign-Up', user_name=user_name, first_name=first_name, last_name=last_name, email=email, form=form, users_db=users_db)
+
+@blueprint.route('/signup/update/<int:id>', methods=["GET", "POST"])
+def update(id):
+  form = SignUpForm()
+  field_to_update = Users.query.get_or_404(id)
+  if request.method == "POST":
+    field_to_update.name = request.form['user_name']
+    field_to_update.email = request.form['email']
+    try:
+      db.session.commit()
+      flash("User Info Updated Successfully!")
+      return render_template('dynamic_pgs/update.html', form=form, field_to_update=field)
+    except:
+      flash("ERROR: User Info Updated Could Not Be Updated! Try Again Later.")
+      return render_template('dynamic_pgs/update.html', form=form, field_to_update=field)
+  else:
+    return render_template('dynamic_pgs/update.html', form=form, field_to_update=field)
+
+
 # TODO: secure password + sessions
