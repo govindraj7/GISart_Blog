@@ -1,6 +1,7 @@
 from datetime import datetime
 from app.extensions.database import db
 class Users(db.Model):
+    __tablename__='my_users'
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(80), unique=True)
     user_name = db.Column(db.String(25), nullable=False)
