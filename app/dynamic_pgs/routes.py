@@ -1,4 +1,3 @@
-from attr import field
 from flask import Blueprint, render_template, flash, request
 from .models import Users
 from flask_wtf import FlaskForm
@@ -10,19 +9,20 @@ blueprint = Blueprint('dynamic_pgs', __name__)
 
 # create forms class
 class SignUpForm(FlaskForm):
-    user_name = StringField("Decide on a Username?", validators=[DataRequired()])
+    user_name = StringField("Username:", validators=[DataRequired()])
     first_name = StringField("First Name:", validators=[DataRequired()])
     last_name = StringField("Surname:", validators=[DataRequired()])
     email = StringField("Email:", validators=[DataRequired()])
 
     # password placeholder
     # password = PasswordField("Password Please", validators=[DataRequired()])
-    submit = SubmitField("Sign Up!")
+    submit = SubmitField("Submit")
 
 @blueprint.route('/user/<username>')
 def user(username):
   return render_template('dynamic_pgs/user.html', username=username, title=username)
 
+# add db record
 @blueprint.route('/signup', methods=["GET", "POST"])
 def signup():
   user_name = None
@@ -40,7 +40,7 @@ def signup():
       db.session.add(user)
       db.session.commit()
     user_name = form.user_name.data
-    form.user_name.data = form
+    # form.user_name.data = form
 
     form.user_name.data = ''
     form.first_name.data = ''
@@ -52,24 +52,34 @@ def signup():
   users_db = Users.query.order_by(Users.date_added)
   return render_template('dynamic_pgs/signup.html', title='Sign-Up', user_name=user_name, first_name=first_name, last_name=last_name, email=email, form=form, users_db=users_db)
 
-@blueprint.route('/signup/update/<int:id>', methods=["GET", "POST"])
+# update db record
+@blueprint.route('/update/<int:id>', methods=["GET", "POST"])
 def update(id):
   form = SignUpForm()
-  field_to_update = Users.query.get_or_404(id)
+  update_user_info = Users.query.get_or_404(id)
+
   if request.method == "POST":
-    field_to_update.name = request.form['user_name']
-    field_to_update.name = request.form['first_name']
-    field_to_update.name = request.form['last_name']
-    field_to_update.email = request.form['email']
+    update_user_info.user_name = request.form['user_name']
+    update_user_info.first_name = request.form['first_name']
+    update_user_info.last_name = request.form['last_name']
+    update_user_info.email = request.form['email']
+
     try:
       db.session.commit()
-      flash("User Info Updated Successfully!")
-      return render_template('dynamic_pgs/update.html', form=form, field_to_update=field)
+      flash("Your details are Updated!")
+    
+      users_db = Users.query.order_by(Users.date_added)
+      return render_template('dynamic_pgs/update.html', title='Update Details', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
+
     except:
-      flash("ERROR: User Info Updated Could Not Be Updated! Try Again Later.")
-      return render_template('dynamic_pgs/update.html', form=form, field_to_update=field_to_update)
+      flash("Oops. Something went wrong. Try again later.")
+    
+      users_db = Users.query.order_by(Users.date_added)
+      return render_template('dynamic_pgs/update.html', title='Update Details', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
+
   else:
-    return render_template('dynamic_pgs/update.html', form=form, field_to_update=field_to_update)
+    users_db = Users.query.order_by(Users.date_added)
+    return render_template('dynamic_pgs/update.html', title='Update Details', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
 
 
 # TODO: secure password + sessions

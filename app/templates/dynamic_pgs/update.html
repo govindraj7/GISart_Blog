@@ -1,6 +1,11 @@
 {% extends 'base.html' %} {% block body %}
 <section id="signup" class="container">
-  <h1>Update</h1>
+  {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>GISart</h1>
+  {% endif %}
+
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus
     laborum nesciunt amet animi, neque ut quas cum maxime labore quia odit
@@ -10,7 +15,7 @@
   {% for message in get_flashed_messages() %}
 
   <div class="alert alert-success alert-dismissible fade show" role="alert">
-    Welcome {{ user_name }}! {{ message }}
+    {{ message }}
     <button
       type="button"
       class="btn-close"
@@ -20,21 +25,12 @@
   </div>
 
   {% endfor %} {% if user_name %}
-  <p>Hello {{ user_name }}!!</p>
-
-  <h2>Test to see db working:</h2>
-  <br />
-  <br />
-  <p>
-    {% for user in users_db %} {{ user.id }}.
-    <a href="#">{{ user.user_name }}</a> - {{ user.email}} <br />
-    {% endfor %}
-  </p>
+  <p>Update your details.</p>
   {% else %}
   <br />
-  <!-- update form -->
+  <!-- signup(update) form -->
   <form
-    action="/signup/update/{{ field_to_update.id }}"
+    action="/update/{{ update_user_info.id }}"
     method="POST"
     class="flex justify-content-md-center"
   >
@@ -43,23 +39,31 @@
     <!-- the form -->
     <!-- * user name -->
     {{ form.user_name.label (class="form-label") }} {{
-    form.user_name(class="form-control", value=field_to_update.name) }}
+    form.user_name(class="form-control", value=update_user_info.user_name) }}
     <br />
     <!-- * first name -->
     {{ form.first_name.label (class="form-label") }} {{
-    form.first_name(class="form-control", value=field_to_update.first_name) }}
+    form.first_name(class="form-control", value=update_user_info.first_name) }}
     <br />
     <!-- * last name -->
     {{ form.last_name.label (class="form-label") }} {{
-    form.last_name(class="form-control", value=field_to_update.last_name) }}
+    form.last_name(class="form-control", value=update_user_info.last_name) }}
     <br />
     <!-- * email -->
     {{ form.email.label (class="form-label") }} {{
-    form.email(class="form-control", value=field_to_update.email) }}
+    form.email(class="form-control", value=update_user_info.email) }}
     <br />
     <br />
     {{ form.submit(class="btn btn-primary") }}
   </form>
 </section>
 
-{% endif %} {% endblock %}
+{% for user in users_db %}
+<div class="container">
+  {{ user.id }}.
+  <a href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
+    >{{ user.user_name }}</a
+  >
+  - {{ user.email}}
+</div>
+{% endfor %} {% endif %} {% endblock %}

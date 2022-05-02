@@ -1,6 +1,11 @@
 {% extends 'base.html' %} {% block body %}
 <section id="signup" class="container">
-  <h1>Signup</h1>
+  {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>GISart</h1>
+  {% endif %}
+
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus
     laborum nesciunt amet animi, neque ut quas cum maxime labore quia odit
@@ -22,18 +27,6 @@
   {% endfor %} {% if user_name %}
   <p>Hello {{ user_name }}!!</p>
 
-  <h2>Test to see db working:</h2>
-  <br />
-  <br />
-  <p>
-    {% for user in users_db %} {{ user.id }}.
-    <a href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
-      >{{ user.user_name }}</a
-    >
-    - {{ user.email}}
-    <br />
-    {% endfor %}
-  </p>
   {% else %}
   <br />
   <!-- signup form -->
@@ -62,4 +55,13 @@
   </form>
 </section>
 
-{% endif %} {% endblock %}
+{% for user in users_db %}
+<div class="container">
+  {{ user.id }}.
+  <a href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
+    >{{ user.user_name }}</a
+  >
+  - {{ user.email}}
+</div>
+
+{% endfor %} {% endif %} {% endblock %}
