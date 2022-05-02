@@ -1,6 +1,10 @@
 {% extends 'base.html' %} {% block body %}
 <section id="about" class="container">
-  <h1>About GISart</h1>
+  {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>GISart</h1>
+  {% endif %}
 </section>
 
 {% include 'components/article.html' %} {% endblock %}

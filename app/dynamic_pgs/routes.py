@@ -81,5 +81,4 @@ def update(id):
     users_db = Users.query.order_by(Users.date_added)
     return render_template('dynamic_pgs/update.html', title='Update Details', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
 
-
 # TODO: secure password + sessions

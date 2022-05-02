@@ -18,7 +18,7 @@ def about():
 
 # create redirect route decorator
 @blueprint.route('/inspiration')
-def inpsiration():
+def inspiration():
   return redirect('https://unsplash.com/s/photos/satellite-imagery')
 
 # placeholder for download file
