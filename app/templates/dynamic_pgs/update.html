@@ -55,20 +55,8 @@
     <br />
     <br />
     {{ form.submit(class="btn btn-primary") }}
+    <a href="">Delete</a>
   </form>
 </section>
 
-{% for user in users_db %}
-
-<div class="container">
-  <table class="table table-sm table-dark">
-    <tr>
-      <td>
-        {{ user.id }}. {{ user.user_name }} - {{ user.email}} -
-        <a href="{{ url_for('dynamic_pgs.update', id=user.id) }}">Update</a>
-      </td>
-    </tr>
-  </table>
-</div>
-
-{% endfor %} {% endif %} {% endblock %}
+{% endif %} {% endblock %}

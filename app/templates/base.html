@@ -74,6 +74,10 @@
     ></script>
 
     <!-- * ///// my scripts /////  -->
-    <script src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+    <script
+      rel="preload"
+      src="{{ url_for('static', filename='javascript/main.js') }}"
+      as="script"
+    ></script>
   </body>
 </html>

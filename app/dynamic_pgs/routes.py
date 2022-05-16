@@ -81,4 +81,24 @@ def update(id):
     users_db = Users.query.order_by(Users.date_added)
     return render_template('dynamic_pgs/update.html', title='Update Details', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
 
+# delete db record
+@blueprint.route('/delete/<int:id>')
+def delete(id):
+  user_name = None
+  form = SignUpForm()
+  delete_user_info = Users.query.get_or_404(id)
+
+  try: 
+    db.session.delete(delete_user_info)
+    db.session.commit()
+    flash("User Deleted Successfully.")
+    users_db = Users.query.order_by(Users.date_added)
+    return render_template('dynamic_pgs/signup.html', title='Detlete User', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
+
+  except:
+    flash("Hmmm... Something did not work. Try again later.")
+    users_db = Users.query.order_by(Users.date_added)
+    return render_template('dynamic_pgs/signup.html', title='Delete User', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
+
+
 # TODO: secure password + sessions
