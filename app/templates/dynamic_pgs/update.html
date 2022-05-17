@@ -14,7 +14,7 @@
 
   {% for message in get_flashed_messages() %}
 
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
     {{ message }}
     <button
       type="button"
@@ -55,7 +55,10 @@
     <br />
     <br />
     {{ form.submit(class="btn btn-primary") }}
-    <a href="">Delete</a>
+    <!-- <a class="btn btn-danger" href="">Delete</a> -->
+    <a class="btn btn-danger" href="{{ url_for('dynamic_pgs.delete', id=id) }}"
+      >Delete User</a
+    >
   </form>
 </section>
 

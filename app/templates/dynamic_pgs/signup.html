@@ -14,8 +14,8 @@
 
   {% for message in get_flashed_messages() %}
 
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ user_name }}! {{ message }}
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
     <button
       type="button"
       class="btn-close"
@@ -62,9 +62,15 @@
     <tr>
       <td>
         {{ user.id }}. {{ user.user_name }} - {{ user.email}} -
-        <a href="{{ url_for('dynamic_pgs.update', id=user.id) }}">Update</a>
+        <a
+          class="btn btn-warning"
+          href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
+          >Update</a
+        >
         or
-        <a href="{{ url_for('dynamic_pgs.delete', id=user.id) }}"
+        <a
+          class="btn btn-danger"
+          href="{{ url_for('dynamic_pgs.delete', id=user.id) }}"
           >Delete User</a
         >
       </td>

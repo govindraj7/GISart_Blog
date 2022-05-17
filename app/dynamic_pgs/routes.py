@@ -93,7 +93,7 @@ def delete(id):
     db.session.commit()
     flash("User Deleted Successfully.")
     users_db = Users.query.order_by(Users.date_added)
-    return render_template('dynamic_pgs/signup.html', title='Detlete User', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
+    return render_template('dynamic_pgs/signup.html', title='Delete User', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
 
   except:
     flash("Hmmm... Something did not work. Try again later.")
