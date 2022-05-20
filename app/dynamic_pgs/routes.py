@@ -1,8 +1,9 @@
+from wsgiref.validate import validator
 from flask import Blueprint, render_template, flash, request
 from .models import Users
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, ValidationError
+from wtforms.validators import DataRequired, EqualTo, Length
 from app.extensions.database import db
 
 blueprint = Blueprint('dynamic_pgs', __name__)
@@ -13,9 +14,9 @@ class SignUpForm(FlaskForm):
     first_name = StringField("First Name:", validators=[DataRequired()])
     last_name = StringField("Surname:", validators=[DataRequired()])
     email = StringField("Email:", validators=[DataRequired()])
+    password_hash = PasswordField('Password:', validators=[DataRequired(), EqualTo('password_hash_confirm', message='Passwords must match.')])
+    password_hash_confirm = PasswordField('Confirm Password:', validators=[DataRequired()])
 
-    # password placeholder
-    # password = PasswordField("Password Please", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 @blueprint.route('/user/<username>')
@@ -30,13 +31,12 @@ def signup():
   last_name = None
   email = None
 
-  # password = None
   form = SignUpForm()
   # validate form  
   if form.validate_on_submit():
     user = Users.query.filter_by(email=form.email.data).first()
     if user is None:
-      user = Users(user_name=form.user_name.data, first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data)
+      user = Users(user_name=form.user_name.data, first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data, password_hash=form.password_hash.data)
       db.session.add(user)
       db.session.commit()
     user_name = form.user_name.data
@@ -46,7 +46,8 @@ def signup():
     form.first_name.data = ''
     form.last_name.data = ''
     form.email.data = ''
-    # form.password.data = ''
+    form.password_hash.data = ''
+
     flash("You are now part of the GISart Community.")
 
   users_db = Users.query.order_by(Users.date_added)
@@ -69,13 +70,13 @@ def update(id):
       flash("Your details are Updated!")
     
       users_db = Users.query.order_by(Users.date_added)
-      return render_template('dynamic_pgs/update.html', title='Update Details', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
+      return render_template('dynamic_pgs/success.html', title='Update Details', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
 
     except:
       flash("Oops. Something went wrong. Try again later.")
     
       users_db = Users.query.order_by(Users.date_added)
-      return render_template('dynamic_pgs/update.html', title='Update Details', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
+      return render_template('dynamic_pgs/update.html', title='Details Updated', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
 
   else:
     users_db = Users.query.order_by(Users.date_added)
@@ -93,12 +94,9 @@ def delete(id):
     db.session.commit()
     flash("User Deleted Successfully.")
     users_db = Users.query.order_by(Users.date_added)
-    return render_template('dynamic_pgs/signup.html', title='Delete User', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
+    return render_template('dynamic_pgs/success.html', title='User Deleted', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
 
   except:
     flash("Hmmm... Something did not work. Try again later.")
     users_db = Users.query.order_by(Users.date_added)
     return render_template('dynamic_pgs/signup.html', title='Delete User', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
-
-
-# TODO: secure password + sessions

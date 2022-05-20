@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for
 from app.extensions.database import db, migrate
 from . import basic_pgs, dynamic_pgs
 
+
 # create flask instance
 def create_app():
   app = Flask(__name__)

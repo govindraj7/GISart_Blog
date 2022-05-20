@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block body %}
+<section id="signup" class="container">
+  {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>GISart</h1>
+  {% endif %}
+
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus
+    laborum nesciunt amet animi, neque ut quas cum maxime labore quia odit
+    saepe, quidem inventore vero perferendis incidunt porro tempore!
+  </p>
+
+  {% for message in get_flashed_messages() %}
+
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  {% endfor %} {% if user_name %}
+  <p>Hello {{ user_name }}!!</p>
+
+  {% else %}
+  <br />
+
+  {% for user in users_db %}
+
+  <div class="container">
+    <table class="table table-sm table-dark">
+      <tr>
+        <td>
+          {{ user.id }}. {{ user.user_name }} - {{ user.email}} - PW: {{
+          user.password_hash }}
+          <a
+            class="btn btn-warning"
+            href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
+            >Update</a
+          >
+          or
+          <a
+            class="btn btn-danger"
+            href="{{ url_for('dynamic_pgs.delete', id=user.id) }}"
+            >Delete User</a
+          >
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  {% endfor %} {% endif %} {% endblock %}
+</section>

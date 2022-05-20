@@ -50,6 +50,14 @@
     {{ form.email.label (class="form-label") }} {{
     form.email(class="form-control") }}
     <br />
+    <!-- * password -->
+    {{ form.password_hash.label (class="form-label") }} {{
+    form.password_hash(class="form-control") }}
+    <br />
+    <!-- * password confirmation -->
+    {{ form.password_hash_confirm.label (class="form-label") }} {{
+    form.password_hash_confirm(class="form-control") }}
+    <br />
     <br />
     {{ form.submit(class="btn btn-primary") }}
   </form>
@@ -61,7 +69,8 @@
   <table class="table table-sm table-dark">
     <tr>
       <td>
-        {{ user.id }}. {{ user.user_name }} - {{ user.email}} -
+        {{ user.id }}. {{ user.user_name }} - {{ user.email}} - PW: {{
+        user.password_hash }}
         <a
           class="btn btn-warning"
           href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
