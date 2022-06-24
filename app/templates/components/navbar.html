@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark nav-bg-custom">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{ url_for('basic_pgs.index') }}">GISart</a>
+    <a class="navbar-brand text-fade-in" href="{{ url_for('basic_pgs.index') }}"
+      >GISart</a
+    >
     <button
       class="navbar-toggler"
       type="button"
@@ -19,19 +21,20 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('basic_pgs.download') }}"
-            >More Info</a
+            >Learn More</a
           >
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('dynamic_pgs.signup') }}"
-            >Signup</a
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('dynamic_pgs.gallery') }}"
+            >Gallery</a
           >
-        </li>
+        </li> -->
       </ul>
-      <span class="navbar-text"> Lorem </span>
+      <span class="navbar-text">
+        <a class="nav-link" href="{{ url_for('dynamic_pgs.signup') }}"
+          >Signup | Login</a
+        >
+      </span>
     </div>
   </div>
 </nav>

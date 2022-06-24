@@ -1,14 +1,25 @@
+/* ! ///// main css ///// */
+html {
+  background-color: #141414;
+}
+
+/* {
+  outline: solid 1px red;
+} */
+
 :root {
   font-size: 16px;
   --font-fam: "Gudea", sans-serif;
+  --font-head: "Orbitron", sans-serif;
 
   --pri-txt: #fff;
-  --sec-txt: #1c1c1c;
+  --sec-txt: #141414;
 
-  --pri-bg: #1c1c1c;
+  --pri-bg: #141414;
   --sec-bg: #fff;
 
-  --highlight: #2c67fc;
+  --highlight: #d9983d;
+  --shadow: 0 0 8px #000;
 }
 
 body {
@@ -20,7 +31,6 @@ body {
   width: 70vw;
 }
 
-h1,
 h2,
 h3,
 h4,
@@ -30,14 +40,40 @@ p,
 a {
   color: var(--pri-txt);
   font-family: var(--font-fam);
+  text-shadow: var(--shadow);
 }
 
 h1 {
-  font-size: 3rem;
+  color: var(--pri-txt);
+  font-family: var(--font-head);
+  font-size: 4rem;
+  text-shadow: var(--shadow);
 }
 
 p {
-  font-size: 1rem;
+  font-size: 1.2rem;
+}
+
+a:link {
+  font-family: var(--font-head);
+  text-decoration: none;
+  transition: color 0.5s ease-in-out;
+  text-shadow: none;
+}
+
+a:hover {
+  color: #059cc1;
+  transition: color 0.5s ease-in-out;
+}
+
+/* a:visited {
+  color: #bbbbbb;
+  transition: color 0.5s ease-in-out;
+} */
+
+a:focus:active {
+  color: var(--highlight);
+  transition: color 0.1s ease-in-out;
 }
 
 /* * ///// custom scrollbar ///// */
@@ -48,7 +84,7 @@ p {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #3e3e3e;
 }
 
 /* Handle */

@@ -1,8 +1,8 @@
 from datetime import datetime
-from app.extensions.database import db
+from app.extensions.database import db, CRUDMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class Users(db.Model):
+class Users(db.Model, CRUDMixin):
     __tablename__='users_details'
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(80), unique=True)

@@ -1,30 +1,13 @@
-<section id="hero" class="container">
-  {% if title %}
-  <h1>{{ title }}</h1>
-  {% else %}
-  <h1>GISart</h1>
-  {% endif %}
-  <p>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit
-    nobis, dolor consequuntur sit voluptates saepe possimus excepturi eaque odio
-    rerum aliquam cum ea distinctio maiores magni ipsam numquam facilis soluta?
-    Here is the
-    <a href="{{ url_for('basic_pgs.inspiration') }}">inspiration</a> of this
-    blog site.
-  </p>
-  <br />
-  <p>
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum perferendis
-    fugiat sed id ducimus earum omnis, expedita necessitatibus in eos
-    exercitationem libero dolore? Quidem voluptate officia ab minima, atque nam!
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae officiis
-    reprehenderit quia, rem corrupti, veritatis ducimus, at dolorem tempora enim
-    vero sed illum laudantium ratione cumque sapiente odio voluptas quibusdam!
-  </p>
-  <a href="">Join Today</a>
+<section id="hero" class="container parent">
+  <div class="child staggering">
+    {% block title %}
+    <h1 class="title-pg slide-rtl text-fade-in">GISart</h1>
+    {% endblock %}
+    <p class="slide-ltr el">
+      <a href="{{ url_for('basic_pgs.about') }}">Learn More</a>
+    </p>
+    <p class="slide-ltr el">
+      <a href="{{ url_for('dynamic_pgs.signup') }}">Join Today</a>
+    </p>
+  </div>
 </section>
-
-<div id="hero-bg">
-  <img type="image/jpeg" src="{{url_for('static',
-  filename='images/nasa-img.jpeg')}}" alt="image" loading="lazy"" alt="">
-</div>

@@ -1,5 +1,9 @@
 .nav-bg-custom {
   background-color: none;
-  padding: 4vh 8vw 0 8vw;
+  padding: 5vh 8vw 0 8vw;
   margin-bottom: 12vh;
+}
+
+.nav-link {
+  padding: 0;
 }

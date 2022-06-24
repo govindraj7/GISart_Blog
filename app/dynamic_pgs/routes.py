@@ -5,8 +5,13 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, EqualTo, Length
 from app.extensions.database import db
+from werkzeug.security import generate_password_hash
 
 blueprint = Blueprint('dynamic_pgs', __name__)
+
+@blueprint.route('/gallery')
+def gallery():
+    return render_template('dynamic_pgs/gallery.html',  title="Gallery")
 
 # create forms class
 class SignUpForm(FlaskForm):
@@ -36,7 +41,8 @@ def signup():
   if form.validate_on_submit():
     user = Users.query.filter_by(email=form.email.data).first()
     if user is None:
-      user = Users(user_name=form.user_name.data, first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data, password_hash=form.password_hash.data)
+      hashed_pw = generate_password_hash(form.password_hash.data, "sha256")
+      user = Users(user_name=form.user_name.data, first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data, password_hash=hashed_pw)
       db.session.add(user)
       db.session.commit()
     user_name = form.user_name.data
@@ -100,3 +106,6 @@ def delete(id):
     flash("Hmmm... Something did not work. Try again later.")
     users_db = Users.query.order_by(Users.date_added)
     return render_template('dynamic_pgs/signup.html', title='Delete User', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
+
+# todo: log errors?
+# todo: sort out slugs
