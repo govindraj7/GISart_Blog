@@ -9,7 +9,7 @@ html {
 
 :root {
   font-size: 16px;
-  --font-fam: "Gudea", sans-serif;
+  --font-fam: "Montserrat", sans-serif;
   --font-head: "Orbitron", sans-serif;
 
   --pri-txt: #fff;
@@ -41,6 +41,7 @@ a {
   color: var(--pri-txt);
   font-family: var(--font-fam);
   text-shadow: var(--shadow);
+  font-weight: 100;
 }
 
 h1 {
@@ -51,29 +52,47 @@ h1 {
 }
 
 p {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 a:link {
+  color: var(--pri-txt);
+  font-family: var(--font-head);
+  text-decoration: none;
+  text-shadow: none;
+}
+
+a:focus {
+  color: var(--highlight);
+}
+
+.hover-line:link {
+  color: var(--pri-txt);
   font-family: var(--font-head);
   text-decoration: none;
   transition: color 0.5s ease-in-out;
   text-shadow: none;
+  display: inline-block;
+  position: relative;
 }
 
-a:hover {
-  color: #059cc1;
-  transition: color 0.5s ease-in-out;
+.hover-line:after {
+  color: var(--pri-txt);
+  content: "";
+  position: absolute;
+  width: 80%;
+  transform: scaleX(0);
+  height: 1.2px;
+  bottom: -2px;
+  left: 10%;
+  background-color: var(--pri-txt);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
 }
 
-/* a:visited {
-  color: #bbbbbb;
-  transition: color 0.5s ease-in-out;
-} */
-
-a:focus:active {
-  color: var(--highlight);
-  transition: color 0.1s ease-in-out;
+.hover-line:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 /* * ///// custom scrollbar ///// */

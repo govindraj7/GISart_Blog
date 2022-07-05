@@ -1,17 +1,14 @@
 from wsgiref.validate import validator
-from flask import Blueprint, render_template, flash, request
-from .models import Users
+from flask import Blueprint, redirect, render_template, flash, request
+from .models import Users, BlogPosts
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, EqualTo, Length
+from wtforms.widgets import TextArea
 from app.extensions.database import db
 from werkzeug.security import generate_password_hash
 
 blueprint = Blueprint('dynamic_pgs', __name__)
-
-@blueprint.route('/gallery')
-def gallery():
-    return render_template('dynamic_pgs/gallery.html',  title="Gallery")
 
 # create forms class
 class SignUpForm(FlaskForm):
@@ -24,6 +21,13 @@ class SignUpForm(FlaskForm):
 
     submit = SubmitField("Submit")
 
+class PostForm(FlaskForm):
+    title = StringField("Title", validators=[DataRequired()])
+    image = StringField("Image URL", validators=[DataRequired()])
+    description = StringField("Description", validators=[DataRequired()], widget=TextArea())
+    submit = SubmitField("Submit")
+   
+# placeholder
 @blueprint.route('/user/<username>')
 def user(username):
   return render_template('dynamic_pgs/user.html', username=username, title=username)
@@ -46,8 +50,8 @@ def signup():
       db.session.add(user)
       db.session.commit()
     user_name = form.user_name.data
-    # form.user_name.data = form
-
+    
+    # clear the form
     form.user_name.data = ''
     form.first_name.data = ''
     form.last_name.data = ''
@@ -109,3 +113,24 @@ def delete(id):
 
 # todo: log errors?
 # todo: sort out slugs
+
+# add post
+@blueprint.route('/create-post', methods=["GET", "POST"])
+def create_post():
+  form = PostForm()
+
+  if form.validate_on_submit():
+    post = BlogPosts(title=form.title.data, image=form.image.data, description=form.description.data)
+    # clear the form
+    form.title.data = ''
+    form.image.data = ''
+    form.description.data = ''
+
+    db.session.add(post)
+    db.session.commit()
+
+    flash("Post successfully created!")
+    
+  return render_template('dynamic_pgs/create_post.html', title='Share Your GISart', form=form)
+
+# todo: change image url place holder to actual images

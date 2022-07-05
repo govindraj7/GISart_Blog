@@ -7,15 +7,15 @@ article {
   -webkit-column-gap: 4em;
   -moz-column-gap: 4em;
   column-gap: 4em;
-  column-rule-style: solid;
+  /* column-rule-style: solid; */
   text-align: left;
-  margin: 0 auto;
+  margin: 0 auto 5vh auto;
 }
 
 .img-container {
   height: 500px;
   width: 100%;
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
 
 #article img {

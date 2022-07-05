@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+<!-- navbar component -->
+{% include 'components/navbar.html' %} {% block body %}
+
+<section id="create-a-post" class="container">
+  {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>GISart</h1>
+  {% endif %} {% for message in get_flashed_messages() %}
+
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  {% endfor %}
+
+  <!-- blogpost form -->
+  <form method="POST" class="flex justify-content-md-center">
+    <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
+    {{ form.hidden_tag() }}
+    <!-- the form -->
+    <!-- * post title -->
+    {{ form.title.label (class="form-label") }} {{
+    form.title(class="form-control") }}
+    <br />
+    <!-- * image url -->
+    {{ form.image.label (class="form-label") }} {{
+    form.image(class="form-control") }}
+    <br />
+    <!-- * description text area -->
+    {{ form.description.label (class="form-label") }} {{
+    form.description(class="form-control", rows="5") }}
+    <br />
+    <br />
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+</section>
+
+{% endblock %}

@@ -17,22 +17,30 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('basic_pgs.about') }}">About</a>
+          <a class="nav-link hover-line" href="{{ url_for('basic_pgs.about') }}"
+            >About</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('basic_pgs.download') }}"
+          <a
+            class="nav-link hover-line"
+            href="{{ url_for('basic_pgs.download') }}"
             >Learn More</a
           >
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('dynamic_pgs.gallery') }}"
-            >Gallery</a
+        <li class="nav-item">
+          <a
+            class="nav-link hover-line"
+            href="{{ url_for('dynamic_pgs.create_post') }}"
+            >Share</a
           >
-        </li> -->
+        </li>
       </ul>
       <span class="navbar-text">
-        <a class="nav-link" href="{{ url_for('dynamic_pgs.signup') }}"
-          >Signup | Login</a
+        <a
+          class="nav-link hover-line"
+          href="{{ url_for('dynamic_pgs.signup') }}"
+          >Sign-up | Login</a
         >
       </span>
     </div>

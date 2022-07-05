@@ -3,7 +3,6 @@
   position: relative;
   height: 100vh;
   display: flex;
-  flex-wrap: wrap;
 
   margin: auto;
   z-index: 999999;
@@ -12,17 +11,17 @@
 .child {
   width: fit-content;
   position: absolute;
-  top: 50%;
-  left: 0;
+  top: 80%;
+  left: -10%;
   transform: translate(0, -50%);
 }
 
 #hero h1 {
-  font-size: 5rem;
+  font-size: 3rem;
 }
 
 #hero p {
-  font-size: 2.5rem;
+  font-size: 1rem;
 }
 
 .title-pg {

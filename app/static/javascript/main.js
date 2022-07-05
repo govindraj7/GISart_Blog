@@ -68,7 +68,7 @@ anime
 
 anime({
   targets: ".staggering .el",
-  translateX: 160,
+  translateX: 90,
   duration: 1500,
   delay: anime.stagger(150, { start: 500 }), // delay starts at 500ms then increase by 100ms for each elements.
 });
