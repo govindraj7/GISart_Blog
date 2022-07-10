@@ -1,6 +1,10 @@
 from datetime import datetime
+from operator import imod
 from app.extensions.database import db, CRUDMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from slugify import slugify
+# slugify(string)
+
 
 # users model
 class Users(db.Model, CRUDMixin):
@@ -25,11 +29,17 @@ class Users(db.Model, CRUDMixin):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def __init__(self, *args, **kwargs):
+        if not 'slug' in kwargs:
+            kwargs['slug'] = slugify(kwargs.get('user_name', ''))
+        super().__init__(*args, **kwargs)
+
     def __repr__(self):
         return '<user_name %r>' % self.user_name
 
 # blog post model
 class BlogPosts(db.Model):
+    __tablename__ = "blog_posts"
     id = db.Column(db.Integer, primary_key=True)
     # author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     # author = db.Column(db.Integer, db.ForeignKey('users.user_name'), nullable=False)
