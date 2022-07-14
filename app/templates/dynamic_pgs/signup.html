@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 <!-- add navbar component -->
-{% include 'components/navbar.html' %} {% block body %}
+{% block body %} {% include 'components/navbar.html' %}
 <section id="signup" class="container">
   {% if title %}
   <h1>{{ title }}</h1>
@@ -51,6 +51,7 @@
     <!-- * email -->
     {{ form.email.label (class="form-label") }} {{
     form.email(class="form-control") }}
+    <br />
     <br />
     <!-- * password -->
     {{ form.password_hash.label (class="form-label") }} {{

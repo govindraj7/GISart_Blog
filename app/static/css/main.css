@@ -47,7 +47,7 @@ a {
 h1 {
   color: var(--pri-txt);
   font-family: var(--font-head);
-  font-size: 4rem;
+  font-size: 3rem;
   text-shadow: var(--shadow);
 }
 

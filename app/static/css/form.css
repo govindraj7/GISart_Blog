@@ -15,5 +15,6 @@ form {
   padding: 5vh 5vw;
   border-radius: 1rem;
   width: 50%;
+  min-width: 172px;
   margin: 5vh auto 15vh auto;
 }

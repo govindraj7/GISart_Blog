@@ -43,9 +43,14 @@ class BlogPosts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     # author = db.Column(db.Integer, db.ForeignKey('users.user_name'), nullable=False)
-    slug = db.Column(db.String(100))
-    title = db.Column(db.String(80))
-    image = db.Column(db.String)
-    description = db.Column(db.String(150))
+    title = db.Column(db.String(100), unique=True, nullable=False)
+    slug = db.Column(db.String(100), unique=True, nullable=False)
+    image = db.Column(db.String, nullable=False)
+    description = db.Column(db.String(150), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __init__(self, *args, **kwargs):
+        if not 'slug' in kwargs:
+            kwargs['slug'] = slugify(kwargs.get('title', ''))
+        super().__init__(*args, **kwargs)
     

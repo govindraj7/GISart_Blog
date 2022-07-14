@@ -1,5 +1,5 @@
 {% extends 'base.html' %}<!-- add navbar component -->
-{% include 'components/navbar.html' %} {% block body %}
+{% block body %} {% include 'components/navbar.html' %}
 <section id="signup" class="container">
   {% if title %}
   <h1>{{ title }}</h1>
@@ -50,13 +50,13 @@
     {{ form.last_name.label (class="form-label") }} {{
     form.last_name(class="form-control", value=update_user_info.last_name) }}
     <br />
+    <br />
     <!-- * email -->
     {{ form.email.label (class="form-label") }} {{
     form.email(class="form-control", value=update_user_info.email) }}
     <br />
     <br />
     {{ form.submit(class="btn btn-primary") }}
-    <!-- <a class="btn btn-danger" href="">Delete</a> -->
     <a class="btn btn-danger" href="{{ url_for('dynamic_pgs.delete', id=id) }}"
       >Delete User</a
     >

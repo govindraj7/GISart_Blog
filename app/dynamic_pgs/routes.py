@@ -134,3 +134,15 @@ def create_post():
   return render_template('dynamic_pgs/create_post.html', title='Share Your GISart', form=form)
 
 # todo: change image url place holder to actual images
+
+@blueprint.route('/gisart-gallery')
+def view_posts():
+  # collect posts from db
+  posts = BlogPosts.query.order_by(BlogPosts.date_posted)
+  return render_template('dynamic_pgs/view_posts.html', title='GISart Gallery', posts=posts)
+
+# @blueprint.route('/gisart/<int:id>')
+@blueprint.route('/gisart-gallery/<int:id>')
+def single_post(id):
+  post = BlogPosts.query.get_or_404(id)
+  return render_template('dynamic_pgs/single_post.html', post=post, id=id)
