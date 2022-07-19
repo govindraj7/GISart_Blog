@@ -75,12 +75,12 @@
         {{ user.id }}. {{ user.user_name }} - {{ user.email}}
         <a
           class="btn btn-warning"
-          href="{{ url_for('blog_post_pgs.update', id=user.id) }}"
+          href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
           >Update</a
         >
         <a
           class="btn btn-danger"
-          href="{{ url_for('blog_post_pgs.delete', id=user.id) }}"
+          href="{{ url_for('dynamic_pgs.delete', id=user.id) }}"
           >Delete User</a
         >
       </td>

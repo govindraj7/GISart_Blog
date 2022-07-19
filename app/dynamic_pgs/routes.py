@@ -9,7 +9,7 @@ from app.extensions.database import db
 from werkzeug.security import generate_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 
-blueprint = Blueprint('blog_post_pgs', __name__)
+blueprint = Blueprint('dynamic_pgs', __name__)
 
 # create forms class
 

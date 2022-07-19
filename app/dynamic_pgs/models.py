@@ -1,5 +1,4 @@
 from datetime import datetime
-from operator import imod
 from app.extensions.database import db, CRUDMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from slugify import slugify
