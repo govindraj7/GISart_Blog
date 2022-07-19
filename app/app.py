@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for
 from app.extensions.database import db, migrate
 from . import basic_pgs, dynamic_pgs
+from app.extensions.authentications import login_manager
 
 
 # create flask instance
@@ -30,3 +31,4 @@ def register_blueprints(app: Flask):
 def register_extensions(app: Flask):
   db.init_app(app)
   migrate.init_app(app, db)
+  login_manager.init_app(app)

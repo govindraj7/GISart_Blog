@@ -1,5 +1,5 @@
 # from app.app import create_app
-# from app.dynamic_pgs.models import Users
+# from app.blog_post_pgs.models import Users
 # from app.extensions.database import db
 
 # app = create_app()

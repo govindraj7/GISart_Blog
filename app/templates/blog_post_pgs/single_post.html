@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+<!-- navbar component -->
+{% block body %} {% include 'components/navbar.html' %}
+
+<section id="gallery" class="container">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  {% endfor %} {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>{{ post.slug }}</h1>
+  {% endif %} <br />
+  <div class="shadow p-3 mb-5 bg-dark text-white rounded">
+    <h3>{{ post.title }}</h3>
+    <br />
+    <h5>{{ post.image }}</h5>
+    <br />
+    <p>{{ post.description }}</p>
+    <br />
+    <h6>{{ post.date_posted }}</h6>
+    <br />
+    <hr />
+  </div>
+  <a
+    class="btn btn-info"
+    href="{{ url_for('blog_post_pgs.view_posts', id=post.id) }}"
+    >Go Back</a
+  >
+  <a
+    class="btn btn-warning"
+    href="{{ url_for('blog_post_pgs.edit_post', id=edit_this_post.id) }}"
+    >Edit Post</a
+  >
+  <a
+    class="btn btn-danger"
+    href="{{ url_for('blog_post_pgs.delete_post', id=post.id) }}"
+    >Delete Post</a
+  >
+</section>
+{% endblock %}

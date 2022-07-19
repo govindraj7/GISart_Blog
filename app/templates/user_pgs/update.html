@@ -57,7 +57,9 @@
     <br />
     <br />
     {{ form.submit(class="btn btn-primary") }}
-    <a class="btn btn-danger" href="{{ url_for('dynamic_pgs.delete', id=id) }}"
+    <a
+      class="btn btn-danger"
+      href="{{ url_for('blog_post_pgs.delete', id=id) }}"
       >Delete User</a
     >
   </form>

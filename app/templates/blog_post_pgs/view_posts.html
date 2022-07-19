@@ -1,9 +1,20 @@
 {% extends 'base.html' %}
 <!-- navbar component -->
 {% block body %} {% include 'components/navbar.html' %}
-
 <section id="gallery" class="container">
-  {% if title %}
+  {% for message in get_flashed_messages() %}
+
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  {% endfor %} {% if title %}
   <h1>{{ title }}</h1>
   {% else %}
   <h1>GISart</h1>
@@ -18,9 +29,9 @@
     <h6>{{ post.date_posted }}</h6>
     <br />
     <a
-      class="btn btn-danger"
-      href="{{ url_for('dynamic_pgs.single_post', id=post.id) }}"
-      >View</a
+      class="btn btn-primary"
+      href="{{ url_for('blog_post_pgs.single_post', id=post.id) }}"
+      >View Post</a
     >
     <br />
     <hr />

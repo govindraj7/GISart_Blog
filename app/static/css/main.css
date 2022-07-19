@@ -60,6 +60,7 @@ a:link {
   font-family: var(--font-head);
   text-decoration: none;
   text-shadow: none;
+  margin: 0 0.5rem;
 }
 
 a:focus {
