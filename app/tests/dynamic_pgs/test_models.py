@@ -1,9 +1,9 @@
 from app.extensions.database import db, CRUDMixin
-from app.blog_post_pgs.models import Users
+from app.dynamic_pgs.models import Users
 
 def test_user_update(Users):
   # updates cookie's properties
-  user = Users(slug='testing', user_name='Name', first_name='fname', last_name='lname', email="email")
+  user = Users(slug='testing', user_name='Name')
   db.session.add(user)
   db.session.commit()
 

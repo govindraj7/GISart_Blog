@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+<!-- add navbar component -->
+{% block body %} {% include 'components/navbar.html' %}
+<section class="container">
+  <h1>
+    Hello {{ current_user.user_name|capitalize }}, this is your user dashboard.
+  </h1>
+</section>
+{% endblock %}

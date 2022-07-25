@@ -36,19 +36,37 @@
           >
         </li>
         <li class="nav-item">
+          {% if current_user.is_authenticated %}
           <a
             class="nav-link hover-line"
             href="{{ url_for('dynamic_pgs.create_post') }}"
             >Share</a
           >
+          {% endif %}
         </li>
       </ul>
+      <!-- * signup & login only seen if session is unauth. -->
       <span class="navbar-text">
+        {% if current_user.is_authenticated %}
+        <small>
+          <a href="{{ url_for('dynamic_pgs.logout') }}">Logout</a>
+        </small>
+        {% else %}
         <a
+          id="signup-link"
           class="nav-link hover-line"
           href="{{ url_for('dynamic_pgs.signup') }}"
-          >Sign-up | Login</a
+          >Sign-up</a
         >
+        |
+        <a
+          id="login-link"
+          <a
+          class="nav-link hover-line"
+          href="{{ url_for('dynamic_pgs.login') }}"
+          >Login</a
+        >
+        {% endif %}
       </span>
     </div>
   </div>

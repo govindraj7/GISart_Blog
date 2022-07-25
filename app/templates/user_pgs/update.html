@@ -1,7 +1,18 @@
-{% extends 'base.html' %}<!-- add navbar component -->
+{% extends 'base.html' %}
+<!-- add navbar component -->
 {% block body %} {% include 'components/navbar.html' %}
-<section id="signup" class="container">
-  {% if title %}
+<section id="update" class="container form_pg">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %} {% if title %}
   <h1>{{ title }}</h1>
   {% else %}
   <h1>GISart</h1>
@@ -12,20 +23,7 @@
     laborum nesciunt amet animi, neque ut quas cum maxime labore quia odit
     saepe, quidem inventore vero perferendis incidunt porro tempore!
   </p>
-
-  {% for message in get_flashed_messages() %}
-
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-
-  {% endfor %} {% if user_name %}
+  {% if user_name %}
   <p>Update your details.</p>
   {% else %}
   <br />
@@ -42,25 +40,17 @@
     {{ form.user_name.label (class="form-label") }} {{
     form.user_name(class="form-control", value=update_user_info.user_name) }}
     <br />
-    <!-- * first name -->
-    {{ form.first_name.label (class="form-label") }} {{
-    form.first_name(class="form-control", value=update_user_info.first_name) }}
     <br />
-    <!-- * last name -->
-    {{ form.last_name.label (class="form-label") }} {{
-    form.last_name(class="form-control", value=update_user_info.last_name) }}
-    <br />
-    <br />
-    <!-- * email -->
-    {{ form.email.label (class="form-label") }} {{
-    form.email(class="form-control", value=update_user_info.email) }}
-    <br />
-    <br />
-    {{ form.submit(class="btn btn-primary") }}
+    {{ form.submit(class="btn btn-warning text-dark") }}
     <a
-      class="btn btn-danger"
-      href="{{ url_for('blog_post_pgs.delete', id=id) }}"
+      class="btn btn-danger text-dark"
+      href="{{ url_for('dynamic_pgs.delete', id=id) }}"
       >Delete User</a
+    >
+    <a
+      class="btn btn-primary text-dark"
+      href="{{ url_for('dynamic_pgs.signup') }}"
+      >Go Back</a
     >
   </form>
 </section>

@@ -1,8 +1,18 @@
 {% extends 'base.html' %}
 <!-- add navbar component -->
 {% block body %} {% include 'components/navbar.html' %}
-<section id="signup" class="container">
-  {% if title %}
+<section id="signup" class="container form_pg">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %} {% if title %}
   <h1>{{ title }}</h1>
   {% else %}
   <h1>GISart</h1>
@@ -14,22 +24,6 @@
     saepe, quidem inventore vero perferendis incidunt porro tempore!
   </p>
 
-  {% for message in get_flashed_messages() %}
-
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-
-  {% endfor %} {% if user_name %}
-  <p>Hello {{ user_name }}!!</p>
-
-  {% else %}
   <br />
   <!-- signup form -->
   <form method="POST" class="flex justify-content-md-center">
@@ -39,18 +33,6 @@
     <!-- * user name -->
     {{ form.user_name.label (class="form-label") }} {{
     form.user_name(class="form-control") }}
-    <br />
-    <!-- * first name -->
-    {{ form.first_name.label (class="form-label") }} {{
-    form.first_name(class="form-control") }}
-    <br />
-    <!-- * last name -->
-    {{ form.last_name.label (class="form-label") }} {{
-    form.last_name(class="form-control") }}
-    <br />
-    <!-- * email -->
-    {{ form.email.label (class="form-label") }} {{
-    form.email(class="form-control") }}
     <br />
     <br />
     <!-- * password -->
@@ -62,7 +44,10 @@
     form.password_hash_confirm(class="form-control") }}
     <br />
     <br />
-    {{ form.submit(class="btn btn-primary") }}
+    {{ form.submit(class="btn btn-warning text-dark") }}
+    <a class="btn btn-primary text-dark" href="{{ url_for('basic_pgs.about') }}"
+      >Go Back</a
+    >
   </form>
 </section>
 
@@ -72,14 +57,14 @@
   <table class="table table-sm table-dark">
     <tr>
       <td>
-        {{ user.id }}. {{ user.user_name }} - {{ user.email}}
+        {{ user.id }}. {{ user.user_name }}
         <a
-          class="btn btn-warning"
+          class="btn btn-secondary text-dark"
           href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
           >Update</a
         >
         <a
-          class="btn btn-danger"
+          class="btn btn-danger text-dark"
           href="{{ url_for('dynamic_pgs.delete', id=user.id) }}"
           >Delete User</a
         >
@@ -88,4 +73,4 @@
   </table>
 </div>
 
-{% endfor %} {% endif %} {% endblock %}
+{% endfor %} {% endblock %}

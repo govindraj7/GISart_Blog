@@ -29,19 +29,21 @@
     <h6>{{ post.date_posted }}</h6>
     <br />
     <hr />
+    <a
+      class="btn btn-primary text-dark"
+      href="{{ url_for('dynamic_pgs.view_posts', id=id) }}"
+      >Go Back</a
+    >
+    <a
+      class="btn btn-warning text-dark"
+      href="{{ url_for('dynamic_pgs.edit_post', id=id) }}"
+      >Edit Post</a
+    >
+    <a
+      class="btn btn-danger text-dark"
+      href="{{ url_for('dynamic_pgs.delete_post', id=id) }}"
+      >Delete Post</a
+    >
   </div>
-  <a class="btn btn-info" href="{{ url_for('dynamic_pgs.view_posts', id=id) }}"
-    >Go Back</a
-  >
-  <a
-    class="btn btn-warning"
-    href="{{ url_for('dynamic_pgs.edit_post', id=id) }}"
-    >Edit Post</a
-  >
-  <a
-    class="btn btn-danger"
-    href="{{ url_for('dynamic_pgs.delete_post', id=id) }}"
-    >Delete Post</a
-  >
 </section>
 {% endblock %}

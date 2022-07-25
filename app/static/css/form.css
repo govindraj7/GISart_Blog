@@ -1,16 +1,19 @@
-#signup {
+.form_pg {
   /* margin: 0 auto; */
   width: 60%;
   /* min-width: 630px; */
 }
 
 form {
-  background: rgba(255, 255, 255, 0.16);
+  background: #ffffff29;
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  -moz-box-shadow: 0 0 3px #ccc;
+  -webkit-box-shadow: 0 0 3px #ccc;
+  box-shadow: 0 0 3px #ccc;
+  /* border: 1px solid #ffffff4d; */
   color: var(--pri-txt);
   font-family: var(--font-head);
   padding: 5vh 5vw;

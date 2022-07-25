@@ -8,11 +8,8 @@ from flask_login import UserMixin
 class Users(db.Model, CRUDMixin, UserMixin):
     __tablename__='users_details'
     id = db.Column(db.Integer, primary_key=True)
-    slug = db.Column(db.String(80), unique=True)
-    user_name = db.Column(db.String(25), unique=True, nullable=False)
-    first_name = db.Column(db.String(373), nullable=False)
-    last_name = db.Column(db.String(374), nullable=False)
-    email = db.Column(db.String(250), nullable=False, unique=True)
+    slug = db.Column(db.String(128), unique=True)
+    user_name = db.Column(db.String(144), unique=True, nullable=False)
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     password_hash = db.Column(db.String(128))
 
@@ -41,10 +38,10 @@ class BlogPosts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     # author = db.Column(db.Integer, db.ForeignKey('users.user_name'), nullable=False)
-    title = db.Column(db.String(100), unique=True, nullable=False)
-    slug = db.Column(db.String(100), unique=True, nullable=False)
+    title = db.Column(db.String(128), unique=True, nullable=False)
+    slug = db.Column(db.String(128), unique=True, nullable=False)
     image = db.Column(db.String, nullable=False)
-    description = db.Column(db.String(150), nullable=False)
+    description = db.Column(db.String(128), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __init__(self, *args, **kwargs):

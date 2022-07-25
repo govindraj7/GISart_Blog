@@ -2,7 +2,17 @@
 <!-- add navbar component -->
 {% block body %} {% include 'components/navbar.html' %}
 <section id="signup" class="container">
-  {% if title %}
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %} {% if title %}
   <h1>{{ title }}</h1>
   {% else %}
   <h1>GISart</h1>
@@ -14,19 +24,14 @@
     saepe, quidem inventore vero perferendis incidunt porro tempore!
   </p>
 
-  {% for message in get_flashed_messages() %}
+  <a
+    class="btn btn-primary text-dark"
+    href="{{ url_for('dynamic_pgs.signup') }}"
+    >Go Back</a
+  >
+  <br /><br />
 
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-
-  {% endfor %} {% if user_name %}
+  {% if user_name %}
   <p>Hello {{ user_name }}!!</p>
 
   {% else %}
@@ -38,14 +43,14 @@
     <table class="table table-sm table-dark">
       <tr>
         <td>
-          {{ user.id }}. {{ user.user_name }} - {{ user.email}}
+          {{ user.id }}. {{ user.user_name }}
           <a
-            class="btn btn-warning"
+            class="btn btn-secondary text-dark"
             href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
             >Update</a
           >
           <a
-            class="btn btn-danger"
+            class="btn btn-danger text-dark"
             href="{{ url_for('dynamic_pgs.delete', id=user.id) }}"
             >Delete User</a
           >

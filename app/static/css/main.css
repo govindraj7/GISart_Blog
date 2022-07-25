@@ -60,7 +60,6 @@ a:link {
   font-family: var(--font-head);
   text-decoration: none;
   text-shadow: none;
-  margin: 0 0.5rem;
 }
 
 a:focus {
@@ -94,6 +93,10 @@ a:focus {
 .hover-line:hover:after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.btn {
+  margin: 0.5rem 0.5rem 0 0;
 }
 
 /* * ///// custom scrollbar ///// */

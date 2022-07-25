@@ -28,13 +28,14 @@
     <br />
     <h6>{{ post.date_posted }}</h6>
     <br />
+    <br />
+    <hr />
     <a
-      class="btn btn-primary"
+      class="btn btn-primary text-dark"
       href="{{ url_for('dynamic_pgs.single_post', id=post.id) }}"
       >View Post</a
     >
     <br />
-    <hr />
   </div>
   {% endfor %}
 </section>

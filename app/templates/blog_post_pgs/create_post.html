@@ -39,7 +39,11 @@
     form.description(class="form-control", rows="5") }}
     <br />
     <br />
-    {{ form.submit(class="btn btn-primary") }}
+    <hr />
+    {{ form.submit(class="btn btn-warning text-dark") }}
+    <a class="btn btn-primary text-dark" href="{{ url_for('basic_pgs.index') }}"
+      >Go Back</a
+    >
   </form>
 </section>
 

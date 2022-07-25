@@ -1,0 +1,9 @@
+<footer class="mt-auto text-white-50">
+  <hr />
+  {% if current_user.is_authenticated %}
+  <small>
+    Logged in as {{ current_user.user_name }}.
+    <a href="{{ url_for('dynamic_pgs.logout') }}">Logout</a>
+  </small>
+  {% endif %}
+</footer>
