@@ -42,10 +42,15 @@
             href="{{ url_for('dynamic_pgs.create_post') }}"
             >Share</a
           >
+          <a
+            class="nav-link hover-line"
+            href="{{ url_for('dynamic_pgs.dashboard') }}"
+            >dashboard</a
+          >
           {% endif %}
         </li>
       </ul>
-      <!-- * signup & login only seen if session is unauth. -->
+      <!-- * signup & login only seen if session is unauthenticated -->
       <span class="navbar-text">
         {% if current_user.is_authenticated %}
         <small>

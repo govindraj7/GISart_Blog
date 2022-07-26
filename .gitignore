@@ -4,3 +4,5 @@ flaskVenv
 __pyache__
 __init__.py
 database.db
+.vscode
+.pytest_cache

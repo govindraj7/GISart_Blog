@@ -17,33 +17,62 @@
   {% endfor %} {% if title %}
   <h1>{{ title }}</h1>
   {% else %}
-  <h1>{{ post.slug }}</h1>
+  <h1>{{ post.title }}</h1>
   {% endif %} <br />
-  <div class="shadow p-3 mb-5 bg-dark text-white rounded">
-    <h3>{{ post.title }}</h3>
-    <br />
-    <h5>{{ post.image }}</h5>
-    <br />
-    <p>{{ post.description }}</p>
-    <br />
-    <h6>{{ post.date_posted }}</h6>
-    <br />
-    <hr />
-    <a
-      class="btn btn-primary text-dark"
-      href="{{ url_for('dynamic_pgs.view_posts', id=id) }}"
-      >Go Back</a
-    >
-    <a
-      class="btn btn-warning text-dark"
-      href="{{ url_for('dynamic_pgs.edit_post', id=id) }}"
-      >Edit Post</a
-    >
-    <a
-      class="btn btn-danger text-dark"
-      href="{{ url_for('dynamic_pgs.delete_post', id=id) }}"
-      >Delete Post</a
-    >
+
+  <div class="card mb-3 bg-dark text-white post-card">
+    <img
+      type="image/jpeg"
+      src="{{url_for('static', filename='images/Mexico.jpeg')}}"
+      alt="image"
+      loading="lazy"
+      class="card-img-top"
+    />
+    <div class="card-body">
+      <h5>{{ post.image }}</h5>
+      <p class="card-text">{{ post.description }}</p>
+      <p class="card-text">
+        <small class="text-muted">{{ post.date_posted.date() }}</small>
+      </p>
+    </div>
   </div>
+
+  <hr />
+  <a
+    class="btn btn-primary text-dark"
+    href="{{ url_for('dynamic_pgs.view_posts', id=id) }}"
+    >Go Back</a
+  >
+  {% if current_user.is_authenticated %}
+  <a
+    class="btn btn-warning text-dark"
+    href="{{ url_for('dynamic_pgs.edit_post', id=id) }}"
+    >Edit Post</a
+  >
+  <a
+    class="btn btn-danger text-dark"
+    href="{{ url_for('dynamic_pgs.delete_post', id=id) }}"
+    >Delete Post</a
+  >
+  {% endif %}
 </section>
-{% endblock %}
+
+<div class="img-bg">
+  <img
+    type="image/jpeg"
+    src="{{url_for('static', filename='images/spacex-light.jpeg')}}"
+    alt="image"
+    loading="lazy"
+  />
+  Photo by
+  <a
+    href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >SpaceX</a
+  >
+  on
+  <a
+    href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >Unsplash</a
+  >
+</div>
+{% include 'components/footer.html' %} {% endblock %}

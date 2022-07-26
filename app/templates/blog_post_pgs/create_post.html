@@ -3,11 +3,7 @@
 {% block body %} {% include 'components/navbar.html' %}
 
 <section id="create-a-post" class="container">
-  {% if title %}
-  <h1>{{ title }}</h1>
-  {% else %}
-  <h1>GISart</h1>
-  {% endif %} {% for message in get_flashed_messages() %}
+  {% for message in get_flashed_messages() %}
 
   <div class="alert alert-info alert-dismissible fade show" role="alert">
     {{ message }}
@@ -19,7 +15,11 @@
     ></button>
   </div>
 
-  {% endfor %}
+  {% endfor %} {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>GISart</h1>
+  {% endif %}
 
   <!-- blogpost form -->
   <form method="POST" class="flex justify-content-md-center">
@@ -47,4 +47,23 @@
   </form>
 </section>
 
-{% endblock %}
+<div class="img-bg">
+  <img
+    type="image/jpeg"
+    src="{{url_for('static', filename='images/spacex-light.jpeg')}}"
+    alt="image"
+    loading="lazy"
+  />
+  Photo by
+  <a
+    href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >SpaceX</a
+  >
+  on
+  <a
+    href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >Unsplash</a
+  >
+</div>
+
+{% include 'components/footer.html' %} {% endblock %}

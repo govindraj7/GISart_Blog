@@ -2,6 +2,7 @@
   background-color: none;
   padding: 5vh 6vw 0 6vw;
   margin-bottom: 12vh;
+  z-index: 128;
 }
 
 .nav-link {
@@ -17,6 +18,11 @@
 }
 
 footer {
-  padding: 3rem 0;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  font-family: var(--font-head);
+  position: static;
+  bottom: 0;
+  padding-bottom: 3rem;
   text-align: center;
 }

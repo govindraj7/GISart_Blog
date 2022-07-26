@@ -19,24 +19,48 @@
   {% else %}
   <h1>GISart</h1>
   {% endif %} {% for post in posts %} <br />
-  <div class="shadow p-3 mb-5 bg-dark text-white rounded">
-    <h3>{{ post.title }}</h3>
-    <br />
-    <h5>{{ post.image }}</h5>
-    <br />
-    <p>{{ post.description }}</p>
-    <br />
-    <h6>{{ post.date_posted }}</h6>
-    <br />
-    <br />
-    <hr />
-    <a
-      class="btn btn-primary text-dark"
-      href="{{ url_for('dynamic_pgs.single_post', id=post.id) }}"
-      >View Post</a
-    >
-    <br />
+
+  <div class="card bg-dark text-white post-card">
+    <img
+      type="image/jpeg"
+      src="{{url_for('static', filename='images/Mexico.jpeg')}}"
+      alt="image"
+      loading="lazy"
+      class="card-img-top"
+    />
+    <div class="card-img-overlay">
+      <h5>{{ post.image }}</h5>
+      <h5 class="card-title">{{ post.title }}</h5>
+      <p class="card-text">{{ post.description }}</p>
+      <p class="card-text">
+        <small class="card-text">{{ post.date_posted.date() }}</small>
+      </p>
+      <a
+        class="btn btn-dark text-white"
+        href="{{ url_for('dynamic_pgs.single_post', id=post.id) }}"
+        >View Post</a
+      >
+    </div>
   </div>
   {% endfor %}
 </section>
-{% endblock %}
+
+<div class="img-bg">
+  <img
+    type="image/jpeg"
+    src="{{url_for('static', filename='images/spacex-dark.jpeg')}}"
+    alt="image"
+    loading="lazy"
+  />
+  Photo by
+  <a
+    href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >SpaceX</a
+  >
+  on
+  <a
+    href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >Unsplash</a
+  >
+</div>
+{% include 'components/footer.html' %} {% endblock %}

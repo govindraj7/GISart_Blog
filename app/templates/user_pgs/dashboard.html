@@ -2,8 +2,42 @@
 <!-- add navbar component -->
 {% block body %} {% include 'components/navbar.html' %}
 <section class="container">
-  <h1>
+  <h3>
     Hello {{ current_user.user_name|capitalize }}, this is your user dashboard.
-  </h1>
+  </h3>
+  <br />
+
+  <div class="card bg-dark text-white" style="width: 18rem">
+    <img
+      type="image/jpeg"
+      src="{{url_for('static', filename='images/Sahara_Desert.jpeg')}}"
+      alt="image"
+      loading="lazy"
+      class="card-img-top"
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{ current_user.user_name|capitalize }}</h5>
+      <h6>Member Since: {{ current_user.date_added.date() }}</h6>
+    </div>
+  </div>
 </section>
-{% endblock %}
+
+<div class="img-bg">
+  <img
+    type="image/jpeg"
+    src="{{url_for('static', filename='images/spacex-dark.jpeg')}}"
+    alt="image"
+    loading="lazy"
+  />
+  Photo by
+  <a
+    href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >SpaceX</a
+  >
+  on
+  <a
+    href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >Unsplash</a
+  >
+</div>
+{% include 'components/footer.html' %} {% endblock %}

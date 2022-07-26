@@ -1,0 +1,14 @@
+/* #gallery {
+  color: var(--pri-txt);
+} */
+
+.card-img-top {
+  max-height: 25em;
+  min-height: 20rem;
+}
+
+.post-card img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
