@@ -33,6 +33,9 @@
       <h5 class="card-title">{{ post.title }}</h5>
       <p class="card-text">{{ post.description }}</p>
       <p class="card-text">
+        Author: <strong>{{ post.author.user_name }}</strong>
+      </p>
+      <p class="card-text">
         <small class="card-text">{{ post.date_posted.date() }}</small>
       </p>
       <a

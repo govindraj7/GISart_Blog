@@ -6,12 +6,13 @@ from flask_login import UserMixin
 
 # users model
 class Users(db.Model, CRUDMixin, UserMixin):
-    __tablename__='users_details'
+    __tablename__='users'
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(128), unique=True)
     user_name = db.Column(db.String(144), unique=True, nullable=False)
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     password_hash = db.Column(db.String(128))
+    posts = db.relationship('BlogPosts', backref="author")
 
     @property
     def password(self):
@@ -36,13 +37,14 @@ class Users(db.Model, CRUDMixin, UserMixin):
 class BlogPosts(db.Model):
     __tablename__ = "blog_posts"
     id = db.Column(db.Integer, primary_key=True)
-    # author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    # author = db.Column(db.Integer, db.ForeignKey('users.user_name'), nullable=False)
     title = db.Column(db.String(128), unique=True, nullable=False)
     slug = db.Column(db.String(128), unique=True, nullable=False)
     image = db.Column(db.String, nullable=False)
     description = db.Column(db.String(128), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    #  foreign key linking user to post(s)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
 
     def __init__(self, *args, **kwargs):
         if not 'slug' in kwargs:

@@ -40,11 +40,9 @@
     <br />
     <hr />
     {{ form.submit(class="btn btn-warning text-dark") }}
-    <a
-      class="btn btn-primary text-dark"
-      href="{{ url_for('dynamic_pgs.view_posts', id=id) }}"
-      >Go Back</a
-    >
+    <button class="btn btn-primary text-dark" onclick="history.back()">
+      Go Back
+    </button>
   </form>
 
   {% else %}

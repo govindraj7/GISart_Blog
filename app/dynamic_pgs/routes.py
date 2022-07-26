@@ -10,6 +10,8 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 blueprint = Blueprint('dynamic_pgs', __name__)
 
+# ! /////////// flash & error msgs must be fixed - issues on redirect url_for
+
 # create forms class
 
 # * form for creating a user
@@ -50,23 +52,20 @@ def signup():
         user = Users(user_name=form.user_name.data, password_hash=hashed_pw)
         db.session.add(user)
         db.session.commit()
-            
-        flash("You are now part of the GISart Community.")
-        return redirect(url_for('dynamic_pgs.success'))
+        return redirect(url_for('dynamic_pgs.dashboard'))
 
       except:
-          flash("Username already exists")
+          # flash("Username already exists")
           return redirect(url_for('dynamic_pgs.signup'))
     
     # clear the form
     form.user_name.data = ''
     form.password_hash.data = ''
-
-  users_db = Users.query.order_by(Users.date_added)
-  return render_template('user_pgs/signup.html', title='Sign-Up', user_name=user_name, form=form, users_db=users_db)
+  return render_template('user_pgs/signup.html', title='Sign-Up', user_name=user_name, form=form)
 
 # update db record
 @blueprint.route('/update/<int:id>', methods=["GET", "POST"])
+@login_required
 def update(id):
   form = SignUpForm()
   update_user_info = Users.query.get_or_404(id)
@@ -76,19 +75,19 @@ def update(id):
 
     try:
       db.session.commit()
-      flash("Your details are Updated!")
-      return redirect(url_for('dynamic_pgs.signup'))
+      # flash("Your details are Updated!")
+      return redirect(url_for('dynamic_pgs.dashboard'))
 
     except:
-      flash("Oops. Something went wrong. Try again later.")
+      # flash("Oops. Something went wrong. Try again later.")
       return redirect(url_for('dynamic_pgs.signup'))
 
   else:
-    users_db = Users.query.order_by(Users.date_added)
-    return render_template('user_pgs/update.html', title='Update Details', form=form, users_db=users_db, update_user_info=update_user_info, id=id)
+    return render_template('user_pgs/update.html', title='Update Details', form=form, update_user_info=update_user_info, id=id)
 
 # delete db record
 @blueprint.route('/delete/<int:id>')
+@login_required
 def delete(id):
   user_name = None
   form = SignUpForm()
@@ -97,14 +96,12 @@ def delete(id):
   try: 
     db.session.delete(delete_user_info)
     db.session.commit()
-    flash("User Deleted Successfully.")
-    users_db = Users.query.order_by(Users.date_added)
-    return render_template('user_pgs/success.html', title='User Deleted', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
+    # flash("User Deleted Successfully.")
+    return redirect(url_for('dynamic_pgs.signup'))
 
   except:
-    flash("Hmmm... Something did not work. Try again later.")
-    users_db = Users.query.order_by(Users.date_added)
-    return render_template('user_pgs/signup.html', title='Delete User', user_name=user_name, form=form, users_db=users_db, delete_user_info=delete_user_info, id=id)
+    # flash("Hmmm... Something did not work. Try again later.")
+    return render_template('user_pgs/signup.html', title='Delete User', user_name=user_name, form=form, delete_user_info=delete_user_info, id=id)
 
 # todo: log errors?
 # todo: sort out slugs
@@ -141,7 +138,9 @@ def create_post():
   form = PostForm()
 
   if form.validate_on_submit():
-    post = BlogPosts(title=form.title.data, image=form.image.data, description=form.description.data)
+    # one-to-many relationship
+    author = current_user.id
+    post = BlogPosts(title=form.title.data, image=form.image.data, description=form.description.data, author_id=author)
     # clear the form
     form.title.data = ''
     form.image.data = ''
@@ -149,8 +148,8 @@ def create_post():
 
     db.session.add(post)
     db.session.commit()
-
-    flash("Post successfully created!")
+    return redirect(url_for('dynamic_pgs.view_posts'))
+    # flash("Post successfully created!")
     
   return render_template('blog_post_pgs/create_post.html', title='Share Your GISart', form=form)
 
@@ -178,17 +177,13 @@ def delete_post(id):
   try:
     db.session.delete(delete_this_post)
     db.session.commit()
-    flash("Your post was successfully deleted.")
-    posts = BlogPosts.query.order_by(BlogPosts.date_posted)
-    return render_template('blog_post_pgs/view_posts.html', title='GISart Gallery', posts=posts)
-
+    # flash("Your post was successfully deleted.")
+    return redirect(url_for('dynamic_pgs.view_posts'))
     # redirect issue with flash messages ?? Calls both ??
 
   except:
-    flash('Hmm... Something did not work. Try again later.')
-    posts = BlogPosts.query.order_by(BlogPosts.date_posted)
-    return render_template('blog_post_pgs/view_posts.html', title='GISart Gallery', posts=posts)
-
+    # flash('Hmm... Something did not work. Try again later.')
+    return redirect(url_for('dynamic_pgs.view_posts'))
 
 # ! do I want this in the app??
 @blueprint.route('/gisart-gallery/edit/<int:id>', methods=["GET", "POST"])
@@ -202,13 +197,14 @@ def edit_post(id):
     edit_this_post.description = request.form['description']
 
     try:
-      # db.session.add(edit_this_post)
+      db.session.add(edit_this_post)
       db.session.commit()
-      flash("Post successfully updated!")
-      return render_template('blog_post_pgs/single_post.html', title='Edit Post', form=form, id=id, edit_this_post=edit_this_post)
+      # flash("Post successfully updated!")
+      return redirect(url_for('dynamic_pgs.view_posts'))
+      # todo: fix this redirect
 
     except:
-      flash("Oops. Something went wrong. Try again later.")
+      # flash("Oops. Something went wrong. Try again later.")
       return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id)
 
   else:

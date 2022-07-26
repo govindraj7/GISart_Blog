@@ -44,9 +44,12 @@
     <br />
     <hr />
     {{ form.submit(class="btn btn-warning text-dark") }}
-    <a class="btn btn-primary text-dark" href="{{ url_for('basic_pgs.index') }}"
+    <!-- <a class="btn btn-primary text-dark" href="{{ url_for('basic_pgs.index') }}"
       >Go Back</a
-    >
+    > -->
+    <button class="btn btn-primary text-dark" onclick="history.back()">
+      Go Back
+    </button>
   </form>
 
   {% else %}

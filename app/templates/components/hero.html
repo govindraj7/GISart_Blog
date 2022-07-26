@@ -2,7 +2,14 @@
   <div class="child staggering">
     {% block title %}
     <h1 class="title-pg slide-rtl text-fade-in">GISart</h1>
-    {% endblock %}
+    {% endblock %} {% if current_user.is_authenticated %}
+    <p class="slide-ltr el">
+      <a class="hover-line" href="{{ url_for('basic_pgs.about') }}"
+        >Learn More</a
+      >
+    </p>
+
+    {% else %}
     <p class="slide-ltr el">
       <a class="hover-line" href="{{ url_for('basic_pgs.about') }}"
         >Learn More</a
@@ -13,6 +20,7 @@
         >Join Today</a
       >
     </p>
+    {% endif %}
   </div>
 </section>
 

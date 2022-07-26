@@ -32,17 +32,24 @@
       <h5>{{ post.image }}</h5>
       <p class="card-text">{{ post.description }}</p>
       <p class="card-text">
+        Author: <strong>{{ post.author.user_name }}</strong>
+      </p>
+
+      <p class="card-text">
         <small class="text-muted">{{ post.date_posted.date() }}</small>
       </p>
     </div>
   </div>
 
   <hr />
-  <a
+  <!-- <a
     class="btn btn-primary text-dark"
     href="{{ url_for('dynamic_pgs.view_posts', id=id) }}"
     >Go Back</a
-  >
+  > -->
+  <button class="btn btn-primary text-dark" onclick="history.back()">
+    Go Back
+  </button>
   {% if current_user.is_authenticated %}
   <a
     class="btn btn-warning text-dark"
