@@ -20,9 +20,14 @@
 footer {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+  border-top: solid 1px rgba(255, 255, 255, 0.084);
   font-family: var(--font-head);
-  position: static;
+  position: fixed;
   bottom: 0;
-  padding-bottom: 3rem;
+  left: 0;
+  width: 100%;
+  height: 3rem;
+  padding-top: 0.5rem;
   text-align: center;
+  z-index: 128;
 }

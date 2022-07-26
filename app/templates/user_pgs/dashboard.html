@@ -2,12 +2,14 @@
 <!-- add navbar component -->
 {% block body %} {% include 'components/navbar.html' %}
 <section class="container">
+  <!-- locking down page -->
+  {% if current_user.is_authenticated %}
   <h3>
     Hello {{ current_user.user_name|capitalize }}, this is your user dashboard.
   </h3>
   <br />
 
-  <div class="card bg-dark text-white" style="width: 18rem">
+  <div class="card bg-dark text-white" style="width: 18rem; margin: 1rem auto">
     <img
       type="image/jpeg"
       src="{{url_for('static', filename='images/Sahara_Desert.jpeg')}}"
@@ -18,8 +20,31 @@
     <div class="card-body">
       <h5 class="card-title">{{ current_user.user_name|capitalize }}</h5>
       <h6>Member Since: {{ current_user.date_added.date() }}</h6>
+      <a
+        class="btn btn-secondary text-dark btn-sm"
+        href="{{ url_for('dynamic_pgs.update', id=current_user.id) }}"
+        >Update Profile</a
+      >
+      <a
+        class="btn btn-danger text-dark btn-sm"
+        href="{{ url_for('dynamic_pgs.delete', id=current_user.id) }}"
+        >Delete User</a
+      >
     </div>
   </div>
+
+  {% else %}
+  <h6>Please login in or Signup to access this page.</h6>
+  <br />
+  <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.signup') }}"
+    >Sign-up</a
+  >
+  |
+  <a <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.login') }}"
+    >Login</a
+  >
+
+  {% endif %}
 </section>
 
 <div class="img-bg">
@@ -27,17 +52,8 @@
     type="image/jpeg"
     src="{{url_for('static', filename='images/spacex-dark.jpeg')}}"
     alt="image"
+    aria-label="Description of the overall image"
     loading="lazy"
   />
-  Photo by
-  <a
-    href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-    >SpaceX</a
-  >
-  on
-  <a
-    href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-    >Unsplash</a
-  >
 </div>
 {% include 'components/footer.html' %} {% endblock %}

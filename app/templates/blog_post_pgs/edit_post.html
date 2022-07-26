@@ -21,6 +21,9 @@
   <h1>GISart</h1>
   {% endif %}
 
+  <!-- locking down page -->
+  <!-- this should not be accessed as login_required should protect the page -->
+  {% if current_user.is_authenticated %}
   <!-- blogpost form -->
   <form method="POST" class="flex justify-content-md-center">
     <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
@@ -43,6 +46,19 @@
       >Go Back</a
     >
   </form>
+
+  {% else %}
+  <h6>Please login in or Signup to access this page.</h6>
+  <br />
+  <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.signup') }}"
+    >Sign-up</a
+  >
+  |
+  <a <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.login') }}"
+    >Login</a
+  >
+
+  {% endif %}
 </section>
 
 <div class="img-bg">

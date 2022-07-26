@@ -36,28 +36,6 @@
 
   {% else %}
   <br />
-
-  {% for user in users_db %}
-
-  <div class="container">
-    <table class="table table-sm table-dark">
-      <tr>
-        <td>
-          {{ user.id }}. {{ user.user_name }}
-          <a
-            class="btn btn-secondary text-dark"
-            href="{{ url_for('dynamic_pgs.update', id=user.id) }}"
-            >Update</a
-          >
-          <a
-            class="btn btn-danger text-dark"
-            href="{{ url_for('dynamic_pgs.delete', id=user.id) }}"
-            >Delete User</a
-          >
-        </td>
-      </tr>
-    </table>
-  </div>
 </section>
 
 <div class="img-bg">
@@ -65,18 +43,9 @@
     type="image/jpeg"
     src="{{url_for('static', filename='images/spacex-dark.jpeg')}}"
     alt="image"
+    aria-label="Description of the overall image"
     loading="lazy"
   />
-  Photo by
-  <a
-    href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-    >SpaceX</a
-  >
-  on
-  <a
-    href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-    >Unsplash</a
-  >
 </div>
 
-{% endfor %} {% endif %} {% endblock %}{% include 'components/footer.html' %}
+{% endif %} {% endblock %}{% include 'components/footer.html' %}

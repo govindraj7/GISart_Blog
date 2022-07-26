@@ -33,11 +33,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password:', validators=[DataRequired(), EqualTo('password_hash_confirm', message='Passwords must match.')])
     submit = SubmitField("Submit")
 
-# placeholder
-@blueprint.route('/user/<username>')
-def user(username):
-  return render_template('user_pgs/user.html', username=username, title=username)
-
 # ! user signup related
 # add db record
 @blueprint.route('/signup', methods=["GET", "POST"])
@@ -141,6 +136,7 @@ def dashboard():
 # ! blog post related
 # create a post
 @blueprint.route('/gisart-gallery/create', methods=["GET", "POST"])
+@login_required
 def create_post():
   form = PostForm()
 
@@ -175,6 +171,7 @@ def single_post(id):
 
 # deleta a post 
 @blueprint.route('/gisart-gallery/delete/<int:id>')
+@login_required
 def delete_post(id):
   delete_this_post = BlogPosts.query.get_or_404(id)
 
@@ -195,6 +192,7 @@ def delete_post(id):
 
 # ! do I want this in the app??
 @blueprint.route('/gisart-gallery/edit/<int:id>', methods=["GET", "POST"])
+@login_required
 def edit_post(id):
   form = PostForm()
   edit_this_post = BlogPosts.query.get_or_404(id)

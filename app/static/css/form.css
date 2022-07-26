@@ -18,3 +18,7 @@ form {
   min-width: 172px;
   margin: 5vh auto 15vh auto;
 }
+
+.btn-sm {
+  font-size: 0.8rem;
+}
