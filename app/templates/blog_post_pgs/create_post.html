@@ -25,7 +25,7 @@
   <!-- this should not be accessed as login_required should protect the page -->
   {% if current_user.is_authenticated %}
   <!-- blogpost form -->
-  <form method="POST" class="flex justify-content-md-center">
+  <form method="POST" class="flex justify-content-md-center my_form">
     <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
     {{ form.hidden_tag() }}
     <!-- the form -->
@@ -44,9 +44,6 @@
     <br />
     <hr />
     {{ form.submit(class="btn btn-warning text-dark") }}
-    <!-- <a class="btn btn-primary text-dark" href="{{ url_for('basic_pgs.index') }}"
-      >Go Back</a
-    > -->
     <button class="btn btn-primary text-dark" onclick="history.back()">
       Go Back
     </button>

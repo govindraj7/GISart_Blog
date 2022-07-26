@@ -31,7 +31,7 @@
   <form
     action="/update/{{ update_user_info.id }}"
     method="POST"
-    class="flex justify-content-md-center"
+    class="flex justify-content-md-center my_form"
   >
     <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
     {{ form.hidden_tag() }}
@@ -40,6 +40,10 @@
     {{ form.user_name.label (class="form-label") }} {{
     form.user_name(class="form-control", value=update_user_info.user_name) }}
     <br />
+    <!-- * user bio -->
+    {{ form.bio.label (class="form-label") }} {{ form.bio(class="form-control")
+    }}
+    <br />
     <br />
     {{ form.submit(class="btn btn-warning text-dark") }}
     <a
@@ -47,11 +51,6 @@
       href="{{ url_for('dynamic_pgs.delete', id=id) }}"
       >Delete User</a
     >
-    <!-- <a
-      class="btn btn-primary text-dark"
-      href="{{ url_for('dynamic_pgs.signup') }}"
-      >Go Back</a
-    > -->
     <button class="btn btn-primary text-dark" onclick="history.back()">
       Go Back
     </button>

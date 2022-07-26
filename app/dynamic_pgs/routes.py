@@ -1,12 +1,13 @@
 from flask import Blueprint, redirect, render_template, flash, request, redirect, url_for
 from .models import Users, BlogPosts
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, ValidationError
+from wtforms import StringField, SubmitField, PasswordField, ValidationError, TextAreaField
 from wtforms.validators import DataRequired, EqualTo, Length
 from wtforms.widgets import TextArea
 from app.extensions.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
+from flask_cachecontrol import cache, cache_for, dont_cache, Always, ResponseIsSuccessfulOrRedirect
 
 blueprint = Blueprint('dynamic_pgs', __name__)
 
@@ -17,6 +18,7 @@ blueprint = Blueprint('dynamic_pgs', __name__)
 # * form for creating a user
 class SignUpForm(FlaskForm):
     user_name = StringField("Username:", validators=[DataRequired()])
+    bio = TextAreaField("Short Bio:")
     password_hash = PasswordField('Password:', validators=[DataRequired(), EqualTo('password_hash_confirm', message='Passwords must match.')])
     password_hash_confirm = PasswordField('Confirm Password:', validators=[DataRequired()])
 
@@ -49,7 +51,7 @@ def signup():
     if user is None:
       try:
         hashed_pw = generate_password_hash(form.password_hash.data, "sha256")
-        user = Users(user_name=form.user_name.data, password_hash=hashed_pw)
+        user = Users(user_name=form.user_name.data, bio=form.bio.data, password_hash=hashed_pw)
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('dynamic_pgs.dashboard'))
@@ -60,6 +62,7 @@ def signup():
     
     # clear the form
     form.user_name.data = ''
+    form.bio.data = ''
     form.password_hash.data = ''
   return render_template('user_pgs/signup.html', title='Sign-Up', user_name=user_name, form=form)
 
@@ -72,6 +75,7 @@ def update(id):
 
   if request.method == "POST":
     update_user_info.user_name = request.form['user_name']
+    update_user_info.bio = request.form['bio']
 
     try:
       db.session.commit()
@@ -127,6 +131,7 @@ def logout():
 # dashboard
 @blueprint.route('/dashboard', methods=["GET", "POST"])
 @login_required
+@dont_cache()
 def dashboard():
   return render_template('user_pgs/dashboard.html', title='User Dashboard')
 
@@ -141,22 +146,24 @@ def create_post():
     # one-to-many relationship
     author = current_user.id
     post = BlogPosts(title=form.title.data, image=form.image.data, description=form.description.data, author_id=author)
+
+    db.session.add(post)
+    db.session.commit()
+
     # clear the form
     form.title.data = ''
     form.image.data = ''
     form.description.data = ''
-
-    db.session.add(post)
-    db.session.commit()
     return redirect(url_for('dynamic_pgs.view_posts'))
     # flash("Post successfully created!")
     
   return render_template('blog_post_pgs/create_post.html', title='Share Your GISart', form=form)
 
-# todo: change image url place holder to actual images
+# todo: change image url place holder to actual  >> blobs
 
 # view all posts
 @blueprint.route('/gisart-gallery/view')
+@dont_cache()
 def view_posts():
   # collect posts from db
   posts = BlogPosts.query.order_by(BlogPosts.date_posted)
@@ -164,6 +171,7 @@ def view_posts():
 
 # view a single post on a page
 @blueprint.route('/gisart-gallery/view/<int:id>')
+@dont_cache()
 def single_post(id):
   post = BlogPosts.query.get_or_404(id)
   return render_template('blog_post_pgs/single_post.html', post=post, id=post.id)
@@ -174,7 +182,7 @@ def single_post(id):
 def delete_post(id):
   delete_this_post = BlogPosts.query.get_or_404(id)
   id = current_user.id
-  if id == delete_this_post.author.id:
+  if id == delete_this_post.author.id or id == 1:
     try:
       db.session.delete(delete_this_post)
       db.session.commit()
@@ -189,15 +197,14 @@ def delete_post(id):
     # flash('Unauthorized.')
     return redirect(url_for('dynamic_pgs.view_posts'))
 
-# ! do I want this in the app??
 @blueprint.route('/gisart-gallery/edit/<int:id>', methods=["GET", "POST"])
 @login_required
 def edit_post(id):
   form = PostForm()
   edit_this_post = BlogPosts.query.get_or_404(id)
-
   id = current_user.id
-  if id == edit_this_post.author.id:
+
+  if id == edit_this_post.author.id or id == 1:
     if request.method == "POST":
       edit_this_post.title = request.form['title']
       edit_this_post.description = request.form['description']
@@ -208,7 +215,7 @@ def edit_post(id):
         # flash("Post successfully updated!")
         return redirect(url_for('dynamic_pgs.view_posts'))
         # todo: fix this redirect
-        
+
       except:
         # flash("Oops. Something went wrong. Try again later.")
         return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id)
@@ -218,3 +225,16 @@ def edit_post(id):
   else:
     # flash('Unauthorized.')
     return redirect(url_for('dynamic_pgs.view_posts'))
+
+# ! the chosen one
+# view a single post on a page
+@blueprint.route('/admin', methods=["GET", "POST"])
+@login_required
+def admin():
+  id = current_user.id
+  if id == 1:
+    all_users = Users.query.order_by(Users.date_added)
+    return render_template('admin/admin.html', all_users=all_users, id=id)
+  else:
+    # error = 'Access Denied. Not Admin.'
+    return redirect(url_for('dynamic_pgs.dashboard'))

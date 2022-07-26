@@ -2,9 +2,11 @@
   {% if current_user.is_authenticated %}
   <small>
     Logged in as {{ current_user.user_name }}.
-    <a href="{{ url_for('dynamic_pgs.logout') }}">Logout</a>
+    <a href="{{ url_for('dynamic_pgs.logout') }}">Logout</a>{% if
+    current_user.id == 1 %} |
+    <a href="{{ url_for('dynamic_pgs.admin') }}">Admin</a>
   </small>
-  {% else %}
+  {% endif %} {% else %}
   <small>
     <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.signup') }}"
       >Sign-up</a
@@ -15,7 +17,7 @@
       class="navbar-text hover-line"
       href="{{ url_for('dynamic_pgs.login') }}"
       >Login</a
-    ></small
-  >
+    >
+  </small>
   {% endif %}
 </footer>

@@ -1,10 +1,18 @@
-/* #gallery {
+/* #posts {
   color: var(--pri-txt);
 } */
 
-.card-img-top {
+.profile-card {
+  width: 18rem;
+}
+
+.post-img-top {
   max-height: 25em;
-  min-height: 20rem;
+  /* min-height: 20rem; */
+}
+
+.card-header {
+  padding: 0;
 }
 
 .post-card img {
@@ -13,9 +21,14 @@
   object-fit: cover;
 }
 
-.card {
-  max-width: 400px;
-  /* use grid instead */
-  /* margin: 1rem; */
-  /* float: left; */
+.profile-picture img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-img-overlay a {
+  margin: 0;
+  position: absolute;
+  bottom: 1rem;
 }

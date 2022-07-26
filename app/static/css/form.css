@@ -1,19 +1,20 @@
 .form_pg {
-  /* margin: 0 auto; */
   width: 60%;
-  /* min-width: 630px; */
 }
 
 form {
+  color: var(--pri-txt);
+  font-family: var(--font-head);
+}
+
+.my_form {
   background: #6b6b6b17;
   border-radius: 16px;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: solid 1px rgba(255, 255, 255, 0.084);
-  color: var(--pri-txt);
-  font-family: var(--font-head);
-  padding: 5vh 5vw;
   border-radius: 1rem;
+  padding: 5vh 5vw;
   width: 50%;
   min-width: 172px;
   margin: 5vh auto 15vh auto;
@@ -22,3 +23,35 @@ form {
 .btn-sm {
   font-size: 0.8rem;
 }
+
+.table {
+  margin-top: 1rem;
+  text-align: left;
+  width: 90%;
+}
+
+.id_col {
+  width: 2rem;
+}
+
+.search {
+  padding: 2rem 0;
+  width: 40%;
+  min-width: 240px;
+  text-align: left;
+}
+
+.search form {
+  position: relative;
+  left: 0;
+}
+
+.search button {
+  margin: 0;
+}
+
+.col {
+  min-height: 360px;
+}
+
+/* todo: add @media queries */

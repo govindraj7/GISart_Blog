@@ -11,7 +11,10 @@ class Users(db.Model, CRUDMixin, UserMixin):
     slug = db.Column(db.String(128), unique=True)
     user_name = db.Column(db.String(144), unique=True, nullable=False)
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    bio = db.Column(db.String(400), nullable=True)
+    # password
     password_hash = db.Column(db.String(128))
+    # one-to-many relationship
     posts = db.relationship('BlogPosts', backref="author")
 
     @property

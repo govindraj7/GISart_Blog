@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 <!-- navbar component -->
 {% block body %} {% include 'components/navbar.html' %}
-<section id="gallery" class="container">
+<section id="posts" class="container">
   {% for message in get_flashed_messages() %}
 
   <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -18,34 +18,67 @@
   <h1>{{ title }}</h1>
   {% else %}
   <h1>GISart</h1>
-  {% endif %} {% for post in posts %} <br />
+  {% endif %}
+  <!-- 
+  <div class="search">
+    <form class="d-flex">
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-info" type="submit">Search</button>
+    </form>
+  </div> -->
+  <br />
 
-  <div class="card bg-dark text-white post-card">
-    <img
-      type="image/jpeg"
-      src="{{url_for('static', filename='images/Mexico.jpeg')}}"
-      alt="image"
-      loading="lazy"
-      class="card-img-top"
-    />
-    <div class="card-img-overlay">
-      <h5>{{ post.image }}</h5>
-      <h5 class="card-title">{{ post.title }}</h5>
-      <p class="card-text">{{ post.description }}</p>
-      <p class="card-text">
-        Author: <strong>{{ post.author.user_name }}</strong>
-      </p>
-      <p class="card-text">
-        <small class="card-text">{{ post.date_posted.date() }}</small>
-      </p>
-      <a
-        class="btn btn-dark text-white"
-        href="{{ url_for('dynamic_pgs.single_post', id=post.id) }}"
-        >View Post</a
-      >
+  <div class="container">
+    <div class="row gx-5">
+      {% for post in posts %}
+
+      <div class="col-lg-auto p-5">
+        <div class="card bg-dark text-white post-card">
+          <img
+            type="image/jpeg"
+            src="{{url_for('static', filename='images/Mexico.jpeg')}}"
+            alt="image"
+            loading="lazy"
+            class="card-img-top post-img-top"
+          />
+          <div class="card-img-overlay">
+            <h5>{{ post.image }}</h5>
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.description }}</p>
+            <!-- <p class="card-text">
+              Author: <strong>{{ post.author.user_name }}</strong>
+            </p> -->
+            <p class="card-text">
+              <small class="card-text">{{ post.date_posted.date() }}</small>
+            </p>
+            <a
+              class="btn btn-dark text-white"
+              href="{{ url_for('dynamic_pgs.single_post', id=post.id) }}"
+              >View Post</a
+            >
+            <!-- {% if current_user.id == 1 %}
+            <a
+              class="btn btn-warning text-dark"
+              href="{{ url_for('dynamic_pgs.edit_post', id=post.id) }}"
+              >Edit Post</a
+            >
+            <a
+              class="btn btn-danger text-dark"
+              href="{{ url_for('dynamic_pgs.delete_post', id=post.id) }}"
+              >Delete Post</a
+            >
+            {% endif %} -->
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
-  {% endfor %}
 </section>
 
 <div class="img-bg">

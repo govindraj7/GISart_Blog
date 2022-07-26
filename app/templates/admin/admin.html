@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block body %} {% include 'components/navbar.html'
+%}
+<section id="login" class="container form_pg">
+  <h1>Admin Area</h1>
+  <br /><br />
+  <h3>List of All Current Users</h3>
+  <table class="table table-dark table-striped table-hover">
+    <thead>
+      <tr class="table-active text-muted">
+        <th>ID</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Member Since</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a_user in all_users %}
+      <tr>
+        <td class="id_col">{{ a_user. id}}</td>
+        <td>{{ a_user.user_name }}</td>
+        <td>Must still assign roles</td>
+        <td>{{ a_user.date_added.date() }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<div class="img-bg">
+  <img
+    type="image/jpeg"
+    src="{{url_for('static', filename='images/spacex-dark.jpeg')}}"
+    alt="image"
+    aria-label="Description of the overall image"
+    loading="lazy"
+  />
+</div>
+
+{% include 'components/footer.html' %} {% endblock %}

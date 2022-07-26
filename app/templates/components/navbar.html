@@ -35,20 +35,30 @@
             >View</a
           >
         </li>
+        {% if current_user.is_authenticated %}
         <li class="nav-item">
-          {% if current_user.is_authenticated %}
           <a
             class="nav-link hover-line"
             href="{{ url_for('dynamic_pgs.create_post') }}"
             >Share</a
           >
+        </li>
+        <li class="nav-item">
           <a
             class="nav-link hover-line"
             href="{{ url_for('dynamic_pgs.dashboard') }}"
-            >dashboard</a
+            >Dashboard</a
           >
-          {% endif %}
         </li>
+        {% endif %} {% if current_user.id == 1 %}
+        <li class="nav-item">
+          <a
+            class="nav-link hover-line"
+            href="{{ url_for('dynamic_pgs.admin') }}"
+            >Admin</a
+          >
+        </li>
+        {% endif %}
       </ul>
       <!-- * signup & login only seen if session is unauthenticated -->
       <span class="navbar-text">

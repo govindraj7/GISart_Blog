@@ -9,17 +9,19 @@
   </h3>
   <br />
 
-  <div class="card bg-dark text-white" style="width: 18rem; margin: 1rem auto">
-    <img
-      type="image/jpeg"
-      src="{{url_for('static', filename='images/Sahara_Desert.jpeg')}}"
-      alt="image"
-      loading="lazy"
-      class="card-img-top"
-    />
+  <div class="card text-center bg-dark text-white profile-card">
+    <div class="card-header profile-picture">
+      <img
+        type="image/jpeg"
+        src="{{url_for('static', filename='images/default-pp.png')}}"
+        alt="image"
+        loading="lazy"
+        class="card-img-top profile-picture"
+      />
+    </div>
     <div class="card-body">
       <h5 class="card-title">{{ current_user.user_name|capitalize }}</h5>
-      <h6>Member Since: {{ current_user.date_added.date() }}</h6>
+      <p class="card-text">{{ current_user.bio }}</p>
       <a
         class="btn btn-secondary text-dark btn-sm"
         href="{{ url_for('dynamic_pgs.update', id=current_user.id) }}"
@@ -28,8 +30,13 @@
       <a
         class="btn btn-danger text-dark btn-sm"
         href="{{ url_for('dynamic_pgs.delete', id=current_user.id) }}"
-        >Delete User</a
+        >Delete Account</a
       >
+    </div>
+    <div class="card-footer">
+      <h6 class="text-muted">
+        Member Since: {{ current_user.date_added.date() }}
+      </h6>
     </div>
   </div>
 
