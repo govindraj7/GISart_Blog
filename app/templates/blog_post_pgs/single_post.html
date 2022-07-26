@@ -42,15 +42,10 @@
   </div>
 
   <hr />
-  <!-- <a
-    class="btn btn-primary text-dark"
-    href="{{ url_for('dynamic_pgs.view_posts', id=id) }}"
-    >Go Back</a
-  > -->
   <button class="btn btn-primary text-dark" onclick="history.back()">
     Go Back
   </button>
-  {% if current_user.is_authenticated %}
+  {% if post.author.id == current_user.id %}
   <a
     class="btn btn-warning text-dark"
     href="{{ url_for('dynamic_pgs.edit_post', id=id) }}"

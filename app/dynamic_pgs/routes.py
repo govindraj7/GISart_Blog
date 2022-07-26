@@ -173,16 +173,20 @@ def single_post(id):
 @login_required
 def delete_post(id):
   delete_this_post = BlogPosts.query.get_or_404(id)
+  id = current_user.id
+  if id == delete_this_post.author.id:
+    try:
+      db.session.delete(delete_this_post)
+      db.session.commit()
+      # flash("Your post was successfully deleted.")
+      return redirect(url_for('dynamic_pgs.view_posts'))
+      # redirect issue with flash messages ?? Calls both ??
 
-  try:
-    db.session.delete(delete_this_post)
-    db.session.commit()
-    # flash("Your post was successfully deleted.")
-    return redirect(url_for('dynamic_pgs.view_posts'))
-    # redirect issue with flash messages ?? Calls both ??
-
-  except:
-    # flash('Hmm... Something did not work. Try again later.')
+    except:
+      # flash('Hmm... Something did not work. Try again later.')
+      return redirect(url_for('dynamic_pgs.view_posts'))
+  else:
+    # flash('Unauthorized.')
     return redirect(url_for('dynamic_pgs.view_posts'))
 
 # ! do I want this in the app??
@@ -192,20 +196,25 @@ def edit_post(id):
   form = PostForm()
   edit_this_post = BlogPosts.query.get_or_404(id)
 
-  if request.method == "POST":
-    edit_this_post.title = request.form['title']
-    edit_this_post.description = request.form['description']
+  id = current_user.id
+  if id == edit_this_post.author.id:
+    if request.method == "POST":
+      edit_this_post.title = request.form['title']
+      edit_this_post.description = request.form['description']
 
-    try:
-      db.session.add(edit_this_post)
-      db.session.commit()
-      # flash("Post successfully updated!")
-      return redirect(url_for('dynamic_pgs.view_posts'))
-      # todo: fix this redirect
+      try:
+        db.session.add(edit_this_post)
+        db.session.commit()
+        # flash("Post successfully updated!")
+        return redirect(url_for('dynamic_pgs.view_posts'))
+        # todo: fix this redirect
+        
+      except:
+        # flash("Oops. Something went wrong. Try again later.")
+        return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id)
 
-    except:
-      # flash("Oops. Something went wrong. Try again later.")
+    else:
       return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id)
-
   else:
-    return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id)
+    # flash('Unauthorized.')
+    return redirect(url_for('dynamic_pgs.view_posts'))
