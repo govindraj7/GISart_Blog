@@ -1,24 +1,47 @@
-/* #posts {
-  color: var(--pri-txt);
-} */
+/*! ///// css for blog posts ///// */
+/** ///// personal css on bootstrap cards + col/row ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+.gutters-row {
+  padding: 2rem 0;
+}
+
+.gutters-col {
+  padding: 0.5rem 0.5rem;
+}
 
 .profile-card {
   width: 18rem;
-}
-
-.post-img-top {
-  max-height: 25em;
-  /* min-height: 20rem; */
 }
 
 .card-header {
   padding: 0;
 }
 
-.post-card img {
+/** ///// img related ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+.many-posts {
+  filter: brightness(50%);
+  max-height: 25em;
+}
+
+.post-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  max-height: 360px;
+}
+
+.post-card-single {
   height: 100%;
   width: 100%;
   object-fit: cover;
+}
+
+.post-card img {
+  flex-shrink: 1;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .profile-picture img {
@@ -31,4 +54,15 @@
   margin: 0;
   position: absolute;
   bottom: 1rem;
+}
+
+/** ///// media rules ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+@media only screen and (max-width: 600px) {
+  .gutters-row {
+    padding: 0 0.5rem;
+  }
+  .gutters-col {
+    padding: 0.5rem 0;
+  }
 }

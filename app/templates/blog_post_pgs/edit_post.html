@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 <!-- navbar component -->
-{% block body %} {% include 'components/navbar.html' %}
+{% block body %}{% include 'components/navbar.html' %}
 
-<section id="edit-post" class="container">
+<section id="edit-post" class="container spacer">
   {% for message in get_flashed_messages() %}
 
   <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -61,8 +61,8 @@
 
 <div class="img-bg">
   <img
-    type="image/jpeg"
-    src="{{url_for('static', filename='images/spacex-light.jpeg')}}"
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-light.png')}}"
     alt="image"
     loading="lazy"
   />

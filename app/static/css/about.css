@@ -1,5 +1,9 @@
 /* ! ///// about css ///// */
 
+#about .container {
+  margin-bottom: 0;
+}
+
 article {
   -webkit-columns: 2 200px;
   -moz-columns: 2 200px;
@@ -22,4 +26,14 @@ article {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/** ///// media rules ///// */
+
+@media only screen and (max-width: 600px) {
+  .img-container {
+    height: 200px;
+    width: 100%;
+    padding: 0.5rem 0;
+  }
 }

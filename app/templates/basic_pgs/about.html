@@ -8,7 +8,7 @@
   <h1>GISart</h1>
   {% endif %}
 </section>
-<article id="article" class="container">
+<article id="article" class="container spacer">
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo consequatur
     eos ipsam eum, sequi repudiandae in natus corporis qui nisi quibusdam quo
@@ -19,8 +19,8 @@
   </p>
   <div class="container img-container">
     <img
-      type="image/jpeg"
-      src="{{url_for('static', filename='images/Kazakhstan-2.jpeg')}}"
+      type="image/png"
+      src="{{url_for('static', filename='images/Kazakhstan-2.png')}}"
       alt="image"
       loading="lazy"
       onmouseover="KazakImage1(this)"
@@ -29,10 +29,13 @@
   </div>
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta quam illo
-    ratione incidunt voluptatem qui obcaecati animi temporibus aperiam nemo
-    adipisci, in sit beatae commodi sunt libero suscipit modi quaerat. Lorem
-    ipsum dolor sit amet consectetur adipisicing elit. Blanditiis mollitia
-    voluptates non.
+    ratione incidunt
+    <a class="nav-link hover-line" href="{{ url_for('basic_pgs.inspiration') }}"
+      >inspiration</a
+    >
+    qui obcaecati animi temporibus aperiam nemo adipisci, in sit beatae commodi
+    sunt libero suscipit modi quaerat. Lorem ipsum dolor sit amet consectetur
+    adipisicing elit. Blanditiis mollitia voluptates non.
   </p>
   <br />
   <p>
@@ -43,8 +46,8 @@
   </p>
   <div class="container img-container">
     <img
-      type="image/jpeg"
-      src="{{url_for('static', filename='images/Algeria.jpeg')}}"
+      type="image/png"
+      src="{{url_for('static', filename='images/Algeria.png')}}"
       alt="image"
       loading="lazy"
       onmouseover="algeImage1(this)"
@@ -64,12 +67,12 @@
 
 <div class="img-bg">
   <img
-    type="image/jpeg"
-    src="{{url_for('static', filename='images/spacex-dark.jpeg')}}"
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-dark.png')}}"
     alt="image"
     aria-label="Description of the overall image"
     loading="lazy"
   />
 </div>
 
-{% endblock %}
+{% include 'components/footer.html' %} {% endblock %}

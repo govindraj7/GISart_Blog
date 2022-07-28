@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 <!-- add navbar component -->
-{% block body %} {% include 'components/navbar.html' %}
-<section class="container">
+{% block body %}{% include 'components/navbar.html' %}
+<section class="container spacer">
   <!-- locking down page -->
   {% if current_user.is_authenticated %}
   <h3>
@@ -12,7 +12,7 @@
   <div class="card text-center bg-dark text-white profile-card">
     <div class="card-header profile-picture">
       <img
-        type="image/jpeg"
+        type="image/png"
         src="{{url_for('static', filename='images/default-pp.png')}}"
         alt="image"
         loading="lazy"
@@ -56,8 +56,8 @@
 
 <div class="img-bg">
   <img
-    type="image/jpeg"
-    src="{{url_for('static', filename='images/spacex-dark.jpeg')}}"
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-dark.png')}}"
     alt="image"
     aria-label="Description of the overall image"
     loading="lazy"

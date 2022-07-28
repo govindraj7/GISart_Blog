@@ -1,10 +1,15 @@
-.form_pg {
-  width: 60%;
-}
+/*! ///// form related css ///// */
+/** ///// tags & elements ///// ------------------------------------------------------------------------------------------------------------------------ */
 
 form {
   color: var(--pri-txt);
   font-family: var(--font-head);
+}
+
+/** ///// classes ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+.form_pg {
+  width: 60%;
 }
 
 .my_form {
@@ -34,24 +39,17 @@ form {
   width: 2rem;
 }
 
-.search {
-  padding: 2rem 0;
-  width: 40%;
-  min-width: 240px;
-  text-align: left;
-}
-
-.search form {
-  position: relative;
-  left: 0;
-}
-
-.search button {
-  margin: 0;
-}
-
 .col {
   min-height: 360px;
 }
 
-/* todo: add @media queries */
+/** ///// media rules ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+@media only screen and (max-width: 600px) {
+  .form_pg {
+    width: 95%;
+  }
+  .my_form {
+    width: 95%;
+  }
+}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 <!-- add navbar component -->
-{% block body %} {% include 'components/navbar.html' %}
-<section id="update" class="container form_pg">
+{% block body %}{% include 'components/navbar.html' %}
+<section id="update" class="container form_pg spacer">
   {% for message in get_flashed_messages() %}
   <div class="alert alert-info alert-dismissible fade show" role="alert">
     {{ message }}
@@ -89,8 +89,8 @@
 
 <div class="img-bg">
   <img
-    type="image/jpeg"
-    src="{{url_for('static', filename='images/spacex-dark.jpeg')}}"
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-dark.png')}}"
     alt="image"
     aria-label="Description of the overall image"
     loading="lazy"

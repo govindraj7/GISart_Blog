@@ -1,5 +1,7 @@
+#* routes for basic pgs ------------------------------------------------------------------------------------------------------------------------
 from flask import Blueprint, render_template, redirect, send_file
-from flask_cachecontrol import cache, cache_for, dont_cache, Always, ResponseIsSuccessfulOrRedirect
+# cache caused issues with static files
+from flask_cachecontrol import dont_cache
 
 blueprint = Blueprint('basic_pgs', __name__)
 
@@ -7,6 +9,7 @@ blueprint = Blueprint('basic_pgs', __name__)
 @blueprint.route('/')
 # create route decorator
 @blueprint.route('/welcome')
+@blueprint.route('/home')
 @dont_cache()
 def index():
   return render_template('basic_pgs/index.html',  title="Welcome!")

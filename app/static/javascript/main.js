@@ -1,44 +1,13 @@
-//  about page image changes
+//! ///// vanilla js & anime.js code /////
+//* ///// about pg img manipulation ///// ------------------------------------------------------------------------------------------------------------------------ */
 
-function jsTest2(image) {
-  image.src = "static/images/Kazakhstan.jpeg";
-}
-
-// kazakhstan
-function KazakImage1(image) {
-  image.src = "static/images/Kazakhstan.jpeg";
-}
-
-function KazakImage2(image) {
-  image.src = "static/images/Kazakhstan-2.jpeg";
-}
-
-// alge
-function algeImage1(image) {
-  image.src = "static/images/Algeria-2.jpeg";
-}
-
-function algeImage2(image) {
-  image.src = "static/images/Algeria.jpeg";
-}
-
-// * ///// anime.js code /////
-
-// links slide in
-// let slide_ltr = anime({
-//   targets: ".slide-ltr",
-//   translateX: 150,
-//   delay: 1500,
-//   easing: "easeInOutSine",
-// });
-
+// her0 & nav GISart fade animation
 var textWrapper = document.querySelector(".text-fade-in");
 textWrapper.innerHTML = textWrapper.textContent.replace(
   /\S/g,
   "<span class='letter'>$&</span>"
 );
 
-// title fade animation
 anime
   .timeline({ loop: true })
   .add({
@@ -56,19 +25,34 @@ anime
     delay: 1000,
   });
 
-//  enlarge
-// anime({
-//   targets: ".space-effect",
-//   scale: 1.5,
-//   direction: "alternate",
-//   loop: true,
-//   easing: "easeInOutSine",
-//   duration: 50000,
-// });
-
 anime({
   targets: ".staggering .el",
   translateX: 90,
   duration: 1500,
-  delay: anime.stagger(150, { start: 500 }), // delay starts at 500ms then increase by 100ms for each elements.
+  delay: anime.stagger(150, { start: 500 }),
 });
+
+//* ///// about page img manipulation ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+function jsTest2(image) {
+  image.src = "static/images/Kazakhstan.png";
+}
+
+// kazakhstan imgs
+function KazakImage1(image) {
+  image.src = "static/images/Kazakhstan.png";
+}
+
+function KazakImage2(image) {
+  image.src = "static/images/Kazakhstan-2.png";
+}
+
+// algeria imgs
+
+function algeImage1(image) {
+  image.src = "static/images/Algeria-2.png";
+}
+
+function algeImage2(image) {
+  image.src = "static/images/Algeria.png";
+}

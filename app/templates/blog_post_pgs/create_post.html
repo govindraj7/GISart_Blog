@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 <!-- navbar component -->
-{% block body %} {% include 'components/navbar.html' %}
+{% block body %}{% include 'components/navbar.html' %}
 
-<section id="create-a-post" class="container">
+<section id="create-a-post" class="container spacer">
   {% for message in get_flashed_messages() %}
 
   <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -25,7 +25,11 @@
   <!-- this should not be accessed as login_required should protect the page -->
   {% if current_user.is_authenticated %}
   <!-- blogpost form -->
-  <form method="POST" class="flex justify-content-md-center my_form">
+  <form
+    method="POST"
+    class="flex justify-content-md-center my_form"
+    enctype="multipart/form-data"
+  >
     <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
     {{ form.hidden_tag() }}
     <!-- the form -->
@@ -33,9 +37,9 @@
     {{ form.title.label (class="form-label") }} {{
     form.title(class="form-control") }}
     <br />
-    <!-- * image url -->
-    {{ form.image.label (class="form-label") }} {{
-    form.image(class="form-control") }}
+    <!-- * file  -->
+    {{ form.file.label (class="form-label") }} {{
+    form.file(class="form-control") }}
     <br />
     <!-- * description text area -->
     {{ form.description.label (class="form-label") }} {{
@@ -65,8 +69,8 @@
 
 <div class="img-bg">
   <img
-    type="image/jpeg"
-    src="{{url_for('static', filename='images/spacex-light.jpeg')}}"
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-light.png')}}"
     alt="image"
     loading="lazy"
   />

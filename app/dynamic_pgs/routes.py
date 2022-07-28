@@ -1,21 +1,60 @@
+#* routes for dynamics pgs >> user specific content >> linked to db ------------------------------------------------------------------------------------------------------------------------
+# for routes
 from flask import Blueprint, redirect, render_template, flash, request, redirect, url_for
+# models of db
 from .models import Users, BlogPosts
+from app.extensions.database import db
+from sqlalchemy import desc
+# flask forms + login
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, ValidationError, TextAreaField
+from wtforms import StringField, SubmitField, PasswordField, ValidationError, TextAreaField, FileField
 from wtforms.validators import DataRequired, EqualTo, Length
 from wtforms.widgets import TextArea
-from app.extensions.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
-from flask_cachecontrol import cache, cache_for, dont_cache, Always, ResponseIsSuccessfulOrRedirect
+# cache caused issues with static files
+from flask_cachecontrol import dont_cache
+
+#! AWS S3 ------------------------------------------------------------------------------------------------------------------------
+# postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
+from app.config import S3_KEY, S3_SECRET, S3_LOCATION, S3BASEURL, S3_BUCKET
+import boto3
+s3_client = boto3.client('s3', 
+  aws_access_key_id=S3_KEY,
+   aws_secret_access_key=S3_SECRET,
+   region_name=S3_LOCATION
+   )
+
+#*AWS S3 for blog post images
+def s3_upload(data, name):
+  try:
+    upload_file_response = s3_client.put_object(Body=data,
+                                             Bucket=S3_BUCKET,
+                                             Key=name,
+                                             ContentType='image/jpeg')
+    print(f" ** Response - {upload_file_response}")
+  except Exception as e:
+        print("Something Happened: ", e)
+        return e
+
+def s3_remove(name):
+  try:
+    delete_file_response = s3_client.delete_object(
+                                              Bucket=S3_BUCKET,
+                                              Key=name)
+    print(f" ** Response - {delete_file_response}")
+  except Exception as e:
+          print("Something Happened: ", e)
+          return e
+
+
+# todo: log errors? flash & error msgs must be fixed - issues on redirect url_for
 
 blueprint = Blueprint('dynamic_pgs', __name__)
 
-# ! /////////// flash & error msgs must be fixed - issues on redirect url_for
+#! create forms class ------------------------------------------------------------------------------------------------------------------------
 
-# create forms class
-
-# * form for creating a user
+#* form for creating a user
 class SignUpForm(FlaskForm):
     user_name = StringField("Username:", validators=[DataRequired()])
     bio = TextAreaField("Short Bio:")
@@ -24,20 +63,22 @@ class SignUpForm(FlaskForm):
 
     submit = SubmitField("Submit")
 
-# * form for creating a post
+#* form for creating a post
 class PostForm(FlaskForm):
+    file = FileField("File Please", validators=[DataRequired()])
     title = StringField("Title", validators=[DataRequired()])
-    image = StringField("Image URL", validators=[DataRequired()])
+    # image = StringField("Image URL", validators=[DataRequired()])
     description = StringField("Description", validators=[DataRequired()], widget=TextArea())
     submit = SubmitField("Submit")
    
-# * form for login
+#* form for login
 class LoginForm(FlaskForm):
     user_name = StringField("Username:", validators=[DataRequired()])
     password = PasswordField('Password:', validators=[DataRequired(), EqualTo('password_hash_confirm', message='Passwords must match.')])
     submit = SubmitField("Submit")
 
-# ! user signup related
+#! user signup related ------------------------------------------------------------------------------------------------------------------------
+
 # add db record
 @blueprint.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -66,7 +107,7 @@ def signup():
     form.password_hash.data = ''
   return render_template('user_pgs/signup.html', title='Sign-Up', user_name=user_name, form=form)
 
-# update db record
+#* update db record
 @blueprint.route('/update/<int:id>', methods=["GET", "POST"])
 @login_required
 def update(id):
@@ -89,7 +130,7 @@ def update(id):
   else:
     return render_template('user_pgs/update.html', title='Update Details', form=form, update_user_info=update_user_info, id=id)
 
-# delete db record
+#* delete db record
 @blueprint.route('/delete/<int:id>')
 @login_required
 def delete(id):
@@ -107,10 +148,7 @@ def delete(id):
     # flash("Hmmm... Something did not work. Try again later.")
     return render_template('user_pgs/signup.html', title='Delete User', user_name=user_name, form=form, delete_user_info=delete_user_info, id=id)
 
-# todo: log errors?
-# todo: sort out slugs
-
-# login pg
+#* login pg
 @blueprint.route('/login', methods=["GET", "POST"])
 def login():
   # error = None
@@ -135,7 +173,8 @@ def logout():
 def dashboard():
   return render_template('user_pgs/dashboard.html', title='User Dashboard')
 
-# ! blog post related
+#! blog post related ------------------------------------------------------------------------------------------------------------------------
+
 # create a post
 @blueprint.route('/gisart-gallery/create', methods=["GET", "POST"])
 @login_required
@@ -143,40 +182,40 @@ def create_post():
   form = PostForm()
 
   if form.validate_on_submit():
+    # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
+    s3_upload(form.file.data, form.title.data)
     # one-to-many relationship
     author = current_user.id
-    post = BlogPosts(title=form.title.data, image=form.image.data, description=form.description.data, author_id=author)
-
+    post = BlogPosts(title=form.title.data, image=S3BASEURL+form.title.data, description=form.description.data, author_id=author)
+    
     db.session.add(post)
     db.session.commit()
 
     # clear the form
     form.title.data = ''
-    form.image.data = ''
     form.description.data = ''
     return redirect(url_for('dynamic_pgs.view_posts'))
     # flash("Post successfully created!")
     
   return render_template('blog_post_pgs/create_post.html', title='Share Your GISart', form=form)
 
-# todo: change image url place holder to actual  >> blobs
-
-# view all posts
+#*view all posts
 @blueprint.route('/gisart-gallery/view')
 @dont_cache()
 def view_posts():
   # collect posts from db
-  posts = BlogPosts.query.order_by(BlogPosts.date_posted)
+  
+  posts = BlogPosts.query.order_by(BlogPosts.date_posted.desc())
   return render_template('blog_post_pgs/view_posts.html', title='GISart Gallery', posts=posts)
 
-# view a single post on a page
+#* view a single post on a page
 @blueprint.route('/gisart-gallery/view/<int:id>')
 @dont_cache()
 def single_post(id):
   post = BlogPosts.query.get_or_404(id)
   return render_template('blog_post_pgs/single_post.html', post=post, id=post.id)
 
-# deleta a post 
+#* deleta a post 
 @blueprint.route('/gisart-gallery/delete/<int:id>')
 @login_required
 def delete_post(id):
@@ -184,6 +223,7 @@ def delete_post(id):
   id = current_user.id
   if id == delete_this_post.author.id or id == 1:
     try:
+      s3_remove(delete_this_post.title)
       db.session.delete(delete_this_post)
       db.session.commit()
       # flash("Your post was successfully deleted.")
@@ -226,8 +266,7 @@ def edit_post(id):
     # flash('Unauthorized.')
     return redirect(url_for('dynamic_pgs.view_posts'))
 
-# ! the chosen one
-# view a single post on a page
+#* the chosen one
 @blueprint.route('/admin', methods=["GET", "POST"])
 @login_required
 def admin():
