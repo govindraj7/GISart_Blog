@@ -13,6 +13,7 @@ class Users(db.Model, CRUDMixin, UserMixin):
     user_name = db.Column(db.String(144), unique=True, nullable=False)
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     bio = db.Column(db.String(400), nullable=True)
+    profile_pic = db.Column(db.String, nullable=False)
     role = db.Column(db.String(32), nullable=True,  default='User')
     # security - hashed password stored
     password_hash = db.Column(db.String(128))
@@ -46,7 +47,7 @@ class BlogPosts(db.Model):
     title = db.Column(db.String(128), unique=True, nullable=False)
     slug = db.Column(db.String(128), unique=True, nullable=False)
     image = db.Column(db.String, nullable=False)
-    description = db.Column(db.String(128), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     #  foreign key linking one user to post(s)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))

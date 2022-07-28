@@ -26,13 +26,21 @@
 
   <br />
   <!-- signup form -->
-  <form method="POST" class="flex justify-content-md-center my_form">
-    <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
+  <form
+    method="POST"
+    class="flex justify-content-md-center my_form"
+    enctype="multipart/form-data"
+  >
+    <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, because hackers deffo want to target this -->
     {{ form.hidden_tag() }}
     <!-- the form -->
     <!-- * user name -->
     {{ form.user_name.label (class="form-label") }} {{
     form.user_name(class="form-control") }}
+    <br />
+    <!-- * file  -->
+    {{ form.file.label (class="form-label") }} {{
+    form.file(class="form-control") }}
     <br />
     <!-- * user bio -->
     {{ form.bio.label (class="form-label") }} {{ form.bio(class="form-control")

@@ -2,35 +2,53 @@
 %}
 <section id="login" class="container form_pg">
   <h1>Admin Area</h1>
+  <h5>
+    You don't really have any privileges other than being able to delete
+    anyone's post... and access to this super cool table. But that is it.
+  </h5>
   <br /><br />
   <h3>List of All Current Users</h3>
-  <table class="table table-dark table-striped table-hover">
-    <thead>
-      <tr class="table-active text-muted">
-        <th>ID</th>
-        <th>Username</th>
-        <th>Role</th>
-        <th>Member Since</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for a_user in all_users %}
-      <tr>
-        <td class="id_col">{{ a_user. id}}</td>
-        <td>{{ a_user.user_name }}</td>
-        <td>{{ a_user.role }}</td>
-        <td>{{ a_user.date_added.date() }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="d-flex justify-content-center">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Member Since</th>
+          <th class="d-flex justify-content-center">Display Picture</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a_user in all_users %}
+        <tr>
+          <td class="id_col">{{ a_user. id}}</td>
+          <td>{{ a_user.user_name }}</td>
+          <td>{{ a_user.role }}</td>
+          <td>{{ a_user.date_added.date() }}</td>
+          <td class="d-flex justify-content-center">
+            <div class="admin-table-img">
+              <img
+                type="image/png"
+                src="{{ a_user.profile_pic }}"
+                alt="image"
+                loading="lazy"
+                class="card-img-top profile-picture"
+              />
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <div class="img-bg">
   <img
     type="image/png"
-    src="{{url_for('static', filename='images/spacex-dark.png')}}"
-    alt="image"
+    src="{{url_for('static', filename='images/spacex-bg.png')}}"
+    alt="Elon Musk in a cloud of happy smoke"
     aria-label="Description of the overall image"
     loading="lazy"
   />

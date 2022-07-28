@@ -14,7 +14,6 @@ form {
 
 .my_form {
   background: #6b6b6b17;
-  border-radius: 16px;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: solid 1px rgba(255, 255, 255, 0.084);
@@ -27,20 +26,6 @@ form {
 
 .btn-sm {
   font-size: 0.8rem;
-}
-
-.table {
-  margin-top: 1rem;
-  text-align: left;
-  width: 90%;
-}
-
-.id_col {
-  width: 2rem;
-}
-
-.col {
-  min-height: 360px;
 }
 
 /** ///// media rules ///// ------------------------------------------------------------------------------------------------------------------------ */

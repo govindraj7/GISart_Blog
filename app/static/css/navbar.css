@@ -9,7 +9,7 @@ nav {
   top: 0;
   left: 0;
   padding: 0 10vw;
-  margin-bottom: 12vh;
+  margin-bottom: 8vh;
   z-index: 128;
 }
 
@@ -41,4 +41,12 @@ footer {
 
 #login-link {
   margin-left: 0.5 rem;
+}
+
+/** ///// media rules ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+@media only screen and (max-width: 600px) {
+  nav {
+    margin-bottom: 6vh;
+  }
 }

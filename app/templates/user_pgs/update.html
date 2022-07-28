@@ -41,8 +41,8 @@
     form.user_name(class="form-control", value=update_user_info.user_name) }}
     <br />
     <!-- * user bio -->
-    {{ form.bio.label (class="form-label") }} {{ form.bio(class="form-control")
-    }}
+    {{ form.bio.label (class="form-label") }} {{ form.bio(class="form-control",
+    value=update_user_info.bio) }}
     <br />
     <br />
     {{ form.submit(class="btn btn-warning text-dark") }}

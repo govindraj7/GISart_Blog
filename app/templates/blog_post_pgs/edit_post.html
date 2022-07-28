@@ -31,11 +31,12 @@
     <!-- the form -->
     <!-- * post title -->
     {{ form.title.label (class="form-label") }} {{
-    form.title(class="form-control") }}
+    form.title(class="form-control", value=edit_this_post.title) }}
     <br />
     <!-- * description text area -->
     {{ form.description.label (class="form-label") }} {{
-    form.description(class="form-control", rows="5") }}
+    form.description(class="form-control", rows="5", value=edit_this_post.bio)
+    }}
     <br />
     <br />
     <hr />

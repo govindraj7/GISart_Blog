@@ -5,6 +5,7 @@ from flask import Blueprint, redirect, render_template, flash, request, redirect
 from .models import Users, BlogPosts
 from app.extensions.database import db
 from sqlalchemy import desc
+from slugify import slugify
 # flask forms + login
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, ValidationError, TextAreaField, FileField
@@ -57,6 +58,7 @@ blueprint = Blueprint('dynamic_pgs', __name__)
 #* form for creating a user
 class SignUpForm(FlaskForm):
     user_name = StringField("Username:", validators=[DataRequired()])
+    file = FileField("Choose a Profile Picture", validators=[DataRequired()])
     bio = TextAreaField("Short Bio:")
     password_hash = PasswordField('Password:', validators=[DataRequired(), EqualTo('password_hash_confirm', message='Passwords must match.')])
     password_hash_confirm = PasswordField('Confirm Password:', validators=[DataRequired()])
@@ -67,7 +69,6 @@ class SignUpForm(FlaskForm):
 class PostForm(FlaskForm):
     file = FileField("File Please", validators=[DataRequired()])
     title = StringField("Title", validators=[DataRequired()])
-    # image = StringField("Image URL", validators=[DataRequired()])
     description = StringField("Description", validators=[DataRequired()], widget=TextArea())
     submit = SubmitField("Submit")
    
@@ -91,8 +92,10 @@ def signup():
     user = Users.query.filter_by(user_name=form.user_name.data).first()
     if user is None:
       try:
+         # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
+        s3_upload(form.file.data, form.user_name.data)
         hashed_pw = generate_password_hash(form.password_hash.data, "sha256")
-        user = Users(user_name=form.user_name.data, bio=form.bio.data, password_hash=hashed_pw)
+        user = Users(user_name=form.user_name.data, profile_pic=S3BASEURL+form.user_name.data, bio=form.bio.data, password_hash=hashed_pw)
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('dynamic_pgs.dashboard'))
@@ -108,11 +111,13 @@ def signup():
   return render_template('user_pgs/signup.html', title='Sign-Up', user_name=user_name, form=form)
 
 #* update db record
-@blueprint.route('/update/<int:id>', methods=["GET", "POST"])
+@blueprint.route('/update/<slug>/<int:id>', methods=["GET", "POST"])
 @login_required
-def update(id):
+def update(id, slug):
   form = SignUpForm()
   update_user_info = Users.query.get_or_404(id)
+  form.user_name.data = update_user_info.user_name
+  form.bio.data = update_user_info.bio
 
   if request.method == "POST":
     update_user_info.user_name = request.form['user_name']
@@ -128,12 +133,12 @@ def update(id):
       return redirect(url_for('dynamic_pgs.signup'))
 
   else:
-    return render_template('user_pgs/update.html', title='Update Details', form=form, update_user_info=update_user_info, id=id)
+    return render_template('user_pgs/update.html', title='Update Details', form=form, update_user_info=update_user_info, id=id, slug=slug)
 
 #* delete db record
-@blueprint.route('/delete/<int:id>')
+@blueprint.route('/delete/<slug>/<int:id>')
 @login_required
-def delete(id):
+def delete(id, slug):
   user_name = None
   form = SignUpForm()
   delete_user_info = Users.query.get_or_404(id)
@@ -146,7 +151,7 @@ def delete(id):
 
   except:
     # flash("Hmmm... Something did not work. Try again later.")
-    return render_template('user_pgs/signup.html', title='Delete User', user_name=user_name, form=form, delete_user_info=delete_user_info, id=id)
+    return render_template('user_pgs/signup.html', title='Delete User', user_name=user_name, form=form, delete_user_info=delete_user_info, id=id, slug=slug)
 
 #* login pg
 @blueprint.route('/login', methods=["GET", "POST"])
@@ -204,21 +209,20 @@ def create_post():
 @dont_cache()
 def view_posts():
   # collect posts from db
-  
   posts = BlogPosts.query.order_by(BlogPosts.date_posted.desc())
   return render_template('blog_post_pgs/view_posts.html', title='GISart Gallery', posts=posts)
 
 #* view a single post on a page
-@blueprint.route('/gisart-gallery/view/<int:id>')
+@blueprint.route('/gisart-gallery/view/<slug>/<int:id>')
 @dont_cache()
-def single_post(id):
+def single_post(id, slug):
   post = BlogPosts.query.get_or_404(id)
-  return render_template('blog_post_pgs/single_post.html', post=post, id=post.id)
+  return render_template('blog_post_pgs/single_post.html', post=post, id=post.id, slug=post.slug)
 
 #* deleta a post 
-@blueprint.route('/gisart-gallery/delete/<int:id>')
+@blueprint.route('/gisart-gallery/delete/<slug>/<int:id>')
 @login_required
-def delete_post(id):
+def delete_post(id, slug):
   delete_this_post = BlogPosts.query.get_or_404(id)
   id = current_user.id
   if id == delete_this_post.author.id or id == 1:
@@ -237,17 +241,21 @@ def delete_post(id):
     # flash('Unauthorized.')
     return redirect(url_for('dynamic_pgs.view_posts'))
 
-@blueprint.route('/gisart-gallery/edit/<int:id>', methods=["GET", "POST"])
+@blueprint.route('/gisart-gallery/edit/<slug>/<int:id>', methods=["GET", "POST"])
 @login_required
-def edit_post(id):
+def edit_post(id, slug):
   form = PostForm()
   edit_this_post = BlogPosts.query.get_or_404(id)
   id = current_user.id
 
   if id == edit_this_post.author.id or id == 1:
+    form.title.data  = edit_this_post.title 
+    form.description.data = edit_this_post.description
     if request.method == "POST":
       edit_this_post.title = request.form['title']
       edit_this_post.description = request.form['description']
+      edit_this_post.slug = slugify(request.form['title'])
+
 
       try:
         db.session.add(edit_this_post)
@@ -258,10 +266,10 @@ def edit_post(id):
 
       except:
         # flash("Oops. Something went wrong. Try again later.")
-        return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id)
+        return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id, slug=edit_this_post.slug)
 
     else:
-      return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id)
+      return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id, slug=edit_this_post.slug)
   else:
     # flash('Unauthorized.')
     return redirect(url_for('dynamic_pgs.view_posts'))
