@@ -3,7 +3,6 @@ from app.extensions.database import db, migrate
 from . import basic_pgs, dynamic_pgs
 from app.extensions.authentications import login_manager
 
-
 # create flask instance
 def create_app():
   app = Flask(__name__)
