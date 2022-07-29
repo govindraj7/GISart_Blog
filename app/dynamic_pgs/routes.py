@@ -98,24 +98,37 @@ def signup():
   user_name = None
   form = SignUpForm()
 
-  # validate form  
   if form.validate_on_submit():
-    
-    user = Users.query.filter_by(user_name=form.user_name.data).first()
-    if user is None:
-      try:
-         # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
-        s3_upload(form.file.data, form.user_name.data)
-        hashed_pw = generate_password_hash(form.password_hash.data, "sha256")
-        user = Users(user_name=form.user_name.data, profile_pic=S3BASEURL+form.user_name.data, bio=form.bio.data, password_hash=hashed_pw)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('dynamic_pgs.dashboard'))
+    image = request.files["file"]
+    blob =  image.read()
+    image_size = len(blob)
+    max_size = 1024 * 1000 * 5
+    if image_size > max_size:
+      flash("File size is too large, 5MB is the limit.")
+      return redirect(request.url)
+    # ensure only an image file is submitted
+    if image.filename == "":
+      flash("File must have a name.")
+      return redirect(request.url)
+    elif not allowed_img_type(image.filename):
+      flash("That file format is not supported. Try png, jpg or jpeg.")
+      return redirect(request.url)
+    else:
+      user = Users.query.filter_by(user_name=form.user_name.data).first()
+      if user is None:
+        try:
+          # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
+          s3_upload(form.file.data, form.user_name.data)
+          hashed_pw = generate_password_hash(form.password_hash.data, "sha256")
+          user = Users(user_name=form.user_name.data, profile_pic=S3BASEURL+form.user_name.data, bio=form.bio.data, password_hash=hashed_pw)
+          db.session.add(user)
+          db.session.commit()
+          return redirect(url_for('dynamic_pgs.dashboard'))
 
-      except:
-          flash("Username already exists")
-          return redirect(url_for('dynamic_pgs.signup'))
-    
+        except:
+            flash("Username already exists")
+            return redirect(url_for('dynamic_pgs.signup'))
+      
     # clear the form
     form.user_name.data = ''
     form.bio.data = ''
