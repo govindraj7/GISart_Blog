@@ -4,9 +4,8 @@ load_dotenv()
 
 # db variable from .env
 from os import environ
-SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL')
-# DATABASE_URL=sqlite:///users.db
-
+# SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL') 
+SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL').replace("://", "ql://", 1)
 # super secret key
 SECRET_KEY = environ.get('SECRET_KEY')
 S3BASEURL = environ.get('S3BASEURL')
