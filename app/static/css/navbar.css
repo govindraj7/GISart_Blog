@@ -28,11 +28,31 @@ footer {
   z-index: 128;
 }
 
+li.nav-item::marker {
+  content: "";
+}
 /** ///// classes & ids ///// ------------------------------------------------------------------------------------------------------------------------ */
 
 .nav-link {
   padding: 0;
   position: relative;
+  text-decoration: none;
+}
+
+.nav-link:link {
+  color: var(--pri-txt);
+}
+
+.nav-link:hover {
+  color: var(--highlight-sec);
+}
+
+.nav-link:visited {
+  color: var(--lowlight-sec);
+}
+
+.nav-link:focus {
+  color: var(--highlight);
 }
 
 #signup-link {

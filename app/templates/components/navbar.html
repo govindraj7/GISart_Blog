@@ -90,10 +90,9 @@
             {% endif %}{% endif %}
           </ul>
         </li>
+        {% if current_user.is_authenticated %} {% else %}
         <li class="nav-item">
           <!-- * signup & login only seen if session is unauthenticated -->
-
-          {% if current_user.is_authenticated %} {% else %}
           <a
             id="signup-link"
             class="nav-link hover-line"
@@ -107,8 +106,8 @@
             href="{{ url_for('dynamic_pgs.login') }}"
             >Login</a
           >
-          {% endif %}
         </li>
+        {% endif %}
       </ul>
     </div>
   </div>

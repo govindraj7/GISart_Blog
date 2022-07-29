@@ -10,13 +10,11 @@ blueprint = Blueprint('basic_pgs', __name__)
 # create route decorator
 @blueprint.route('/welcome')
 @blueprint.route('/home')
-@dont_cache()
 def index():
   return render_template('basic_pgs/index.html',  title="Welcome!")
 
 # create route decorator
 @blueprint.route('/about')
-@dont_cache()
 def about():
   return render_template('basic_pgs/about.html',  title="About")
 

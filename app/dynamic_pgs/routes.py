@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, flash, request, redirect
 # models of db
 from .models import Users, BlogPosts
 from app.extensions.database import db
-from sqlalchemy import desc
+from sqlalchemy import desc, true
 from slugify import slugify
 # flask forms + login
 from flask_wtf import FlaskForm
@@ -13,12 +13,10 @@ from wtforms.validators import DataRequired, EqualTo, Length
 from wtforms.widgets import TextArea
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
-# cache caused issues with static files
-from flask_cachecontrol import dont_cache
 
 #! AWS S3 ------------------------------------------------------------------------------------------------------------------------
 # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
-from app.config import S3_KEY, S3_SECRET, S3_LOCATION, S3BASEURL, S3_BUCKET
+from app.config import S3_KEY, S3_SECRET, S3_LOCATION, S3BASEURL, S3_BUCKET, ALLOWED_EXTENSIONS
 import boto3
 s3_client = boto3.client('s3', 
   aws_access_key_id=S3_KEY,
@@ -27,6 +25,7 @@ s3_client = boto3.client('s3',
    )
 
 #*AWS S3 for blog post images
+# store img from AWS S3 Bucket
 def s3_upload(data, name):
   try:
     upload_file_response = s3_client.put_object(Body=data,
@@ -38,6 +37,7 @@ def s3_upload(data, name):
         print("Something Happened: ", e)
         return e
 
+# delete img from AWS S3 Bucket
 def s3_remove(name):
   try:
     delete_file_response = s3_client.delete_object(
@@ -48,6 +48,18 @@ def s3_remove(name):
           print("Something Happened: ", e)
           return e
 
+# to try ensure only an img file is submitted
+def allowed_img_type(image_type):
+  if not "." in image_type:
+    return False
+
+  ext = image_type.rsplit(".", 1)[1]
+
+  if ext.lower() in ALLOWED_EXTENSIONS:
+    return True
+  else:
+    return False
+  
 
 # todo: log errors? flash & error msgs must be fixed - issues on redirect url_for
 
@@ -174,39 +186,46 @@ def logout():
 # dashboard
 @blueprint.route('/dashboard', methods=["GET", "POST"])
 @login_required
-@dont_cache()
 def dashboard():
   return render_template('user_pgs/dashboard.html', title='User Dashboard')
 
 #! blog post related ------------------------------------------------------------------------------------------------------------------------
-
 # create a post
 @blueprint.route('/gisart-gallery/create', methods=["GET", "POST"])
 @login_required
 def create_post():
   form = PostForm()
-
+  
   if form.validate_on_submit():
-    # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
-    s3_upload(form.file.data, form.title.data)
-    # one-to-many relationship
-    author = current_user.id
-    post = BlogPosts(title=form.title.data, image=S3BASEURL+form.title.data, description=form.description.data, author_id=author)
-    
-    db.session.add(post)
-    db.session.commit()
+    image = request.files["file"]
+    # ensure only an image file is submitted
+    if image.filename == "":
+      flash("File must have a name.")
+      return redirect(request.url)
+    elif not allowed_img_type(image.filename):
+      flash("That file format is not supported. Try png, jpg or jpeg.")
+      return redirect(request.url)
+    else:
+      # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
+      s3_upload(form.file.data, form.title.data)
+      # one-to-many relationship
+      author = current_user.id
+      post = BlogPosts(title=form.title.data, image=S3BASEURL+form.title.data, description=form.description.data, author_id=author)
 
-    # clear the form
-    form.title.data = ''
-    form.description.data = ''
-    flash("Post successfully created!")
-    return redirect(url_for('dynamic_pgs.view_posts'))
+      db.session.add(post)
+      db.session.commit()
+
+      # clear the form
+      form.title.data = ''
+      form.description.data = ''
+      flash("Post successfully created!")
+      return redirect(url_for('dynamic_pgs.view_posts'))
       
   return render_template('blog_post_pgs/create_post.html', title='Share Your GISart', form=form)
 
+
 #*view all posts
 @blueprint.route('/gisart-gallery/view')
-@dont_cache()
 def view_posts():
   # collect posts from db
   posts = BlogPosts.query.order_by(BlogPosts.date_posted.desc())
@@ -214,7 +233,6 @@ def view_posts():
 
 #* view a single post on a page
 @blueprint.route('/gisart-gallery/view/<slug>/<int:id>')
-@dont_cache()
 def single_post(id, slug):
   post = BlogPosts.query.get_or_404(id)
   return render_template('blog_post_pgs/single_post.html', post=post, id=post.id, slug=post.slug)
@@ -254,7 +272,6 @@ def edit_post(id, slug):
       edit_this_post.title = request.form['title']
       edit_this_post.description = request.form['description']
       edit_this_post.slug = slugify(request.form['title'])
-
 
       try:
         db.session.add(edit_this_post)

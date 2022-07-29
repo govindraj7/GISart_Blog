@@ -1,5 +1,9 @@
 /*! ///// general css ///// */
 
+html {
+  background-color: var(--pri-bg);
+}
+
 :root {
   font-size: 16px;
   --font-fam: "Montserrat", sans-serif;
@@ -12,14 +16,13 @@
   --sec-bg: #fff;
 
   --highlight: #d9983d;
+  --highlight-sec: #11a2f6;
+  --lowlight-sec: #8e8e8e;
+
   --shadow: 0 0 8px #000;
 }
 
 /** ///// tags & elements ///// ------------------------------------------------------------------------------------------------------------------------ */
-
-html {
-  background-color: var(--pri-bg);
-}
 
 body {
   margin: 0;
@@ -45,6 +48,12 @@ a {
   font-weight: 100;
 }
 
+ul,
+li,
+a {
+  text-decoration: none;
+}
+
 h1 {
   color: var(--pri-txt);
   font-family: var(--font-head);
@@ -60,8 +69,15 @@ button,
 a:link {
   color: var(--pri-txt);
   font-family: var(--font-head);
-  text-decoration: none;
   text-shadow: none;
+}
+
+a:hover {
+  color: var(--highlight-sec);
+}
+
+a:visited {
+  color: var(--lowlight-sec);
 }
 
 button,
