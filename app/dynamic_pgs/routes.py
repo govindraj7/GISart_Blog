@@ -110,7 +110,7 @@ def signup():
     if image.filename == "":
       flash("File must have a name.")
       return redirect(request.url)
-    elif not allowed_img_type(image.filename):
+    if not allowed_img_type(image.filename):
       flash("That file format is not supported. Try png, jpg or jpeg.")
       return redirect(request.url)
     else:
@@ -220,24 +220,23 @@ def create_post():
     if image.filename == "":
       flash("File must have a name.")
       return redirect(request.url)
-    elif not allowed_img_type(image.filename):
+    if not allowed_img_type(image.filename):
       flash("That file format is not supported. Try png, jpg or jpeg.")
       return redirect(request.url)
-    else:
-      # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
-      s3_upload(form.file.data, form.title.data)
-      # one-to-many relationship
-      author = current_user.id
-      post = BlogPosts(title=form.title.data, image=S3BASEURL+form.title.data, description=form.description.data, author_id=author)
+    # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
+    s3_upload(form.file.data, form.title.data)
+    # one-to-many relationship
+    author = current_user.id
+    post = BlogPosts(title=form.title.data, image=S3BASEURL+form.title.data, description=form.description.data, author_id=author)
 
-      db.session.add(post)
-      db.session.commit()
+    db.session.add(post)
+    db.session.commit()
 
-      # clear the form
-      form.title.data = ''
-      form.description.data = ''
-      flash("Post successfully created!")
-      return redirect(url_for('dynamic_pgs.view_posts'))
+    # clear the form
+    form.title.data = ''
+    form.description.data = ''
+    flash("Post successfully created!")
+    return redirect(url_for('dynamic_pgs.view_posts'))
       
   return render_template('blog_post_pgs/create_post.html', title='Share Your GISart', form=form)
 
