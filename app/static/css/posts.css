@@ -9,10 +9,6 @@
   padding: 0.5rem 0.5rem;
 }
 
-.profile-card {
-  max-width: 18rem;
-}
-
 .card-header {
   padding: 0;
 }
@@ -55,6 +51,12 @@
 
 .many-posts {
   filter: brightness(50%);
+  transition: all 0.5s ease-in-out;
+}
+
+.post-card:hover .many-posts {
+  filter: brightness(100%);
+  transition: all 0.5s ease-in-out;
 }
 
 .post-card {

@@ -122,6 +122,7 @@ def update(id, slug):
   if request.method == "POST":
     update_user_info.user_name = request.form['user_name']
     update_user_info.bio = request.form['bio']
+    update_user_info.slug = slugify(request.form['user_name'])
 
     try:
       db.session.commit()
@@ -187,21 +188,24 @@ def create_post():
   form = PostForm()
 
   if form.validate_on_submit():
-    # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
-    s3_upload(form.file.data, form.title.data)
-    # one-to-many relationship
-    author = current_user.id
-    post = BlogPosts(title=form.title.data, image=S3BASEURL+form.title.data, description=form.description.data, author_id=author)
-    
-    db.session.add(post)
-    db.session.commit()
+    if form.file.data not in UPLOAD_EXTENSIONS:
+      return "Invalid image", 400
+    else:
+      # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
+      s3_upload(form.file.data, form.title.data)
+      # one-to-many relationship
+      author = current_user.id
+      post = BlogPosts(title=form.title.data, image=S3BASEURL+form.title.data, description=form.description.data, author_id=author)
+      
+      db.session.add(post)
+      db.session.commit()
 
-    # clear the form
-    form.title.data = ''
-    form.description.data = ''
-    return redirect(url_for('dynamic_pgs.view_posts'))
-    # flash("Post successfully created!")
-    
+      # clear the form
+      form.title.data = ''
+      form.description.data = ''
+      return redirect(url_for('dynamic_pgs.view_posts'))
+      # flash("Post successfully created!")
+      
   return render_template('blog_post_pgs/create_post.html', title='Share Your GISart', form=form)
 
 #*view all posts

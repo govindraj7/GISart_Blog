@@ -46,7 +46,7 @@
             class="card-img-top post-img-top many-posts"
           />
           <div class="card-img-overlay">
-            <h2 class="card-title text-white">{{ post.title.upper() }}</h2>
+            <h2 class="card-title text-white">{{ post.title|upper }}</h2>
             <div class="card-txt">
               <p class="card-text">
                 By <strong>{{ post.author.user_name }}</strong>

@@ -29,7 +29,7 @@
   <br />
   <!-- signup(update) form -->
   <form
-    action="/update/{{ update_user_info.id }}"
+    action="/update/{{ update_user_info.slug }}/{{ update_user_info.id }}"
     method="POST"
     class="flex justify-content-md-center my_form"
   >
@@ -48,7 +48,7 @@
     {{ form.submit(class="btn btn-warning text-dark") }}
     <a
       class="btn btn-danger text-dark"
-      href="{{ url_for('dynamic_pgs.delete', id=id) }}"
+      href="{{ url_for('dynamic_pgs.delete', id=id, slug=slug) }}"
       >Delete User</a
     >
     <button class="btn btn-primary text-dark" onclick="history.back()">
@@ -96,4 +96,4 @@
     loading="lazy"
   />
 </div>
-{% endblock %}
+{% include 'components/footer.html' %} {% endblock %}
