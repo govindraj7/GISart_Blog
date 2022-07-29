@@ -13,6 +13,8 @@ from wtforms.validators import DataRequired, EqualTo, Length
 from wtforms.widgets import TextArea
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
+# for file size check
+import os
 
 #! AWS S3 ------------------------------------------------------------------------------------------------------------------------
 # postgressql does not support blobs, so AWS S3 is used to store imgs & generate img url which is stored in db
@@ -99,12 +101,13 @@ def signup():
   form = SignUpForm()
 
   if form.validate_on_submit():
-    image = request.files["file"]
-    image_size = len(form.file.data)
-    max_size = 1024 * 1000 * 5
-    if image_size > max_size:
-      flash("File size is too large, 5MB is the limit.")
-      return redirect(request.url)
+    image = request.files['file']
+    # image.seek(0, os.SEEK_END)
+    # image_size = image.tell()
+    # max_size = 1024 * 1000 * 5
+    # if image_size > max_size:
+    #   flash("File size is too large, 5MB is the limit.")
+    #   return redirect(request.url)
     # ensure only an image file is submitted
     if image.filename == "":
       flash("File must have a name.")
@@ -208,12 +211,13 @@ def create_post():
   form = PostForm()
   
   if form.validate_on_submit():
-    image = request.files["file"]
-    image_size = len(form.file.data)
-    max_size = 1024 * 1000 * 5
-    if image_size > max_size:
-      flash("File size is too large, 5MB is the limit.")
-      return redirect(request.url)
+    image = request.files['file']
+    # image.seek(0, os.SEEK_END)
+    # image_size = image.tell()
+    # max_size = 1024 * 1000 * 5
+    # if image_size > max_size:
+    #   flash("File size is too large, 5MB is the limit.")
+    #   return redirect(request.url)
     # ensure only an image file is submitted
     if image.filename == "":
       flash("File must have a name.")
