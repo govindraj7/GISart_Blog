@@ -172,7 +172,6 @@ def login():
   form = LoginForm()
   user = Users.query.filter_by(user_name=form.user_name.data).first()
   if not user or not check_password_hash(user.password_hash, form.password.data):
-    flash("Hmmm... Something did not work. Try again later.")
     return render_template('user_pgs/login.html', title='Login', form=form)
   login_user(user)
   return redirect(url_for('dynamic_pgs.dashboard'))
