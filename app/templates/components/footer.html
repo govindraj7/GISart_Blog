@@ -1,4 +1,16 @@
 <footer class="mt-auto text-white-50">
+  <small class="text-muted credit">
+    Photo by
+    <a
+      href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+      >SpaceX</a
+    >
+    on
+    <a
+      href="https://unsplash.com/s/photos/spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+      >Unsplash</a
+    >
+  </small>
   {% if current_user.is_authenticated %}
   <small>
     Logged in as {{ current_user.user_name }}. {% if current_user.id == 1 %}

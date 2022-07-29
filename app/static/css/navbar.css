@@ -69,4 +69,7 @@ li.nav-item::marker {
   nav {
     margin-bottom: 6vh;
   }
+  footer {
+    height: 5rem;
+  }
 }

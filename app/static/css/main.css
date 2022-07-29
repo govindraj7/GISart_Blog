@@ -127,6 +127,13 @@ a:focus {
   transform-origin: bottom left;
 }
 
+.credit {
+  font-size: 0.5rem;
+  padding: 8px;
+  position: absolute;
+  left: 1rem;
+}
+
 /** ///// img related ///// ------------------------------------------------------------------------------------------------------------------------ */
 
 .img-bg {
@@ -174,5 +181,13 @@ a:focus {
 @media only screen and (max-width: 600px) {
   .container {
     width: 95%;
+  }
+  .credit {
+    font-size: 0.5rem;
+    padding: 8px;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
