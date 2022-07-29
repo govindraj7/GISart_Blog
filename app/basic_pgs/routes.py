@@ -1,4 +1,7 @@
+#* routes for basic pgs ------------------------------------------------------------------------------------------------------------------------
 from flask import Blueprint, render_template, redirect, send_file
+# cache caused issues with static files
+from flask_cachecontrol import dont_cache
 
 blueprint = Blueprint('basic_pgs', __name__)
 
@@ -6,19 +9,20 @@ blueprint = Blueprint('basic_pgs', __name__)
 @blueprint.route('/')
 # create route decorator
 @blueprint.route('/welcome')
+@blueprint.route('/home')
+@dont_cache()
 def index():
   return render_template('basic_pgs/index.html',  title="Welcome!")
 
 # create route decorator
 @blueprint.route('/about')
+@dont_cache()
 def about():
   return render_template('basic_pgs/about.html',  title="About")
-    # return redirect(url_for('basic_pgs.about')) 
-    # redirect kept giving error 404
 
 # create redirect route decorator
 @blueprint.route('/inspiration')
-def inpsiration():
+def inspiration():
   return redirect('https://unsplash.com/s/photos/satellite-imagery')
 
 # placeholder for download file

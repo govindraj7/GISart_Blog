@@ -1,14 +1,24 @@
+/*! ///// general css ///// */
+
 :root {
   font-size: 16px;
-  --font-fam: "Gudea", sans-serif;
+  --font-fam: "Montserrat", sans-serif;
+  --font-head: "Orbitron", sans-serif;
 
   --pri-txt: #fff;
-  --sec-txt: #1c1c1c;
+  --sec-txt: #141414;
 
-  --pri-bg: #1c1c1c;
+  --pri-bg: #141414;
   --sec-bg: #fff;
 
-  --highlight: #2c67fc;
+  --highlight: #d9983d;
+  --shadow: 0 0 8px #000;
+}
+
+/** ///// tags & elements ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+html {
+  background-color: var(--pri-bg);
 }
 
 body {
@@ -16,11 +26,12 @@ body {
   background-color: var(--pri-bg);
 }
 
-.container {
-  width: 70vw;
+section,
+article {
+  position: relative;
+  z-index: 128;
 }
 
-h1,
 h2,
 h3,
 h4,
@@ -30,17 +41,98 @@ p,
 a {
   color: var(--pri-txt);
   font-family: var(--font-fam);
+  text-shadow: var(--shadow);
+  font-weight: 100;
 }
 
 h1 {
-  font-size: 3rem;
+  color: var(--pri-txt);
+  font-family: var(--font-head);
+  font-size: 2.5rem;
+  text-shadow: var(--shadow);
 }
 
 p {
   font-size: 1rem;
 }
 
-/* * ///// custom scrollbar ///// */
+button,
+a:link {
+  color: var(--pri-txt);
+  font-family: var(--font-head);
+  text-decoration: none;
+  text-shadow: none;
+}
+
+button,
+a:focus {
+  color: var(--highlight);
+}
+
+/** ///// classes ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+.container {
+  width: 70vw;
+}
+
+.spacer {
+  margin-bottom: 8rem;
+}
+.btn {
+  margin: 0.5rem 0.5rem 0 0;
+}
+
+.hover-line:link {
+  color: var(--pri-txt);
+  font-family: var(--font-head);
+  text-decoration: none;
+  transition: color 0.5s ease-in-out;
+  text-shadow: none;
+  display: inline-block;
+  position: relative;
+}
+
+.hover-line:after {
+  color: var(--pri-txt);
+  content: "";
+  position: absolute;
+  width: 80%;
+  transform: scaleX(0);
+  height: 1.2px;
+  bottom: -2px;
+  left: 10%;
+  background-color: var(--pri-txt);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-line:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/** ///// img related ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+.img-bg {
+  height: 100%;
+  /* width: 100%; */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.img-bg img {
+  background-repeat: no-repeat;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  filter: brightness(60%);
+}
+
+/** ///// custom scrollbar ///// ------------------------------------------------------------------------------------------------------------------------ */
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -48,7 +140,7 @@ p {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #3e3e3e;
 }
 
 /* Handle */
@@ -59,4 +151,12 @@ p {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/** ///// media rules ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+@media only screen and (max-width: 600px) {
+  .container {
+    width: 95%;
+  }
 }

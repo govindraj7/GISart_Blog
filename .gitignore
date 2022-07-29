@@ -1,5 +1,8 @@
 flaskVenv
 .DS_Store
 .env
-__pyache__
+__pycache__
 __init__.py
+database.db
+.vscode
+.pytest_cache

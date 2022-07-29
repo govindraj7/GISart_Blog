@@ -1,13 +1,20 @@
-{% extends 'base.html' %} {% block body %}
+{% extends 'base.html' %} {% block body %} {% include 'components/navbar.html'
+%}
 <section class="container">
   <h1>Error 404</h1>
   <h2>Page not found...</h2>
-  <div id="system" class="container system">
-    <img
-      type="image/svg"
-      src="{{url_for('static', filename='svgs/system.svg')}}"
-      alt="svg"
-      loading="lazy"
-    />
+  <button class="btn btn-secondary text-dark" onclick="history.back()">
+    Go Back
+  </button>
 </section>
+
+<div class="img-bg">
+  <img
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-dark.png')}}"
+    alt="image"
+    aria-label="Description of the overall image"
+    loading="lazy"
+  />
+</div>
 {% endblock %}

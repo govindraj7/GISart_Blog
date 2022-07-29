@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+<!-- add navbar component -->
+{% block body %}{% include 'components/navbar.html' %}
+<section id="update" class="container form_pg spacer">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %} {% if id == current_user.id %} {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>GISart</h1>
+  {% endif %}
+
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus
+    laborum nesciunt amet animi, neque ut quas cum maxime labore quia odit
+    saepe, quidem inventore vero perferendis incidunt porro tempore!
+  </p>
+
+  <p>Update your details.</p>
+
+  <br />
+  <!-- signup(update) form -->
+  <form
+    action="/update/{{ update_user_info.slug }}/{{ update_user_info.id }}"
+    method="POST"
+    class="flex justify-content-md-center my_form"
+  >
+    <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
+    {{ form.hidden_tag() }}
+    <!-- the form -->
+    <!-- * user name -->
+    {{ form.user_name.label (class="form-label") }} {{
+    form.user_name(class="form-control", value=update_user_info.user_name) }}
+    <br />
+    <!-- * user bio -->
+    {{ form.bio.label (class="form-label") }} {{ form.bio(class="form-control",
+    value=update_user_info.bio) }}
+    <br />
+    <br />
+    {{ form.submit(class="btn btn-warning text-dark") }}
+    <a
+      class="btn btn-danger text-dark"
+      href="{{ url_for('dynamic_pgs.delete', id=id, slug=slug) }}"
+      >Delete User</a
+    >
+    <button class="btn btn-primary text-dark" onclick="history.back()">
+      Go Back
+    </button>
+  </form>
+
+  {% else %}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="currentColor"
+      class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+      viewBox="0 0 16 16"
+      role="img"
+      aria-label="Warning:"
+    >
+      <path
+        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+      />
+    </svg>
+    Unauthorized
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  <h2>You are not authorized to do that.</h2>
+  <button class="btn btn-secondary text-dark" onclick="history.back()">
+    Go Back
+  </button>
+  {% endif %}
+</section>
+
+<div class="img-bg">
+  <img
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-dark.png')}}"
+    alt="image"
+    aria-label="Description of the overall image"
+    loading="lazy"
+  />
+</div>
+{% include 'components/footer.html' %} {% endblock %}

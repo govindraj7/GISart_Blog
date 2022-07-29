@@ -1,5 +1,52 @@
-.nav-bg-custom {
-  background-color: none;
-  padding: 4vh 8vw 0 8vw;
-  margin-bottom: 12vh;
+/*! ///// navbar & footer css ///// */
+
+/** ///// tags & elements ///// ------------------------------------------------------------------------------------------------------------------------ */
+nav {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.084);
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0 10vw;
+  margin-bottom: 8vh;
+  z-index: 128;
+}
+
+footer {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-top: solid 1px rgba(255, 255, 255, 0.084);
+  font-family: var(--font-head);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3rem;
+  padding-top: 0.5rem;
+  text-align: center;
+  z-index: 128;
+}
+
+/** ///// classes & ids ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+.nav-link {
+  padding: 0;
+  position: relative;
+}
+
+#signup-link {
+  margin-right: 0.5 rem;
+}
+
+#login-link {
+  margin-left: 0.5 rem;
+}
+
+/** ///// media rules ///// ------------------------------------------------------------------------------------------------------------------------ */
+
+@media only screen and (max-width: 600px) {
+  nav {
+    margin-bottom: 6vh;
+  }
 }

@@ -1,8 +1,54 @@
-<section id="hero" class="container">
-  <h1>Home</h1>
-  <p>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit
-    nobis, dolor consequuntur sit voluptates saepe possimus excepturi eaque odio
-    rerum aliquam cum ea distinctio maiores magni ipsam numquam facilis soluta?
-  </p>
+<section id="hero" class="container parent spacer">
+  <div class="child staggering">
+    {% block title %}
+    <h1 class="title-pg slide-rtl text-fade-in">GISart</h1>
+    {% endblock %} {% if current_user.is_authenticated %}
+    <p class="slide-ltr el">
+      <a class="hover-line" href="{{ url_for('basic_pgs.about') }}"
+        >Learn More</a
+      >
+    </p>
+    <p class="slide-ltr el">
+      <a
+        class="nav-link hover-line"
+        href="{{ url_for('dynamic_pgs.dashboard') }}"
+        >dashboard</a
+      >
+    </p>
+
+    {% else %}
+    <p class="slide-ltr el">
+      <a class="hover-line" href="{{ url_for('basic_pgs.about') }}"
+        >Learn More</a
+      >
+    </p>
+    <p class="slide-ltr el">
+      <a class="hover-line" href="{{ url_for('dynamic_pgs.signup') }}"
+        >Join Today</a
+      >
+    </p>
+    {% endif %}
+  </div>
 </section>
+
+<div class="img-bg">
+  <img
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-dark.png')}}"
+    alt="image"
+    aria-label="Description of the overall image"
+    loading="lazy"
+  />
+  <span class="bg-img-credit text-muted">
+    Photo by
+    <a
+      href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+      >SpaceX</a
+    >
+    on
+    <a
+      href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+      >Unsplash</a
+    ></span
+  >
+</div>

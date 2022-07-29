@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+<!-- navbar component -->
+{% block body %}{% include 'components/navbar.html' %}
+
+<section id="edit-post" class="container spacer">
+  {% for message in get_flashed_messages() %}
+
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  {% endfor %} {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>GISart</h1>
+  {% endif %}
+
+  <!-- locking down page -->
+  <!-- this should not be accessed as login_required should protect the page -->
+  {% if current_user.is_authenticated %}
+  <!-- blogpost form -->
+  <form method="POST" class="flex justify-content-md-center my_form">
+    <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
+    {{ form.hidden_tag() }}
+    <!-- the form -->
+    <!-- * post title -->
+    {{ form.title.label (class="form-label") }} {{
+    form.title(class="form-control", value=edit_this_post.title) }}
+    <br />
+    <!-- * description text area -->
+    {{ form.description.label (class="form-label") }} {{
+    form.description(class="form-control", rows="5", value=edit_this_post.bio)
+    }}
+    <br />
+    <br />
+    <hr />
+    {{ form.submit(class="btn btn-warning text-dark") }}
+    <button class="btn btn-primary text-dark" onclick="history.back()">
+      Go Back
+    </button>
+  </form>
+
+  {% else %}
+  <h6>Please login in or Signup to access this page.</h6>
+  <br />
+  <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.signup') }}"
+    >Sign-up</a
+  >
+  |
+  <a <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.login') }}"
+    >Login</a
+  >
+
+  {% endif %}
+</section>
+
+<div class="img-bg">
+  <img
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-light.png')}}"
+    alt="image"
+    loading="lazy"
+  />
+  Photo by
+  <a
+    href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >SpaceX</a
+  >
+  on
+  <a
+    href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+    >Unsplash</a
+  >
+</div>
+{% include 'components/footer.html' %} {% endblock %}

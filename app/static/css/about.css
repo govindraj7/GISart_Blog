@@ -1,3 +1,9 @@
+/* ! ///// about css ///// */
+
+#about .container {
+  margin-bottom: 0;
+}
+
 article {
   -webkit-columns: 2 200px;
   -moz-columns: 2 200px;
@@ -5,18 +11,29 @@ article {
   -webkit-column-gap: 4em;
   -moz-column-gap: 4em;
   column-gap: 4em;
+  /* column-rule-style: solid; */
   text-align: left;
-  margin: 0 auto;
+  margin: 0 auto 5vh auto;
 }
 
 .img-container {
   height: 500px;
   width: 100%;
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
 
 #article img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/** ///// media rules ///// */
+
+@media only screen and (max-width: 600px) {
+  .img-container {
+    height: 200px;
+    width: 100%;
+    padding: 0.5rem 0;
+  }
 }

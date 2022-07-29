@@ -1,37 +1,115 @@
-<nav class="navbar navbar-expand-lg navbar-dark nav-bg-custom">
+<!-- ! neu ////// -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{ url_for('basic_pgs.index') }}">GISart</a>
+    <a class="navbar-brand text-fade-in" href="{{ url_for('basic_pgs.index') }}"
+      >GISart</a
+    >
     <button
       class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('basic_pgs.about') }}">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('basic_pgs.download') }}"
-            >More Info</a
+          <a class="nav-link hover-line" href="{{ url_for('basic_pgs.about') }}"
+            >About</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/">Login</a>
+          <a
+            class="nav-link hover-line"
+            href="{{ url_for('basic_pgs.download') }}"
+            >Learn More</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('dynamic_pgs.signup') }}"
-            >Signup</a
+          <a
+            class="nav-link hover-line"
+            href="{{ url_for('dynamic_pgs.view_posts') }}"
+            >View</a
           >
+        </li>
+        {% if current_user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            For Users
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-dark"
+            aria-labelledby="navbarDropdown"
+          >
+            <li>
+              <a
+                class="dropdown-item hover-line"
+                href="{{ url_for('dynamic_pgs.create_post') }}"
+                >Share</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item hover-line"
+                href="{{ url_for('dynamic_pgs.dashboard') }}"
+                >Dashboard</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <small>
+                <a
+                  id="logout-link"
+                  class="dropdown-item hover-line"
+                  href="{{ url_for('dynamic_pgs.logout') }}"
+                  >Logout</a
+                >
+              </small>
+            </li>
+            {% if current_user.id == 1 %}
+            <li><hr class="dropdown-divider" /></li>
+
+            <li>
+              <a
+                class="dropdown-item hover-line"
+                href="{{ url_for('dynamic_pgs.admin') }}"
+                >Admin</a
+              >
+            </li>
+            {% endif %}{% endif %}
+          </ul>
+        </li>
+        <li class="nav-item">
+          <!-- * signup & login only seen if session is unauthenticated -->
+
+          {% if current_user.is_authenticated %} {% else %}
+          <a
+            id="signup-link"
+            class="nav-link hover-line"
+            href="{{ url_for('dynamic_pgs.signup') }}"
+            >Sign-up</a
+          >
+          |
+          <a
+            id="login-link"
+            class="nav-link hover-line"
+            href="{{ url_for('dynamic_pgs.login') }}"
+            >Login</a
+          >
+          {% endif %}
         </li>
       </ul>
-      <span class="navbar-text"> Lorem </span>
     </div>
   </div>
 </nav>

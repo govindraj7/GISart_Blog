@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+<!-- navbar component -->
+{% block body %}{% include 'components/navbar.html' %}
+<section id="posts" class="container spacer">
+  {% for message in get_flashed_messages() %}
+
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %}
+
+  <div class="d-flex justify-content-center post-title-heading">
+    {% if title %}
+    <h1>{{ title }}</h1>
+    {% else %}
+    <h1>GISart</h1>
+    {% endif %}
+  </div>
+
+  {% if current_user.is_authenticated %}
+  <div class="d-flex justify-content-center share-btn">
+    <a
+      class="btn btn-dark text-white share-button"
+      href="{{ url_for('dynamic_pgs.create_post') }}"
+      >Share</a
+    >
+  </div>
+  {% endif %}
+
+  <div class="container">
+    <div class="row gutters-row d-flex justify-content-center">
+      {% for post in posts %}
+      <div class="col-sm-auto gutters-col d-flex justify-content-center">
+        <div class="card bg-dark post-card std_height">
+          <img
+            type="image/png"
+            src="{{ post.image }}"
+            alt="image"
+            loading="lazy"
+            class="card-img-top post-img-top many-posts"
+          />
+          <div class="card-img-overlay">
+            <h2 class="card-title text-white">{{ post.title|upper }}</h2>
+            <div class="card-txt">
+              <p class="card-text">
+                By <strong>{{ post.author.user_name }}</strong>
+              </p>
+              <p class="card-text">
+                <small class="card-text">{{ post.date_posted.date() }}</small>
+              </p>
+            </div>
+            <a
+              class="btn btn-dark text-white"
+              href="{{ url_for('dynamic_pgs.single_post', id=post.id, slug=post.slug) }}"
+              >View Post</a
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="img-bg">
+  <img
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-dark.png')}}"
+    alt="image"
+    aria-label="Description of the overall image"
+    loading="lazy"
+  />
+</div>
+{% include 'components/footer.html' %} {% endblock %}

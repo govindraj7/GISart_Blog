@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+<!-- add navbar component -->
+{% block body %}{% include 'components/navbar.html' %}
+<section id="signup" class="container form_pg spacer">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %} {% if title %}
+  <h1>{{ title }}</h1>
+  {% else %}
+  <h1>GISart</h1>
+  {% endif %}
+
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus
+    laborum nesciunt amet animi, neque ut quas cum maxime labore quia odit
+    saepe, quidem inventore vero perferendis incidunt porro tempore!
+  </p>
+
+  <br />
+  <!-- signup form -->
+  <form
+    method="POST"
+    class="flex justify-content-md-center my_form"
+    enctype="multipart/form-data"
+  >
+    <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, because hackers deffo want to target this -->
+    {{ form.hidden_tag() }}
+    <!-- the form -->
+    <!-- * user name -->
+    {{ form.user_name.label (class="form-label") }} {{
+    form.user_name(class="form-control") }}
+    <br />
+    <!-- * file  -->
+    {{ form.file.label (class="form-label") }} {{
+    form.file(class="form-control") }}
+    <br />
+    <!-- * user bio -->
+    {{ form.bio.label (class="form-label") }} {{ form.bio(class="form-control")
+    }}
+    <br />
+    <br />
+    <!-- * password -->
+    {{ form.password_hash.label (class="form-label") }} {{
+    form.password_hash(class="form-control") }}
+    <br />
+    <!-- * password confirmation -->
+    {{ form.password_hash_confirm.label (class="form-label") }} {{
+    form.password_hash_confirm(class="form-control") }}
+    <br />
+    <br />
+    {{ form.submit(class="btn btn-warning text-dark") }}
+    <button class="btn btn-primary text-dark" onclick="history.back()">
+      Go Back
+    </button>
+  </form>
+</section>
+
+<div class="img-bg">
+  <img
+    type="image/png"
+    src="{{url_for('static', filename='images/spacex-dark.png')}}"
+    alt="image"
+    aria-label="Description of the overall image"
+    loading="lazy"
+  />
+</div>
+
+{% include 'components/footer.html' %} {% endblock %}
