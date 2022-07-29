@@ -15,4 +15,4 @@ S3_KEY = environ.get('S3_KEY')
 S3_SECRET = environ.get('S3_SECRET')
 S3_LOCATION = environ.get('S3_LOCATION')
 # to add some security
-ALLOWED_EXTENSIONS = environ.get('ALLOWED_EXTS')
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
