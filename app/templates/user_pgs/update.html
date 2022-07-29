@@ -2,17 +2,8 @@
 <!-- add navbar component -->
 {% block body %}{% include 'components/navbar.html' %}
 <section id="update" class="container form_pg spacer">
-  {% for message in get_flashed_messages() %}
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-  {% endfor %} {% if id == current_user.id %} {% if title %}
+  {% include 'components/flash_msgs.html' %} {% if id == current_user.id %} {%
+  if title %}
   <h1>{{ title }}</h1>
   {% else %}
   <h1>GISart</h1>
@@ -23,9 +14,7 @@
     laborum nesciunt amet animi, neque ut quas cum maxime labore quia odit
     saepe, quidem inventore vero perferendis incidunt porro tempore!
   </p>
-
   <p>Update your details.</p>
-
   <br />
   <!-- signup(update) form -->
   <form
@@ -55,7 +44,6 @@
       Go Back
     </button>
   </form>
-
   {% else %}
   <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <svg
@@ -86,7 +74,6 @@
   </button>
   {% endif %}
 </section>
-
 <div class="img-bg">
   <img
     type="image/png"

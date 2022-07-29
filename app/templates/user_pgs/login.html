@@ -1,20 +1,17 @@
 {% extends 'base.html' %} {% block body %} {% include 'components/navbar.html'
 %}
 <section id="login" class="container form_pg spacer">
-  <br />
-  {% if title %}
+  {% include 'components/flash_msgs.html' %} {% if title %}
   <h1>{{ title }}</h1>
   {% else %}
   <h1>GISart</h1>
   {% endif %}
-
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus
     laborum nesciunt amet animi, neque ut quas cum maxime labore quia odit
     saepe, quidem inventore vero perferendis incidunt porro tempore!
   </p>
   <br />
-
   <!-- login form -->
   <form method="POST" class="flex justify-content-md-center my_form">
     <!--*  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
@@ -35,7 +32,6 @@
     >
   </form>
 </section>
-
 <div class="img-bg">
   <img
     type="image/png"
@@ -45,5 +41,4 @@
     loading="lazy"
   />
 </div>
-
 {% include 'components/footer.html' %} {% endblock %}

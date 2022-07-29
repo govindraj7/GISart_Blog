@@ -1,26 +1,12 @@
 {% extends 'base.html' %}
 <!-- navbar component -->
 {% block body %}{% include 'components/navbar.html' %}
-
 <section id="edit-post" class="container spacer">
-  {% for message in get_flashed_messages() %}
-
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-
-  {% endfor %} {% if title %}
+  {% include 'components/flash_msgs.html' %} {% if title %}
   <h1>{{ title }}</h1>
   {% else %}
   <h1>GISart</h1>
   {% endif %}
-
   <!-- locking down page -->
   <!-- this should not be accessed as login_required should protect the page -->
   {% if current_user.is_authenticated %}
@@ -56,10 +42,8 @@
   <a <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.login') }}"
     >Login</a
   >
-
   {% endif %}
 </section>
-
 <div class="img-bg">
   <img
     type="image/png"
@@ -67,15 +51,5 @@
     alt="image"
     loading="lazy"
   />
-  Photo by
-  <a
-    href="https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-    >SpaceX</a
-  >
-  on
-  <a
-    href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-    >Unsplash</a
-  >
 </div>
 {% include 'components/footer.html' %} {% endblock %}

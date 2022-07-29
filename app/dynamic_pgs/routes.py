@@ -101,7 +101,7 @@ def signup():
         return redirect(url_for('dynamic_pgs.dashboard'))
 
       except:
-          # flash("Username already exists")
+          flash("Username already exists")
           return redirect(url_for('dynamic_pgs.signup'))
     
     # clear the form
@@ -147,21 +147,20 @@ def delete(id, slug):
   try: 
     db.session.delete(delete_user_info)
     db.session.commit()
-    # flash("User Deleted Successfully.")
+    flash("User Deleted Successfully.")
     return redirect(url_for('dynamic_pgs.signup'))
 
   except:
-    # flash("Hmmm... Something did not work. Try again later.")
+    flash("Hmmm... Something did not work. Try again later.")
     return render_template('user_pgs/signup.html', title='Delete User', user_name=user_name, form=form, delete_user_info=delete_user_info, id=id, slug=slug)
 
 #* login pg
 @blueprint.route('/login', methods=["GET", "POST"])
 def login():
-  # error = None
   form = LoginForm()
   user = Users.query.filter_by(user_name=form.user_name.data).first()
   if not user or not check_password_hash(user.password_hash, form.password.data):
-    # error = 'Please check your login in details and try again.'
+    flash("Hmmm... Something did not work. Try again later.")
     return render_template('user_pgs/login.html', title='Login', form=form)
   login_user(user)
   return redirect(url_for('dynamic_pgs.dashboard'))
@@ -200,8 +199,8 @@ def create_post():
     # clear the form
     form.title.data = ''
     form.description.data = ''
+    flash("Post successfully created!")
     return redirect(url_for('dynamic_pgs.view_posts'))
-    # flash("Post successfully created!")
       
   return render_template('blog_post_pgs/create_post.html', title='Share Your GISart', form=form)
 
@@ -231,15 +230,14 @@ def delete_post(id, slug):
       s3_remove(delete_this_post.title)
       db.session.delete(delete_this_post)
       db.session.commit()
-      # flash("Your post was successfully deleted.")
+      flash("Your post was successfully deleted.")
       return redirect(url_for('dynamic_pgs.view_posts'))
-      # redirect issue with flash messages ?? Calls both ??
 
     except:
-      # flash('Hmm... Something did not work. Try again later.')
+      flash('Hmm... Something did not work. Try again later.')
       return redirect(url_for('dynamic_pgs.view_posts'))
   else:
-    # flash('Unauthorized.')
+    flash('Unauthorized.')
     return redirect(url_for('dynamic_pgs.view_posts'))
 
 @blueprint.route('/gisart-gallery/edit/<slug>/<int:id>', methods=["GET", "POST"])
@@ -261,18 +259,18 @@ def edit_post(id, slug):
       try:
         db.session.add(edit_this_post)
         db.session.commit()
-        # flash("Post successfully updated!")
+        flash("Post successfully updated!")
         return redirect(url_for('dynamic_pgs.view_posts'))
         # todo: fix this redirect
 
       except:
-        # flash("Oops. Something went wrong. Try again later.")
+        flash("Oops. Something went wrong. Try again later.")
         return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id, slug=edit_this_post.slug)
 
     else:
       return render_template('blog_post_pgs/edit_post.html', title='Edit Post', form=form, edit_this_post=edit_this_post, id=edit_this_post.id, slug=edit_this_post.slug)
   else:
-    # flash('Unauthorized.')
+    flash('Unauthorized.')
     return redirect(url_for('dynamic_pgs.view_posts'))
 
 #* the chosen one
@@ -284,5 +282,5 @@ def admin():
     all_users = Users.query.order_by(Users.date_added)
     return render_template('admin/admin.html', all_users=all_users, id=id)
   else:
-    # error = 'Access Denied. Not Admin.'
+    flash('Unauthorized.')
     return redirect(url_for('dynamic_pgs.dashboard'))

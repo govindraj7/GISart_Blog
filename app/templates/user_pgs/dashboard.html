@@ -2,9 +2,9 @@
 <!-- add navbar component -->
 {% block body %}{% include 'components/navbar.html' %}
 <section class="container spacer">
+  {% include 'components/flash_msgs.html' %}
   <!-- locking down page -->
   {% if current_user.is_authenticated %}
-
   <div class="container">
     <div class="row gutters-row justify-content-center">
       <div class="col-sm-auto gutters-col">
@@ -90,7 +90,6 @@
       </div>
     </div>
   </div>
-
   {% else %}
   <h6>Please login in or Signup to access this page.</h6>
   <br />
@@ -103,7 +102,6 @@
   >
   {% endif %}
 </section>
-
 <div class="img-bg">
   <img
     type="image/png"

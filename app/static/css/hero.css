@@ -1,5 +1,9 @@
 /*! ///// hero css ///// */
 
+#hero {
+  height: 100vh;
+}
+
 /** ///// containers ///// ------------------------------------------------------------------------------------------------------------------------ */
 
 .parent {
@@ -37,6 +41,11 @@
 
 @media only screen and (max-width: 600px) {
   .child {
-    top: 85%;
+    top: 65%;
+    left: 20%;
+    /* transform: translate(0, 0); */
+  }
+  #hero h1 {
+    font-size: 2rem;
   }
 }

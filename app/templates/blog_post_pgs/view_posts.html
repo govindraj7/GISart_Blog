@@ -2,19 +2,7 @@
 <!-- navbar component -->
 {% block body %}{% include 'components/navbar.html' %}
 <section id="posts" class="container spacer">
-  {% for message in get_flashed_messages() %}
-
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-  {% endfor %}
-
+  {% include 'components/flash_msgs.html' %}
   <div class="d-flex justify-content-center post-title-heading">
     {% if title %}
     <h1>{{ title }}</h1>
@@ -22,7 +10,6 @@
     <h1>GISart</h1>
     {% endif %}
   </div>
-
   {% if current_user.is_authenticated %}
   <div class="d-flex justify-content-center share-btn">
     <a
@@ -32,7 +19,6 @@
     >
   </div>
   {% endif %}
-
   <div class="container">
     <div class="row gutters-row d-flex justify-content-center">
       {% for post in posts %}
@@ -67,7 +53,6 @@
     </div>
   </div>
 </section>
-
 <div class="img-bg">
   <img
     type="image/png"

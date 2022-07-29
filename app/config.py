@@ -1,12 +1,10 @@
-# load the environmernt variables
+# load the environment variables
 from dotenv import load_dotenv
 load_dotenv()
 
 # db variable from .env
 from os import environ
-# SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL') 
-SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL').replace("://", "ql://", 1)
-# super secret key
+SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL') 
 SECRET_KEY = environ.get('SECRET_KEY')
 S3BASEURL = environ.get('S3BASEURL')
 S3_BUCKET = environ.get('S3_BUCKET')

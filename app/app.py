@@ -7,11 +7,10 @@ from app.extensions.authentications import login_manager
 def create_app():
   app = Flask(__name__)
   app.config.from_object('app.config')
-  
 
   register_extensions(app)
   register_blueprints(app)
-
+  
   @app.errorhandler(404)    # invalid URL
   def page_not_found(e):
     return render_template("404.html"), 404
