@@ -100,8 +100,7 @@ def signup():
 
   if form.validate_on_submit():
     image = request.files["file"]
-    blob =  image.read()
-    image_size = len(blob)
+    image_size = len(form.file.data)
     max_size = 1024 * 1000 * 5
     if image_size > max_size:
       flash("File size is too large, 5MB is the limit.")
@@ -210,8 +209,7 @@ def create_post():
   
   if form.validate_on_submit():
     image = request.files["file"]
-    blob =  image.read()
-    image_size = len(blob)
+    image_size = len(form.file.data)
     max_size = 1024 * 1000 * 5
     if image_size > max_size:
       flash("File size is too large, 5MB is the limit.")
