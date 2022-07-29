@@ -14,7 +14,6 @@ class Users(db.Model, CRUDMixin, UserMixin):
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     bio = db.Column(db.String(400), nullable=True)
     profile_pic = db.Column(db.String, nullable=False)
-    role = db.Column(db.String(32), nullable=True,  default='User')
     # security - hashed password stored
     password_hash = db.Column(db.String(128))
     # one-to-many relationship

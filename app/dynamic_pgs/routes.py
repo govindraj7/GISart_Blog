@@ -197,6 +197,12 @@ def create_post():
   
   if form.validate_on_submit():
     image = request.files["file"]
+    blob =  image.read()
+    image_size = len(blob)
+    max_size = 1024 * 1000 * 5
+    if image_size > max_size:
+      flash("File size is too large, 5MB is the limit.")
+      return redirect(request.url)
     # ensure only an image file is submitted
     if image.filename == "":
       flash("File must have a name.")
