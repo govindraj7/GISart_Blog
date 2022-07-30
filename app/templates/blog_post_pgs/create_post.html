@@ -15,6 +15,7 @@
     method="POST"
     class="flex justify-content-md-center my_form"
     enctype="multipart/form-data"
+    aria-label="Create post form"
   >
     <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
     {{ form.hidden_tag() }}
@@ -41,11 +42,18 @@
   {% else %}
   <h6>Please login in or Signup to access this page.</h6>
   <br />
-  <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.signup') }}"
+  <a
+    class="navbar-text hover-line"
+    href="{{ url_for('dynamic_pgs.signup') }}"
+    aria-label="Sign-up"
     >Sign-up</a
   >
   |
-  <a <a class="navbar-text hover-line" href="{{ url_for('dynamic_pgs.login') }}"
+  <a
+    <a
+    class="navbar-text hover-line"
+    href="{{ url_for('dynamic_pgs.login') }}"
+    aria-label="Login"
     >Login</a
   >
   {% endif %}

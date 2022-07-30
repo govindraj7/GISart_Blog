@@ -14,7 +14,7 @@
     <img
       type="image/png"
       src="{{ post.image }}"
-      alt="SpaceX image of late day or night sky and time lapse light line from ascending rocket."
+      alt="{{ post.description }}"
       loading="lazy"
       class="card-img-top post-img-top"
     />
@@ -27,7 +27,7 @@
               <img
                 type="image/png"
                 src="{{ post.author.profile_pic }}"
-                alt="SpaceX image of late day or night sky and time lapse light line from ascending rocket."
+                alt="Post Author's display picture, author is {{ post.author.user_name }}"
                 loading="lazy"
                 class="card-img-top profile-picture"
               />
@@ -46,18 +46,24 @@
     </div>
   </div>
   <hr />
-  <button class="btn btn-primary text-dark" onclick="history.back()">
+  <button
+    class="btn btn-primary text-dark"
+    onclick="history.back()"
+    aria-label="go back"
+  >
     Go Back
   </button>
   {% if post.author.id == current_user.id or current_user.id == 1 %}
   <a
     class="btn btn-warning text-dark"
     href="{{ url_for('dynamic_pgs.edit_post', id=id, slug=slug) }}"
+    aria-label="edit this post"
     >Edit Post</a
   >
   <a
     class="btn btn-danger text-dark"
     href="{{ url_for('dynamic_pgs.delete_post', id=id, slug=slug) }}"
+    aria-label="delete this post"
     >Delete Post</a
   >
   {% endif %}

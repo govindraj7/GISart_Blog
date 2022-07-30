@@ -8,12 +8,15 @@
   <div class="container">
     <div class="row gutters-row justify-content-center">
       <div class="col-sm-auto gutters-col justify-content-center">
-        <div class="card text-center bg-dark text-white max-width">
+        <div
+          class="card text-center bg-dark text-white max-width"
+          aria-label="User profile card"
+        >
           <div class="card-header profile-picture">
             <img
               type="image/png"
               src="{{ current_user.profile_pic }}"
-              alt="SpaceX image of late day or night sky and time lapse light line from ascending rocket."
+              alt="{{ post.author.user_name }}'s Display Picture."
               loading="lazy"
               class="card-img-top profile-picture"
             />
@@ -40,6 +43,7 @@
               <a
                 class="btn btn-primary text-dark btn-sm"
                 href="{{ url_for('dynamic_pgs.create_post') }}"
+                aria-label="Share a post"
                 >Share</a
               >
             </div>
@@ -47,6 +51,7 @@
               <a
                 class="btn btn-info text-dark btn-sm"
                 href="{{ url_for('dynamic_pgs.view_posts') }}"
+                aria-label="View all posts"
                 >View All Posts</a
               >
             </div>
@@ -54,6 +59,7 @@
               <a
                 class="btn btn-warning text-dark btn-sm"
                 href="{{ url_for('dynamic_pgs.update', id=current_user.id, slug=current_user.slug) }}"
+                aria-label="Update profile"
                 >Update Profile</a
               >
             </div>
@@ -62,6 +68,7 @@
               <a
                 class="btn btn-danger text-dark btn-sm"
                 href="{{ url_for('dynamic_pgs.delete', id=current_user.id, slug=current_user.slug) }}"
+                aria-label="Delete account"
                 >Delete Account</a
               >
             </div>
@@ -78,6 +85,7 @@
                   id="logout-link"
                   class="btn btn-secondary text-dark btn-sm"
                   href="{{ url_for('dynamic_pgs.logout') }}"
+                  aria-label="Logout"
                   >Logout</a
                 >
               </small>

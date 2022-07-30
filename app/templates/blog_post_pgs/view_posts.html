@@ -15,6 +15,7 @@
     <a
       class="btn btn-dark text-white share-button"
       href="{{ url_for('dynamic_pgs.create_post') }}"
+      aria-label="Share a post"
       >Share</a
     >
   </div>
@@ -27,23 +28,26 @@
           <img
             type="image/png"
             src="{{ post.image }}"
-            alt="SpaceX image of late day or night sky and time lapse light line from ascending rocket."
+            alt="{{ post.description }}"
             loading="lazy"
             class="card-img-top post-img-top many-posts"
           />
           <div class="card-img-overlay">
-            <h2 class="card-title text-white">{{ post.title|upper }}</h2>
+            <h2 class="card-title text-white" aria-label="Post title">
+              {{ post.title|upper }}
+            </h2>
             <div class="card-txt">
-              <p class="card-text">
+              <p class="card-text" aria-label="Author Name">
                 By <strong>{{ post.author.user_name }}</strong>
               </p>
-              <p class="card-text">
+              <p class="card-text" aria-label="Date posted">
                 <small class="card-text">{{ post.date_posted.date() }}</small>
               </p>
             </div>
             <a
               class="btn btn-dark text-white"
               href="{{ url_for('dynamic_pgs.single_post', id=post.id, slug=post.slug) }}"
+              aria-label="View this post"
               >View Post</a
             >
           </div>
