@@ -99,6 +99,7 @@ class LoginForm(FlaskForm):
 def signup():
   user_name = None
   form = SignUpForm()
+  flash('Remember, if you forget your password, you will need to email the site admin at stacey.kenny@code.berlin')
 
   if form.validate_on_submit():
     image = request.files['file']
@@ -138,6 +139,7 @@ def update(id, slug):
   update_user_info = Users.query.get_or_404(id)
   form.user_name.data = update_user_info.user_name
   form.bio.data = update_user_info.bio
+  flash('Remember, if you forget your password, you will need to email the site admin at stacey.kenny@code.berlin')
 
   if request.method == "POST":
     update_user_info.user_name = request.form['user_name']
@@ -145,13 +147,13 @@ def update(id, slug):
     update_user_info.slug = slugify(request.form['user_name'])
 
     try:
-      db.session.commit()
-      # flash("Your details are Updated!")
+      db.session.commit(update_user_info)
+      flash("Your details are Updated!")
       return redirect(url_for('dynamic_pgs.dashboard'))
 
     except:
-      # flash("Oops. Something went wrong. Try again later.")
-      return redirect(url_for('dynamic_pgs.signup'))
+      flash("Oops. Something went wrong. Try again later.")
+      return redirect(request.url)
 
   else:
     return render_template('user_pgs/update.html', title='Update Details', form=form, update_user_info=update_user_info, id=id, slug=slug)
