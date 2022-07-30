@@ -24,6 +24,6 @@ def inspiration():
   return redirect('https://unsplash.com/s/photos/satellite-imagery')
 
 # placeholder for download file
-@blueprint.route('/download')
-def download():
-  return send_file('static/downloads/info-sheet.txt', as_attachment=True)
+@blueprint.route('/learn-more')
+def learn():
+  return redirect('https://gisgeography.com/how-to-download-sentinel-satellite-data/')
