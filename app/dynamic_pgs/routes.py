@@ -71,25 +71,25 @@ blueprint = Blueprint('dynamic_pgs', __name__)
 
 #* form for creating a user
 class SignUpForm(FlaskForm):
-    user_name = StringField("Username:", validators=[DataRequired()])
-    file = FileField("Choose a Profile Picture", validators=[DataRequired()])
+    user_name = StringField("Username:", validators=[DataRequired(message="Please provide a unique username."), Length(min=3, max=128, message="Username can only be between 5 and 128 characters.")])
+    file = FileField("Choose a Profile Picture", validators=[DataRequired(message="This is a visual site, an image is required for your profile.")])
     bio = TextAreaField("Short Bio:")
-    password_hash = PasswordField('Password:', validators=[DataRequired(), EqualTo('password_hash_confirm', message='Passwords must match.')])
-    password_hash_confirm = PasswordField('Confirm Password:', validators=[DataRequired()])
+    password_hash = PasswordField('Password:', validators=[DataRequired(message="Please create a strong password."), EqualTo('password_hash_confirm', message='Passwords must match.'), Length(min=6, max=128, message="Password must be at least 6 characters long.")])
+    password_hash_confirm = PasswordField('Confirm Password:', validators=[DataRequired(message="You must retype your password.")])
 
     submit = SubmitField("Submit")
 
 #* form for creating a post
 class PostForm(FlaskForm):
-    file = FileField("File Please", validators=[DataRequired()])
-    title = StringField("Title", validators=[DataRequired()])
-    description = StringField("Description", validators=[DataRequired()], widget=TextArea())
+    file = FileField("File Please", validators=[DataRequired(message="This is a visual site, an image is required for your post.")])
+    title = StringField("Title", validators=[DataRequired(message="Please provide a unique title."), Length(min=3, max=128, message="Username can only be between 5 and 128 characters.")])
+    description = StringField("Description", validators=[DataRequired(), Length(min=3, max=128, message="The post description must be between 3 and 128 characters long.")], widget=TextArea())
     submit = SubmitField("Submit")
    
 #* form for login
 class LoginForm(FlaskForm):
-    user_name = StringField("Username:", validators=[DataRequired()])
-    password = PasswordField('Password:', validators=[DataRequired(), EqualTo('password_hash_confirm', message='Passwords must match.')])
+    user_name = StringField("Username:", validators=[DataRequired(message="Please enter your username.")])
+    password = PasswordField('Password:', validators=[DataRequired(message="Please enter your password"), EqualTo('password_hash_confirm', message='Passwords must match.')])
     submit = SubmitField("Submit")
 
 #! user signup related ------------------------------------------------------------------------------------------------------------------------

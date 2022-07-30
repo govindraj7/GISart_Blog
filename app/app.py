@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, request, redirect, flash
 from app.extensions.database import db, migrate
 from . import basic_pgs, dynamic_pgs
 from app.extensions.authentications import login_manager
@@ -11,6 +11,11 @@ def create_app():
   register_extensions(app)
   register_blueprints(app)
   
+  @app.errorhandler(413)
+  def largefile_error(e):
+    flash("File is too large.")
+    return redirect(request.url), 413
+
   @app.errorhandler(404)    # invalid URL
   def page_not_found(e):
     return render_template("404.html"), 404

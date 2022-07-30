@@ -7,8 +7,8 @@
   {% if current_user.is_authenticated %}
   <div class="container">
     <div class="row gutters-row justify-content-center">
-      <div class="col-sm-auto gutters-col">
-        <div class="card text-center bg-dark text-white profile-card">
+      <div class="col-sm-auto gutters-col justify-content-center">
+        <div class="card text-center bg-dark text-white">
           <div class="card-header profile-picture">
             <img
               type="image/png"
@@ -30,12 +30,12 @@
         </div>
       </div>
       <div class="col-lg-auto gutters-col d-flex justify-content-center">
-        <div class="card bg-dark text-white profile-card">
+        <div class="card bg-dark text-white max-width">
           <div class="card-body">
             <h4 class="card-title welcome-user">
               Welcome {{ current_user.user_name|capitalize }}
             </h4>
-            <p class="card-text text-center">Quick Links:</p>
+            <p class="card-text text-center">Here are some quick links:</p>
             <div class="d-flex justify-content-center">
               <a
                 class="btn btn-primary text-dark btn-sm"
@@ -57,6 +57,7 @@
                 >Update Profile</a
               >
             </div>
+            <br />
             <div class="d-flex justify-content-center">
               <a
                 class="btn btn-danger text-dark btn-sm"
@@ -65,8 +66,14 @@
               >
             </div>
             <br />
-            <p class="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing.
+            <p class="card-text text-muted text-center">
+              <small>
+                Remember, if you forget Your password, you will need to email
+                the site admin at
+                <a href="mailto:stacey.kenny@code.berlin"
+                  >stacey.kenny@code.berlin</a
+                ></small
+              >
             </p>
             <div class="d-flex justify-content-center">
               <small>

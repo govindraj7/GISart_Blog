@@ -9,8 +9,8 @@
   margin: 1rem 0;
 }
 
-.profile-card {
-  max-width: 18rem;
+.max-width {
+  max-width: 380px;
 }
 
 .profile-picture {
