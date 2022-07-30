@@ -29,7 +29,6 @@
             type="image/png"
             src="{{ post.image }}"
             alt="{{ post.description }}"
-            loading="lazy"
             class="card-img-top post-img-top many-posts"
           />
           <div class="card-img-overlay">
@@ -62,7 +61,6 @@
     type="image/png"
     src="{{url_for('static', filename='images/spacex-dark.png')}}"
     alt="SpaceX image of late day or night sky and time lapse light line from ascending rocket."
-    loading="lazy"
   />
 </div>
 {% include 'components/footer.html' %} {% endblock %}
