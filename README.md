@@ -3,8 +3,9 @@
 <br />
 <div align="center">
   <a href="https://github.com/berlin-experiment">
-    <img src="https://camo.githubusercontent.com/e1ccad6596e2a4b368b99085bff8b88ee2174517271fc95c62b3d4ee96bbb8ee/68747470733a2f2f6d65646961312e67697068792e636f6d2f6d656469612f4b7a4a6b7a6a676766474e355079366e6b542f67697068792e6769663f6369643d373930623736313134366163396136373933643265663539343738636530643435356231613637326562363061376666267269643d67697068792e6769662663743d73" alt="Logo" width="80" height="80">
-  </a> 
+<div align="center">
+  <img src="https://github.com/berlin-experiment/readme-files/blob/master/imgs/gisart-blog-site/Main%20Desktop.png?raw=true" alt="Mock Up Design of Product">
+</div>
   
   
 
@@ -41,7 +42,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
