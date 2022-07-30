@@ -2,9 +2,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/berlin-experiment">
-<div align="center">
-  <img src="https://github.com/berlin-experiment/readme-files/blob/master/imgs/gisart-blog-site/Main%20Desktop.png?raw=true" alt="Mock Up Design of Product">
+  <a href="https://gisart.herokuapp.com/home">
+  <img src="https://github.com/berlin-experiment/readme-files/blob/master/imgs/gisart-blog-site/Main%20Desktop.png?raw=true" alt="Mock Up Design of Product"></a>
 </div>
   
   
