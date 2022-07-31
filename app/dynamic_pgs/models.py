@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from slugify import slugify
 from flask_login import UserMixin
 
+# todo: improve CRUD operations with CRUDMixin ///// ------------------------------------------------------------------------------------------------------------------------ */
+
 # one-to-many relationship, one User >> many BlogPosts
 #! ///// users model ///// ------------------------------------------------------------------------------------------------------------------------ */
 class Users(db.Model, CRUDMixin, UserMixin): 

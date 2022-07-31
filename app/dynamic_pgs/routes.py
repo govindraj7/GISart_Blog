@@ -165,6 +165,7 @@ def delete(id, slug):
   user_name = None
   form = SignUpForm()
   delete_user_info = Users.query.get_or_404(id)
+  flash('Remember, if you forget your password, you will need to email the site admin at stacey.kenny@code.berlin')
 
   try: 
     db.session.delete(delete_user_info)
