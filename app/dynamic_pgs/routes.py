@@ -146,7 +146,7 @@ def update(id, slug):
     update_user_info.slug = slugify(request.form['user_name'])
 
     try:
-      db.session.commit(update_user_info)
+      db.session.commit()
       flash("Your details are Updated!")
       return redirect(url_for('dynamic_pgs.dashboard'))
 
