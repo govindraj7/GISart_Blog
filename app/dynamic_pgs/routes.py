@@ -163,7 +163,6 @@ def delete(id, slug):
   user_name = None
   form = SignUpForm()
   delete_user_info = Users.query.get_or_404(id)
-  flash('Remember, if you forget your password, you will need to email the site admin at stacey.kenny@code.berlin')
 
   try: 
     db.session.delete(delete_user_info)
@@ -179,6 +178,7 @@ def delete(id, slug):
 @blueprint.route('/login', methods=["GET", "POST"])
 def login():
   form = LoginForm()
+  flash('Remember, if you forget your password, you will need to email the site admin at stacey.kenny@code.berlin')
   user = Users.query.filter_by(user_name=form.user_name.data).first()
   if not user or not check_password_hash(user.password_hash, form.password.data):
     return render_template('user_pgs/login.html', title='Login', form=form)
