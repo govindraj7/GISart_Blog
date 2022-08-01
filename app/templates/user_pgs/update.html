@@ -41,9 +41,13 @@
       href="{{ url_for('dynamic_pgs.delete', id=id, slug=slug) }}"
       >Delete User</a
     >
-    <button class="btn btn-secondary text-dark" onclick="history.back()">
-      Cancel
-    </button>
+    <a
+      class="btn btn-secondary text-dark"
+      href="{{ url_for('dynamic_pgs.dashboard') }}"
+      aria-label="user dashboard"
+    >
+      Cancel</a
+    >
   </form>
   {% else %}
   <div class="alert alert-danger alert-dismissible fade show" role="alert">
