@@ -56,6 +56,9 @@
       crossorigin="anonymous"
     />
 
+    <!-- * ///// jquery /////  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <!-- * ///// css styling ///// -->
     <link
       type="text/css"
@@ -112,5 +115,13 @@
       src="{{ url_for('static', filename='javascript/main.js') }}"
       as="script"
     ></script>
+
+    <script>
+      $("document").ready(function () {
+        setTimeout(function () {
+          $("#alert").fadeOut("slow");
+        }, 5000); // 5 secs
+      });
+    </script>
   </body>
 </html>

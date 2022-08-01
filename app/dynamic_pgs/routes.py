@@ -151,9 +151,8 @@ def update(id, slug):
       return redirect(url_for('dynamic_pgs.dashboard'))
 
     except:
-      flash("Oops. Something went wrong. Try again later.")
       return redirect(url_for('dynamic_pgs.dashboard'))
-
+  
   else:
     return render_template('user_pgs/update.html', title='Update Details', form=form, update_user_info=update_user_info, id=id, slug=slug)
 

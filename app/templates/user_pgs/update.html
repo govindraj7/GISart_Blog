@@ -41,11 +41,7 @@
       href="{{ url_for('dynamic_pgs.delete', id=id, slug=slug) }}"
       >Delete User</a
     >
-    <button
-      class="btn btn-primary text-dark"
-      href="{{ url_for('dynamic_pgs.dashboard') }}"
-      aria-label="User dashboard"
-    >
+    <button class="btn btn-secondary text-dark" onclick="history.back()">
       Cancel
     </button>
   </form>
@@ -75,7 +71,7 @@
   </div>
   <h2>You are not authorized to do that.</h2>
   <button class="btn btn-secondary text-dark" onclick="history.back()">
-    Cancel
+    Go Back
   </button>
   {% endif %}
 </section>
