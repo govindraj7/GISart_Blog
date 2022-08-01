@@ -24,6 +24,12 @@
   </p>
 </div>
 
+<hr/>
+  <div align="center">
+    If you are the assessor for this project @CODE, please note the main branch is work done prior and up until the deadline Aug. 1st 16:59 2022 and is part of the assessment, the improvement branch is work done after then and not part of the assessment.
+  </div>
+<hr/>
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
