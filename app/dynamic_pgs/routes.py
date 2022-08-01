@@ -99,7 +99,6 @@ class LoginForm(FlaskForm):
 def signup():
   user_name = None
   form = SignUpForm()
-  flash('Remember, if you forget your password, you will need to email the site admin at stacey.kenny@code.berlin')
 
   if form.validate_on_submit():
     image = request.files['file']
@@ -153,7 +152,7 @@ def update(id, slug):
 
     except:
       flash("Oops. Something went wrong. Try again later.")
-      return redirect(request.url)
+      return redirect(url_for('dynamic_pgs.dashboard'))
 
   else:
     return render_template('user_pgs/update.html', title='Update Details', form=form, update_user_info=update_user_info, id=id, slug=slug)

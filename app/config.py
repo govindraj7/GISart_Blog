@@ -16,4 +16,4 @@ S3_SECRET = environ.get('S3_SECRET')
 S3_LOCATION = environ.get('S3_LOCATION')
 # to add some security
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-MAX_CONTENT_LENGTH = 1024 * 5 * 1024
+MAX_CONTENT_LENGTH = 5 * 1024 * 1024

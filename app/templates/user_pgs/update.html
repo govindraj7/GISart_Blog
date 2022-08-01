@@ -21,6 +21,7 @@
     action="/update/{{ update_user_info.slug }}/{{ update_user_info.id }}"
     method="POST"
     class="flex justify-content-md-center my_form"
+    enctype="multipart/form-data"
   >
     <!--  generates a hidden field that includes a token that is used to protect the form against CSRF attacks, becauses hackers deffo want to target this -->
     {{ form.hidden_tag() }}
@@ -40,8 +41,12 @@
       href="{{ url_for('dynamic_pgs.delete', id=id, slug=slug) }}"
       >Delete User</a
     >
-    <button class="btn btn-primary text-dark" onclick="history.back()">
-      Go Back
+    <button
+      class="btn btn-primary text-dark"
+      href="{{ url_for('dynamic_pgs.dashboard') }}"
+      aria-label="User dashboard"
+    >
+      Cancel
     </button>
   </form>
   {% else %}
@@ -70,7 +75,7 @@
   </div>
   <h2>You are not authorized to do that.</h2>
   <button class="btn btn-secondary text-dark" onclick="history.back()">
-    Go Back
+    Cancel
   </button>
   {% endif %}
 </section>
