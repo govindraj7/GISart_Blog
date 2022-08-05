@@ -110,7 +110,8 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* <a href="https://www.python.org/downloads/">Python 3.10 +</a>
+* <a href="https://www.python.org/downloads/">Using Python 3.10 +</a>
+* <a href="https://www.postgresqltutorial.com/postgresql-getting-started/">Getting Started with PostgreSQL</a>
 * <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-up-s3.html">Setting up Amazon S3</a>
 
 ### Installation
