@@ -11,7 +11,7 @@
   <h3 align="center">GISart</h3>
 
   <p align="center">
-    SEO_01 Assessment Spring Semster 2022 for
+    SE_01 + SE_19 Assessment Spring Semester 2022 for
     <br />
     <a href="https://code.berlin/en/"><strong>CODE University of Applied Sciences</strong></a>
     <br />
